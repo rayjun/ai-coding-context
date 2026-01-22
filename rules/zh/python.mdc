@@ -1,0 +1,8 @@
+---
+description: Python language standards, style, and best practices.
+globs: *.py, requirements.txt, pyproject.toml
+---
+
+### Python
+- **风格:** PEP 8。所有函数签名都使用类型提示 (`typing`)。
+- **现代性:** 使用现代 Python 特性（例如 `pathlib` 优于 `os.path`，`f-strings` 优于 `.format()`）。

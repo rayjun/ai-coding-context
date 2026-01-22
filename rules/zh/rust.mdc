@@ -1,0 +1,10 @@
+---
+description: Rust language standards, style, and best practices.
+globs: *.rs, Cargo.toml
+---
+
+### Rust
+- **风格:** `rustfmt` 标准。变量/函数使用 `snake_case`，类型使用 `CamelCase`。
+- **错误处理:** 使用 `Result` 和 `?` 运算符。避免使用 `unwrap()` 或 `expect()`，除非绝对必要（并记录原因）。
+- **并发:** 尽可能优先使用消息传递 (channel) 而不是共享状态 (Mutex)。
+- **测试:** 单元测试在同一文件中 (`mod tests`)，集成测试在 `tests/` 中。

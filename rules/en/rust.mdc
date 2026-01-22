@@ -1,0 +1,10 @@
+---
+description: Rust language standards, style, and best practices.
+globs: *.rs, Cargo.toml
+---
+
+### Rust
+- **Style:** `rustfmt` standard. `snake_case` for variables/functions, `CamelCase` for types.
+- **Error Handling:** Use `Result` and `?` operator. Avoid `unwrap()` or `expect()` unless strictly necessary (and documented why).
+- **Concurrency:** Prefer message passing (channels) over shared state (Mutex) where possible.
+- **Tests:** Unit tests in the same file (`mod tests`), integration tests in `tests/`.

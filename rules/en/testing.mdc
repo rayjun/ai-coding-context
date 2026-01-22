@@ -1,0 +1,9 @@
+---
+description: Global testing requirements and standards.
+globs: *
+---
+
+## 3. Testing Requirements
+- **Non-Trivial Logic:** MUST have accompanying unit tests.
+- **Regression:** If fixing a bug, first create a test case that reproduces the bug (fail), then fix it (pass).
+- **Mocking:** Mock external I/O (DB, Network) in unit tests.

@@ -1,0 +1,9 @@
+---
+description: Go language standards, style, and best practices.
+globs: *.go, go.mod
+---
+
+### Go
+- **Style:** `gofmt` standard.
+- **Errors:** Explicit error checking `if err != nil`. Wrap errors with context when bubbling up.
+- **Concurrency:** Use `goroutines` and `channels`. Avoid complex mutex locking hierarchies if possible.
