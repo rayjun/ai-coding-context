@@ -1,42 +1,42 @@
-# AI Coding Context
+# AI Coding Context (AI 编程上下文)
 
-A standardized collection of AI coding assistant contexts (Agents, Rules, Skills) designed to enhance code generation, refactoring, and project maintenance. This repository provides structured prompts and rules to align AI assistants with professional engineering standards.
+中文 | [English](./README_en.md)
 
-## 🌟 Features
+一套标准化的 AI 编程助手上下文集合（包含 Agent、规则和技能），旨在增强代码生成、重构和项目维护能力。理想的情况这个，在开发任意一个项目的时候，都可以使用这个仓库的内容。
 
-- **Multi-language Support**: Available in English and Chinese.
-- **Modular Context**: Separated into Agents (personas), Rules (coding standards), and Skills (task-specific instructions).
-- **Cursor IDE Ready**: Automated setup for `.cursorrules` and `.cursor/rules` integration.
+**`AGENTS.md`**：该文件分叉并改编自 [Xuanwo 的 AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)。
 
-## 🚀 Installation & Usage
 
-This repository includes an installation script to help you set up the context in your target project.
+## 🌟 特性
 
-1.  **Clone this repository** (or download the script).
-2.  **Run the installer** from the root of this repository, targeting your project directory:
+- **模块化上下文**：分为 Agent（人格设定）、Rules（编程标准）和 Skills（特定任务指令）。
+- **Cursor IDE 就绪**：自动设置 `.cursorrules` 和 `.cursor/rules` 集成。
+
+## 🚀 安装与使用
+
+本仓库包含一个安装脚本，帮助在目标项目中设置上下文。
+
+1.  **克隆本仓库**（或下载脚本）。
+2.  **在仓库根目录下运行安装程序**，指向你的项目目录：
 
     ```bash
-    ./install_context.sh <path-to-your-project>
+    ./install_context.sh <你的项目路径>
     ```
 
-    *If running inside the target project itself:*
+    *如果直接在目标项目中运行：*
     ```bash
     ./install_context.sh
     ```
 
-3.  **Follow the interactive prompts**:
-    - Select your preferred language (English/Chinese).
-    - Choose whether to automatically generate/overwrite `.cursorrules` for Cursor IDE optimization.
+3.  **按照交互式提示操作**：
+    - 选择你偏好的语言（英文/中文）。
+    - 选择是否自动生成/覆盖 `.cursorrules` 以进行 Cursor IDE 优化。
 
-### What it installs
+### 安装内容
 
-- Creates a `.ai-context/` directory in your project containing:
-    - `AGENTS.md`: Core persona definitions.
-    - `agents/`: Specialized role definitions (`architect.md`, `debugger.md`, `reviewer.md`, `security.md`).
-    - `rules/`: Language and tool-specific coding standards (e.g., `git.mdc`, `rust.mdc`).
-    - `skills/`: Instructions for specific tasks (e.g., `refactor_safe.md`).
-- (Optional) Configures `.cursorrules` and `.cursor/rules` for seamless IDE integration.
-
-## 👏 Acknowledgements
-
-- **`AGENTS.md`**: This file is forked and adapted from [Xuanwo's AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed).
+- 在你的项目中创建 `.ai-context/` 目录，包含：
+    - `AGENTS.md`：核心人格定义。
+    - `agents/`：专业角色定义（`architect.md`, `debugger.md`, `reviewer.md`, `security.md`）。
+    - `rules/`：语言和工具特定的编程标准（例如 `git.mdc`, `rust.mdc`）。
+    - `skills/`：特定任务的操作指南（例如 `refactor_safe.md`）。
+- （可选）配置 `.cursorrules` 和 `.cursor/rules` 以实现无缝 IDE 集成。
