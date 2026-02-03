@@ -1,8 +1,0 @@
----
-description: Python language standards, style, and best practices.
-globs: *.py, requirements.txt, pyproject.toml
----
-
-### Python
-- **Style:** PEP 8. Use type hints (`typing`) for all function signatures.
-- **Modernity:** Use modern Python features (e.g., `pathlib` over `os.path`, `f-strings` over `.format()`).

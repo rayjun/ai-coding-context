@@ -1,9 +1,0 @@
----
-description: Global testing requirements and standards.
-globs: *
----
-
-## 3. 测试要求
-- **非平凡逻辑:** 必须有配套的单元测试。
-- **回归:** 如果修复一个 bug，首先创建一个重现该 bug 的测试用例（失败），然后修复它（通过）。
-- **Mocking:** 在单元测试中 Mock 外部 I/O（数据库，网络）。

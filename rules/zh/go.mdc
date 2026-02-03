@@ -1,9 +1,0 @@
----
-description: Go language standards, style, and best practices.
-globs: *.go, go.mod
----
-
-### Go
-- **风格:** `gofmt` 标准。
-- **错误:** 显式错误检查 `if err != nil`。向上冒泡时使用上下文包装错误。
-- **并发:** 使用 `goroutines` 和 `channels`。尽可能避免复杂的互斥锁层级。
