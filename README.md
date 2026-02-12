@@ -1,4 +1,4 @@
-# AI Coding Context (AI 编程上下文)
+# AI Coding Context
 
 中文 | [English](./README_en.md)
 
