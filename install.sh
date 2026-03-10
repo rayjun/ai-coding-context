@@ -8,7 +8,7 @@ set -e
 
 # --- Configuration ---
 # Priority: 1. Positional Argument ($1), 2. AI_CONTEXT_BASE_URL env, 3. DEFAULT_URL
-DEFAULT_URL="https://raw.githubusercontent.com/humanlayer/ai-coding-context/main"
+DEFAULT_URL="https://raw.githubusercontent.com/rayjun/ai-coding-context/main"
 BASE_URL="${1:-${AI_CONTEXT_BASE_URL:-$DEFAULT_URL}}"
 
 # Files and directories to sync
@@ -43,7 +43,14 @@ download_file() {
   fi
 
   info "Downloading $file_path..."
-  curl -sSL "$url" -o "$file_path" || warn "Failed to download $file_path"
+  # Use -f to fail on HTTP error, and cleanup if a zero-sized file is created
+  if curl -fsSL "$url" -o "$file_path"; then
+    return 0
+  else
+    warn "Failed to download $file_path (URL: $url)"
+    [ -f "$file_path" ] && [ ! -s "$file_path" ] && rm "$file_path"
+    return 1
+  fi
 }
 
 # --- Main Execution ---
