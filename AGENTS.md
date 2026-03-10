@@ -362,7 +362,8 @@
    * 必须记录当前处于 **9 步走流程** 的哪一阶段。
    * 必须包含：进度百分比 (X/Y %)、决策记录 (Decision Record)、阻塞问题 (Blockers)。
 2. **DOCS.md 维护 (Mandatory)**：
-   * 任务结束前必须检查并更新 `DOCS.md` 中的架构或知识库章节。
+   * 必须在任务结束前同步更新项目主文档。
+   * 遵循 `DOCS.md` 中的 **追加记录 (Append-Only)** 和 **存量保护 (Persistence)** 原则。
 3. **验证存档 (Mandatory)**：
    * 所有的测试结果、构建产物或 Lint 输出必须作为证据存入 `docs/reports/`。
 
