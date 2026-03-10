@@ -1,23 +1,70 @@
 # AI Coding Context
 
-中文 | [English](./README_en.md)
+AI Coding 的本质是 **上下文管理**，旨在 LLM 的概率性与软件工程的确定性之间通过精细的规范、工具和 Skill 寻找平衡。
 
-AI Cdoing 就是上下文管理，提升 AI 代码生成、重构和项目维护的能力，在 LLM 的概率性和软件工程的确定性中找到一个平衡点。
+本项目提供了一套完整的 AI 行为准则、自动化开发流程和文档规范，以确保代码质量、可维护性和开发的可追踪性。
 
-## 📄 `AGENTS.md`
+---
 
-该文件定义了一套完整的 AI 行为准则、推理框架和编码规范。它分叉并改编自 [Xuanwo 的 AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)。
+## ⚡ 快速安装 (Quick Start)
 
-## 12 Factors
+在你的项目根目录下执行以下命令（一键初始化/更新）：
 
-使用 AI Agents 的 [12 条原则](https://github.com/humanlayer/12-factor-agents)，这是我目前最认可的对大模型使用的一些基础准则，核心其实只有一个：控制向大模型输入的上下文的大小。无论后面大模型怎么发展，但上下文还是会有限制。
+```bash
+# 请将 [USER]/[REPO] 替换为你的真实仓库路径
+curl -sSL https://raw.githubusercontent.com/[USER]/[REPO]/main/install.sh | bash
+```
 
-如果用更简短的 prompt 表述清楚需求，那么大模型的表现就会更好。
+*如果你是第一次使用，该命令将创建目录并初始化状态；如果你已经安装过，它将同步最新的规范文件。*
 
-## Spec-Driven
+---
 
-[spec-kit](https://github.com/github/spec-kit) 和 [OpenSpec](https://github.com/Fission-AI/OpenSpec) 都很好用，都可以用来规划开发任务，但这两个工具的重点都是开发任务的分解和执行，对于开发之外的任务，还需要其他的工具来补充对应的能力。
+## 🛠️ 自动化开发流程 (Automated Workflow)
 
+项目强制执行以下 **9 步走** 开发流程：
 
-## Superpowers
-在理解了大模型上下文的限制和 Spec-Driven 的开发模型之后，我也想到了要做一个适合自己的开发流程，结果在使用 [Superpowers](https://github.com/obra/superpowers) 做一个小项目之后就放弃自己造轮子了，后续可能会继续补充一些 subagents 和 Skills。
+1.  **头脑风暴 (Brainstorming)**: 探索用户意图、需求和设计方案。
+2.  **制定计划 (Plan Writing)**: 拆解任务，生成 `docs/plans/TASK_NAME.md`。
+3.  **创建 Git 工作树**: 隔离开发分支。
+4.  **测试驱动开发 (TDD)**: 每个功能变更必须有对应测试。
+5.  **执行计划 (Execution)**: 具体的实现过程。
+6.  **代码审查 (Code Review)**: 验证成果是否满足原始需求。
+7.  **验证 (Verification)**: 运行测试并生成 `docs/reports/TASK_NAME.md`。
+8.  **文档维护 (Document Maintenance)**: 更新 `DOCS.md` 沉淀项目知识。
+9.  **完成分支**: 合并并清理开发分支。
+
+---
+
+## 📂 文档体系结构
+
+```bash
+docs/
+├── plans/      # 存档详细的开发计划文件
+├── reports/    # 存档测试结果、Lint 报告和验证证据
+└── STATUS.md   # 记录项目的实时状态、进度和决策
+```
+
+---
+
+## 📄 核心规范文件
+
+### `AGENTS.md` (最高行为准则)
+定义 AI 的推理框架（Abductive Reasoning）、工作模式（Plan/Code）和编码风格。
+*   **自动化约束**: 所有任务必须遵守：状态先行、计划存档、验证闭环、**文档同步**、方法论回哺。
+
+### `DEV.md` (强制流程)
+定义详细的 **9 步开发流程** 及其跳步规则，禁止静默跳过任何关键步骤。
+
+### `STATUS.md` (状态规范)
+定义如何维护 `docs/STATUS.md`。该文件是项目的 **单一事实源 (SSoT)**，记录进度、决策和阻塞。
+
+### `DOCS.md` (项目百科)
+记录架构设计、关键决策理由、API 参考和操作指南。任务结束前必须同步更新。
+
+---
+
+## 📏 核心准则
+
+*   **12 Factor Agents**: 控制上下文大小，利用 sub-agents 和 skills 扩展能力。
+*   **Spec-Driven**: 所有的代码变更应源于清晰的 Spec（计划）。
+*   **Recursive Improvement**: 任务完成后，自动提炼经验并回哺至 `AGENTS.md`。
