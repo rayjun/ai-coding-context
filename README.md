@@ -68,3 +68,17 @@ docs/
 *   **12 Factor Agents**: 控制上下文大小，利用 sub-agents 和 skills 扩展能力。
 *   **Spec-Driven**: 所有的代码变更应源于清晰的 Spec（计划）。
 *   **Recursive Improvement**: 任务完成后，自动提炼经验并回哺至 `AGENTS.md`。
+
+---
+
+## ⚙️ 技术底座 (Tooling & Dependencies)
+
+本项目在 [12 Factor Agents](https://github.com/humanlayer/12-factor-agents) 原则的基础上，利用 [superpowers](https://github.com/obra/superpowers) 的 **Skills** 机制实现自动化能力的扩展。
+*   所有的自动化逻辑均定义在 `skills/` 目录下。
+*   通过 Skill，AI 能够自主调用 Shell 命令来执行 9 步走流程。
+
+---
+
+## 🔗 来源与鸣谢 (Credits)
+
+本项目的 `AGENTS.md` 规范最初分叉并改编自 [Xuanwo 的 AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)，并在其实践基础上增加了针对 9 步自动化流程和项目知识库维护的专属适配。
