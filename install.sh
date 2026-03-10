@@ -21,6 +21,7 @@ DIRECTORIES=(
 CORE_FILES=(
   "AGENTS.md"
   "DEV.md"
+  "DOCS.md"
   "skills/workflow-management/SKILL.md"
 )
 
@@ -75,7 +76,6 @@ done
 # 4. Initialize Project-Specific Files (Do Not Overwrite)
 info "Initializing project-specific files..."
 download_file "docs/STATUS.md" "false"
-download_file "DOCS.md" "false"
 download_file "README.md" "false"
 
 # 5. Success Message
