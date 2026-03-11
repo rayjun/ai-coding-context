@@ -1,44 +1,44 @@
 ---
 name: workflow-management
-description: Use when executing non-trivial development tasks to ensure a standardized 9-step workflow from requirements analysis to final documentation.
+description: 当执行非平凡的开发任务时使用，以确保从需求分析到最终文档化的标准 9 步开发流程。
 ---
 
-# Workflow Management
+# 工作流管理 (Workflow Management)
 
-## Overview
-A standardized implementation process that bridges the gap between LLM probability and software engineering certainty through a strict 9-step lifecycle.
+## 概览
+通过严格的 9 步生命周期，在 LLM 的概率性与软件工程的确定性之间建立平衡的标准化实施流程。
 
-## When to Use
-- Implementing new features or refactoring code.
-- Fixing bugs or resolving architectural issues.
-- Any development task that requires a formal plan and verification.
+## 何时使用
+- 实现新功能或重构代码。
+- 修复 Bug 或解决架构问题。
+- 任何需要正式计划和验证的开发任务。
 
-## Core Pattern
-The 9-step development cycle:
-1. Brainstorming (Intention exploration)
-2. Plan Writing (docs/plans/)
-3. Git Worktree (Isolation)
-4. TDD (Test-first)
-5. Execution (Implementation)
-6. Code Review (Validation)
-7. Verification (docs/reports/)
-8. Document Maintenance (DOCS.md synchronization)
-9. Finishing Branch (Integration)
+## 核心模式
+9 步开发周期：
+1. 头脑风暴 (需求探索)
+2. 制定计划 (docs/plans/)
+3. 创建 Git 工作树 (隔离)
+4. 测试驱动开发 (TDD)
+5. 执行计划 (代码实现)
+6. 代码审查 (验证需求)
+7. 验证报告 (docs/reports/)
+8. 文档维护 (DOCS.md 同步)
+9. 完成分支 (集成)
 
-## Quick Reference
-| Step | Action | Output / Goal |
-|------|--------|---------------|
-| 1-2 | Initialization | Update docs/STATUS.md, create plan |
-| 4-5 | Red-Green | TDD cycle and code implementation |
-| 7 | Validation | Run tests and generate report |
-| 8 | Maintenance | Update DOCS.md (Append-Only) |
-| 9 | Completion | Final merge and methodology extraction |
+## 快速参考
+| 步骤 | 动作 | 产出 / 目标 |
+|------|------|------------|
+| 1-2 | 初始化 | 更新 docs/STATUS.md，创建计划 |
+| 4-5 | 红-绿-重构 | TDD 周期与代码实现 |
+| 7 | 验证 | 运行测试并生成报告 |
+| 8 | 维护 | 更新 DOCS.md (追加原则) |
+| 9 | 完成 | 最终合并与方法论提炼 |
 
-## Implementation
-AI must update `docs/STATUS.md` at the beginning and end of each session. All technical decisions and architectural changes must be appended to `DOCS.md`.
+## 实施
+AI 必须在每轮会话的开始和结束时更新 `docs/STATUS.md`。所有技术决策和架构变更必须追加记录到 `DOCS.md`。
 
-## Common Mistakes
-- Skipping Step 8 (Documentation): Results in knowledge rot.
-- Silently bypassing steps: Violates the DEV.md guidelines.
-- Missing verification evidence: Claims "tests passed" without showing output.
-- Using emojis: Violates the project's formatting standard for skills.
+## 常见错误
+- 跳过步骤 8 (文档维护)：导致项目知识库腐烂。
+- 静默跳步：违反了 DEV.md 的强制流程指南。
+- 缺失验证证据：在没有展示命令输出的情况下声称“测试通过”。
+- 使用 emoji：违反了 Skill 文档的格式标准。
