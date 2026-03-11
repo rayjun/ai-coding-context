@@ -1,32 +1,40 @@
-# Skill: Monitoring Security
+---
+name: monitoring-security
+description: Use when deploying monitoring infrastructure such as Prometheus, Grafana, or Alertmanager to ensure security hardening and credential protection.
+---
 
-## 目的
-提供监控基础设施部署的安全准则，确保身份验证、传输加密和最小权限访问。
+# Monitoring Security
 
-## 自动化操作流
+## Overview
+A framework for securing monitoring infrastructure through authentication, transmission encryption, and the principle of least privilege.
 
-### 1. 身份验证与 TLS 检查
-*   **触发**: 部署 Prometheus, Grafana 或 Alertmanager 等监控组件。
-*   **操作**:
-    1.  强制执行基本身份验证（Basic Auth）或集成身份验证。
-    2.  确保生产环境强制启用 HTTPS/TLS 1.2+。
-    3.  验证敏感凭据是否安全存储在环境变量或密钥管理系统中，而非 Git。
+## When to Use
+- Deploying monitoring stacks (Prometheus, Grafana, Alertmanager).
+- Configuring reverse proxies for monitoring services.
+- Hardening existing monitoring installations.
 
-### 2. 网络与访问控制
-*   **触发**: 容器化部署或网络配置。
-*   **操作**:
-    1.  配置专用 Docker 网络以隔离监控组件。
-    2.  仅暴露必要的端口，并按 IP/网络限制访问。
-    3.  应用最小权限原则，配置 RBAC 角色（只读优先）。
+## Core Pattern
+- **Authentication**: Require login for all endpoints (Basic Auth or SSO).
+- **HTTPS/TLS**: Enforce TLS 1.2+ for production data transmission.
+- **Least Privilege**: Apply RBAC and restricted network access.
+- **Secret Management**: Prevent committing credentials to version control.
 
-### 3. 安全头与加固
-*   **触发**: 配置反向代理（Nginx, Traefik）。
-*   **操作**:
-    1.  在响应头中配置 X-Frame-Options, X-Content-Type-Options, HSTS 等。
-    2.  验证抓取端点和推送网关（Pushgateway）均受身份验证保护。
+## Quick Reference
+| Area | Rule | Implementation |
+|------|------|----------------|
+| Auth | Mandatory | Basic Auth / Grafana RBAC |
+| HTTPS | Required | TLS 1.2+, Nginx/Traefik |
+| Network | Isolation | Dedicated Docker network |
+| Secrets | No Git | .env (ignored) / Vault |
 
-## 约束
-- 严禁将 .env 文件、密码或密钥提交到版本控制。
-- 禁止使用默认凭据（如 admin/admin）。
-- 生产环境严禁使用未经验证的自签名证书。
-- 禁止在 Skill 文档中使用 emoji 符号。
+## Implementation
+1. Enforce HTTPS via reverse proxy.
+2. Store passwords in environment variables.
+3. Use non-root users in container environments.
+4. Add security headers (X-Frame-Options, HSTS).
+
+## Common Mistakes
+- Committing .env files: Leaks credentials to Git history.
+- Using default passwords: admin/admin is a common vulnerability.
+- Using HTTP for production: Exposes metrics to eavesdropping.
+- Using self-signed certificates in production: Compromises chain of trust.
