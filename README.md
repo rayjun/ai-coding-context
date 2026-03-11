@@ -8,11 +8,10 @@ AI Coding 的本质是 **上下文管理**，旨在 LLM 的概率性与软件工
 
 ## ⚡ 快速安装 (Quick Start)
 
-在你的项目根目录下执行以下命令（一键初始化/更新）：
+需要提前安装 [superpowers](https://github.com/obra/superpowers)，然后在项目根目录下执行以下命令（一键初始化/更新）：
 
 ```bash
-# 请将 [USER]/[REPO] 替换为你的真实仓库路径
-curl -sSL https://raw.githubusercontent.com/[USER]/[REPO]/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/rayjun/ai-coding-context/main/install.sh | bash
 ```
 
 *如果你是第一次使用，该命令将创建目录并初始化状态；如果你已经安装过，它将同步最新的规范文件。*
@@ -71,7 +70,7 @@ docs/
 
 ---
 
-## 🛠️ 实现与致谢
+## 🛠️ 相关依赖
 - **技术基础**: 基于 [12 Factor Agents](https://github.com/humanlayer/12-factor-agents) 准则，利用 [superpowers](https://github.com/obra/superpowers) 的 Skills 扩展自动化能力（见 `skills/`）。
 - **规范起源**: `AGENTS.md` 改编自 [Xuanwo 的 AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)，并针对 9 步自动化流程进行了定制。
 
