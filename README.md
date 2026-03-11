@@ -71,10 +71,7 @@ docs/
 
 ---
 
-## 🛠️ 技术实现
-- **Skill 机制**: 基于 [superpowers](https://github.com/obra/superpowers) 的 Skills 扩展自动化能力，核心指令定义在 `skills/` 目录。
-- **核心原则**: 遵循 [12 Factor Agents](https://github.com/humanlayer/12-factor-agents) 准则，优先通过任务拆分（Spec-Driven）控制上下文。
-
-## 🔗 来源与鸣谢
-- **AGENTS.md**: 改编自 [Xuanwo 的 AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)，增加了针对 9 步走自动化流程的专属适配。
+## 🛠️ 实现与致谢
+- **技术基础**: 基于 [12 Factor Agents](https://github.com/humanlayer/12-factor-agents) 准则，利用 [superpowers](https://github.com/obra/superpowers) 的 Skills 扩展自动化能力（见 `skills/`）。
+- **规范起源**: `AGENTS.md` 改编自 [Xuanwo 的 AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)，并针对 9 步自动化流程进行了定制。
 
