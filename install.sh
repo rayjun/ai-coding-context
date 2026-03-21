@@ -20,6 +20,8 @@ DIRECTORIES=(
   "skills/careful-ops"
   "skills/plan-review"
   "skills/monitoring-security"
+  "hooks"
+  "hooks/lib"
 )
 
 CORE_FILES=(
@@ -31,6 +33,22 @@ CORE_FILES=(
   "skills/careful-ops/SKILL.md"
   "skills/plan-review/SKILL.md"
   "skills/monitoring-security/SKILL.md"
+  "hooks/careful-ops-check.sh"
+  "hooks/orient-session.sh"
+  "hooks/status-reminder.sh"
+  "hooks/pre-commit-check.sh"
+  "hooks/status-format-check.sh"
+  "hooks/tasks-validate.sh"
+  "hooks/drift-detector.sh"
+  "hooks/notify.sh"
+  "hooks/lib/json-extract.sh"
+  "hooks/lib/session-dir.sh"
+  "hooks/session-end.sh"
+  "hooks/prompt-context.sh"
+  "hooks/pre-compact.sh"
+  ".claude/settings.json"
+  ".gemini/settings.json"
+  ".codex/config.toml"
 )
 
 # --- Functions ---
@@ -45,11 +63,16 @@ download_file() {
   local file_path=$1
   local overwrite=$2
   local url="${BASE_URL}/${file_path}"
-  
+
   if [ -f "$file_path" ] && [ "$overwrite" != "true" ]; then
     info "Skipping $file_path (already exists)"
     return
   fi
+
+  # Ensure parent directory exists
+  local dir
+  dir=$(dirname "$file_path")
+  [ "$dir" != "." ] && mkdir -p "$dir"
 
   info "Downloading $file_path..."
   # Use -f to fail on HTTP error, and cleanup if a zero-sized file is created
@@ -83,10 +106,16 @@ done
 
 # 4. Initialize Project-Specific Files (Do Not Overwrite)
 info "Initializing project-specific files..."
+download_file "docs/STATUS.template.md" "true"
 download_file "docs/STATUS.md" "false"
+download_file "docs/tasks.example.json" "false"
 download_file "README.md" "false"
 
-# 5. Success Message
+# 5. Make Hook Scripts Executable
+info "Setting hook scripts as executable..."
+chmod +x hooks/*.sh hooks/lib/*.sh 2>/dev/null || true
+
+# 6. Success Message
 echo -e "\n\033[0;32m✅ AI Coding Context has been successfully initialized!\033[0m"
 echo -e "--------------------------------------------------------"
 echo -e "Next steps:"

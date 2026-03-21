@@ -1,0 +1,10 @@
+# Codex CLI Project Configuration
+# Note: Codex CLI does not support hooks like Claude Code or Gemini CLI.
+# Safety is enforced via sandbox + approval policy instead.
+# The shared hooks/ scripts provide safety for Claude and Gemini sessions.
+
+# Require explicit user approval before any shell command execution
+approval_policy = "on-failure"
+
+# Restrict file system writes to the workspace directory only
+sandbox_mode = "workspace-write"

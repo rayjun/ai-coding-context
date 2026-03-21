@@ -1,0 +1,112 @@
+{
+  "hooks": {
+    "BeforeModel": [
+      {
+        "hooks": [
+          {
+            "name": "prompt-context",
+            "type": "command",
+            "command": "hooks/prompt-context.sh",
+            "description": "Inject current task context before each model call"
+          },
+          {
+            "name": "pre-compact",
+            "type": "command",
+            "command": "hooks/pre-compact.sh",
+            "description": "Inject critical state before context compaction"
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "matcher": "shell|ShellTool",
+        "hooks": [
+          {
+            "name": "careful-ops-check",
+            "type": "command",
+            "command": "hooks/careful-ops-check.sh",
+            "description": "Intercept destructive Bash commands (rm -rf, DROP TABLE, etc.)"
+          },
+          {
+            "name": "pre-commit-check",
+            "type": "command",
+            "command": "hooks/pre-commit-check.sh",
+            "description": "Block git commit if no test/build/lint was run in this session"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "name": "orient-session",
+            "type": "command",
+            "command": "hooks/orient-session.sh",
+            "description": "Auto-inject project context (git log, STATUS.md, recent plans)"
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "matcher": "write_file|replace|edit",
+        "hooks": [
+          {
+            "name": "status-reminder",
+            "type": "command",
+            "command": "hooks/status-reminder.sh",
+            "description": "Remind to update docs/STATUS.md after editing source files"
+          },
+          {
+            "name": "status-format-check",
+            "type": "command",
+            "command": "hooks/status-format-check.sh",
+            "description": "Validate STATUS.md has all required sections after editing"
+          },
+          {
+            "name": "tasks-validate",
+            "type": "command",
+            "command": "hooks/tasks-validate.sh",
+            "description": "Validate docs/tasks.json structure after editing"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "name": "drift-detector",
+            "type": "command",
+            "command": "hooks/drift-detector.sh",
+            "description": "Periodic reminder to check plan alignment after every 30 tool calls"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "name": "notify",
+            "type": "command",
+            "command": "hooks/notify.sh",
+            "description": "System notification when Claude needs user attention"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "name": "session-end",
+            "type": "command",
+            "command": "hooks/session-end.sh",
+            "description": "Validate state persistence before session ends"
+          }
+        ]
+      }
+    ]
+  }
+}

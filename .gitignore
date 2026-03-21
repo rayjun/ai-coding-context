@@ -1,6 +1,10 @@
-# AI tools
-.gemini
-.claude/
+# AI tools - ignore local/personal settings, track shared configs
+.claude/*
+!.claude/settings.json
+.gemini/*
+!.gemini/settings.json
+.codex/*
+!.codex/config.toml
 
 # Environment & secrets
 .env*
