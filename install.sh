@@ -16,6 +16,10 @@ DIRECTORIES=(
   "docs/plans"
   "docs/reports"
   "skills/workflow-management"
+  "skills/investigate"
+  "skills/careful-ops"
+  "skills/plan-review"
+  "skills/monitoring-security"
 )
 
 CORE_FILES=(
@@ -23,6 +27,10 @@ CORE_FILES=(
   "DEV.md"
   "DOCS.md"
   "skills/workflow-management/SKILL.md"
+  "skills/investigate/SKILL.md"
+  "skills/careful-ops/SKILL.md"
+  "skills/plan-review/SKILL.md"
+  "skills/monitoring-security/SKILL.md"
 )
 
 # --- Functions ---

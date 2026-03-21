@@ -15,6 +15,13 @@
 - 产出：书面计划文件，需用户审批通过
 - 跳过条件：用户明确同意跳过
 
+### 第二步半：架构审查（skill: plan-review）
+- 触发条件：计划审批通过后，开始实现之前
+- 目的：从数据流、并发、接口契约、测试策略、可运维性五个维度审查计划
+- 适用范围：complex 级别任务，或涉及跨模块 / 数据库 schema / 公共 API 的变更
+- 产出：每个维度 pass / warn / fail，所有 fail 项必须解决后才能继续
+- 跳过条件：moderate 级别任务，或用户明确同意跳过
+
 ### 第三步：创建 Git 工作树（skill: using-git-worktrees）
 - 触发条件：开始实现之前
 - 目的：将开发工作与主分支隔离
@@ -29,7 +36,8 @@
 ### 第五步：执行计划（skill: executing-plans 或 subagent-driven-development）
 - 触发条件：计划审批通过，准备开始实现
 - 独立任务可使用 dispatching-parallel-agents 并行执行
-- 遇到测试失败或异常行为时，使用 systematic-debugging 进行系统性排查
+- 遇到测试失败或异常行为时，使用 systematic-debugging 进行行为纪律约束，配合 investigate 进行后端场景特化分析
+- 执行破坏性操作时，使用 careful-ops 进行安全防护
 
 ### 第六步：代码审查（skill: requesting-code-review）
 - 触发条件：实现完成后
