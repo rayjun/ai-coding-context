@@ -1,1 +1,20 @@
+# AI tools
 .gemini
+.claude/
+
+# Environment & secrets
+.env*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Generated reports
+docs/reports/
