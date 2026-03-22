@@ -43,6 +43,7 @@ CORE_FILES=(
   "hooks/notify.sh"
   "hooks/lib/json-extract.sh"
   "hooks/lib/session-dir.sh"
+  "hooks/lib/task-summary.py"
   "hooks/session-end.sh"
   "hooks/prompt-context.sh"
   "hooks/pre-compact.sh"
@@ -107,6 +108,7 @@ done
 # 4. Initialize Project-Specific Files (Do Not Overwrite)
 info "Initializing project-specific files..."
 download_file "docs/STATUS.template.md" "true"
+download_file ".gitignore" "false"
 download_file "docs/STATUS.md" "false"
 download_file "docs/tasks.example.json" "false"
 download_file "README.md" "false"

@@ -23,21 +23,23 @@ if [ -z "$COMMAND" ]; then
 fi
 
 # --- Phase 1: Record test/build/lint execution ---
+# Patterns are anchored: command must start with, or follow ;/&&/| before the test command.
+# This prevents false matches like: echo "we should run cargo test later"
 
 # Common test commands across languages
-if echo "$COMMAND" | grep -qiE '(cargo test|go test|pytest|python -m pytest|npm test|npx jest|yarn test|pnpm test|mvn test|gradle test|make test|mix test|bundle exec rspec|dotnet test|php artisan test|phpunit)'; then
+if echo "$COMMAND" | grep -qiE '(^|;|\&\&|\|\|?\s*)(cargo test|go test|pytest|python -m pytest|npm test|npx jest|yarn test|pnpm test|mvn test|gradle test|make test|mix test|bundle exec rspec|dotnet test|php artisan test|phpunit)\b'; then
   echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $COMMAND" >> "$EVIDENCE_FILE"
   exit 0
 fi
 
 # Common build commands
-if echo "$COMMAND" | grep -qiE '(cargo build|cargo check|go build|go vet|npm run build|yarn build|pnpm build|mvn compile|mvn package|gradle build|make build|make all|tsc --noEmit|dotnet build)'; then
+if echo "$COMMAND" | grep -qiE '(^|;|\&\&|\|\|?\s*)(cargo build|cargo check|go build|go vet|npm run build|yarn build|pnpm build|mvn compile|mvn package|gradle build|make build|make all|tsc --noEmit|dotnet build)\b'; then
   echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $COMMAND" >> "$EVIDENCE_FILE"
   exit 0
 fi
 
 # Common lint commands
-if echo "$COMMAND" | grep -qiE '(cargo clippy|golangci-lint|eslint|prettier|ruff|flake8|pylint|rubocop|shellcheck)'; then
+if echo "$COMMAND" | grep -qiE '(^|;|\&\&|\|\|?\s*)(cargo clippy|golangci-lint|eslint|prettier|ruff|flake8|pylint|rubocop|shellcheck)\b'; then
   echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $COMMAND" >> "$EVIDENCE_FILE"
   exit 0
 fi

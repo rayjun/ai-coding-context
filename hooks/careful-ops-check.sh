@@ -22,8 +22,10 @@ fi
 
 # --- CRITICAL level: deny execution (exit 2) ---
 
-# rm -rf (with path)
-if echo "$COMMAND" | grep -qE '\brm\s+(-[a-zA-Z]*r[a-zA-Z]*f|(-[a-zA-Z]*f[a-zA-Z]*r))\b'; then
+# rm with recursive + force (handles: rm -rf, rm -r -f, rm --recursive --force, etc.)
+if echo "$COMMAND" | grep -qE '\brm\b' && \
+   echo "$COMMAND" | grep -qE '(-r\b|-R\b|--recursive\b|-[a-zA-Z]*r[a-zA-Z]*\b)' && \
+   echo "$COMMAND" | grep -qE '(-f\b|--force\b|-[a-zA-Z]*f[a-zA-Z]*\b)'; then
   cat <<'EOF'
 {"decision":"deny","reason":"CRITICAL: `rm -rf` detected. This is an irreversible destructive operation.","alternative":"Use `ls` to verify the path first, or consider `trash-put` / moving to a backup location."}
 EOF

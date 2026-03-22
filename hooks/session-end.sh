@@ -28,19 +28,7 @@ fi
 
 # 2. Check tasks.json consistency if it exists
 if [ -f "docs/tasks.json" ]; then
-  TASK_CHECK=$(python3 -c "
-import json
-try:
-    with open('docs/tasks.json') as f:
-        data = json.load(f)
-    tasks = data.get('tasks', [])
-    in_progress = [t for t in tasks if t.get('status') == 'in_progress']
-    if in_progress:
-        ids = ', '.join(t['id'] for t in in_progress)
-        print(f'Tasks still in_progress (may need status update): {ids}')
-except:
-    pass
-" 2>/dev/null || true)
+  TASK_CHECK=$(python3 hooks/lib/task-summary.py check 2>/dev/null || true)
   if [ -n "$TASK_CHECK" ]; then
     WARNINGS="${WARNINGS}\n  - ${TASK_CHECK}"
   fi

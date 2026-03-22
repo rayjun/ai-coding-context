@@ -45,25 +45,7 @@ fi
 # 4. Structured task progress (docs/tasks.json)
 if [ -f "docs/tasks.json" ]; then
   echo "--- Task Progress ---"
-  # Use python3 for reliable JSON parsing
-  TASK_SUMMARY=$(python3 -c "
-import json, sys
-try:
-    with open('docs/tasks.json') as f:
-        data = json.load(f)
-    tasks = data.get('tasks', [])
-    total = len(tasks)
-    done = sum(1 for t in tasks if t.get('done', False))
-    print(f'Tasks: {done}/{total} completed')
-    pending = [t for t in tasks if not t.get('done', False)]
-    if pending:
-        t = pending[0]
-        print(f'Next: [{t[\"id\"]}] {t[\"title\"]}')
-    elif total > 0:
-        print('All tasks completed!')
-except Exception as e:
-    print(f'(could not parse tasks.json: {e})')
-" 2>/dev/null || echo "(python3 not available for task parsing)")
+  TASK_SUMMARY=$(python3 hooks/lib/task-summary.py full 2>/dev/null || echo "(python3 not available for task parsing)")
   echo "$TASK_SUMMARY"
   echo ""
 fi
