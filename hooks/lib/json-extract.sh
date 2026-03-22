@@ -21,11 +21,11 @@ fi
 
 # Primary: python3 (available on macOS and most Linux)
 if command -v python3 &>/dev/null; then
-  python3 -c "
-import json, sys
+  FIELD_PATH="$FIELD_PATH" python3 -c "
+import json, sys, os
 try:
     data = json.loads(sys.stdin.read())
-    keys = '${FIELD_PATH}'.split('.')
+    keys = os.environ['FIELD_PATH'].split('.')
     val = data
     for k in keys:
         if isinstance(val, dict):
@@ -34,7 +34,7 @@ try:
             val = ''
             break
     print(val if isinstance(val, str) else json.dumps(val))
-except:
+except Exception:
     print('')
 " <<< "$INPUT"
   exit 0
@@ -42,7 +42,7 @@ fi
 
 # Fallback: jq
 if command -v jq &>/dev/null; then
-  JQ_PATH=$(echo "$FIELD_PATH" | sed 's/\././g; s/^/./')
+  JQ_PATH=".$FIELD_PATH"
   echo "$INPUT" | jq -r "$JQ_PATH // empty" 2>/dev/null || echo ""
   exit 0
 fi

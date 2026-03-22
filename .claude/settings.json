@@ -2,8 +2,6 @@
   "permissions": {
     "deny": [
       "Read(**/.env*)",
-      "Read(**/.env.local)",
-      "Read(**/.env.production)",
       "Read(**/credentials*)",
       "Read(**/secrets/**)",
       "Read(**/*.pem)",
@@ -11,19 +9,19 @@
       "Read(**/*secret*)",
       "Read(**/*token*)",
       "Edit(**/.env*)",
-      "Edit(**/.env.local)",
-      "Edit(**/.env.production)",
       "Edit(**/credentials*)",
       "Edit(**/secrets/**)",
       "Edit(**/*.pem)",
       "Edit(**/*.key)",
+      "Edit(**/*secret*)",
+      "Edit(**/*token*)",
       "Write(**/.env*)",
-      "Write(**/.env.local)",
-      "Write(**/.env.production)",
       "Write(**/credentials*)",
       "Write(**/secrets/**)",
       "Write(**/*.pem)",
-      "Write(**/*.key)"
+      "Write(**/*.key)",
+      "Write(**/*secret*)",
+      "Write(**/*token*)"
     ]
   },
   "hooks": {
