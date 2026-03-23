@@ -50,9 +50,9 @@ if [ -f "docs/tasks.json" ]; then
   echo ""
 fi
 
-# 5. Recent plans
+# 5. Recent plans (files only, exclude dotfiles and directories)
 if [ -d "docs/plans" ]; then
-  PLANS=$(ls -t docs/plans/ 2>/dev/null | head -5)
+  PLANS=$(ls -tp docs/plans/ 2>/dev/null | grep -v '/$' | grep -v '^\.' | head -5)
   if [ -n "$PLANS" ]; then
     echo "--- Recent Plans ---"
     echo "$PLANS"

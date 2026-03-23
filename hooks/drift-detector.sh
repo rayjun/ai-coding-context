@@ -20,7 +20,7 @@ else
 fi
 
 COUNT=$((COUNT + 1))
-echo "$COUNT" > "$COUNTER_FILE"
+echo "$COUNT" > "$COUNTER_FILE.tmp" && mv "$COUNTER_FILE.tmp" "$COUNTER_FILE"
 
 # Every 30 tool calls, output a reminder
 if [ $((COUNT % 30)) -eq 0 ]; then

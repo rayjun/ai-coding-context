@@ -8,12 +8,6 @@
             "type": "command",
             "command": "hooks/prompt-context.sh",
             "description": "Inject current task context before each model call"
-          },
-          {
-            "name": "pre-compact",
-            "type": "command",
-            "command": "hooks/pre-compact.sh",
-            "description": "Inject critical state before context compaction"
           }
         ]
       }

@@ -30,7 +30,7 @@ fi
 
 # 3. Active plan
 if [ -d "docs/plans" ]; then
-  LATEST_PLAN=$(ls -t docs/plans/ 2>/dev/null | head -1)
+  LATEST_PLAN=$(ls -tp docs/plans/ 2>/dev/null | grep -v '/$' | grep -v '^\.' | head -1)
   if [ -n "$LATEST_PLAN" ]; then
     echo "ACTIVE PLAN: docs/plans/${LATEST_PLAN}"
   fi

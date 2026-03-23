@@ -46,7 +46,7 @@ fi
 if [ -n "$WARNINGS" ]; then
   echo ""
   echo "=== SESSION END CHECK ==="
-  echo -e "Before ending, please address:${WARNINGS}"
+  printf "Before ending, please address:%b\n" "$WARNINGS"
   echo "=== END CHECK ==="
   echo ""
 fi
@@ -55,7 +55,7 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 if [ -x "$SCRIPT_DIR/lib/session-dir.sh" ]; then
   SESSION_DIR=$("$SCRIPT_DIR/lib/session-dir.sh" 2>/dev/null || true)
-  if [ -n "$SESSION_DIR" ] && [ -d "$SESSION_DIR" ]; then
+  if [ -n "$SESSION_DIR" ] && [ -d "$SESSION_DIR" ] && [[ "$SESSION_DIR" == /tmp/claude-hooks/* ]]; then
     rm -rf "$SESSION_DIR"
   fi
 fi
