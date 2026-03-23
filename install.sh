@@ -20,6 +20,7 @@ DIRECTORIES=(
   "skills/careful-ops"
   "skills/plan-review"
   "skills/monitoring-security"
+  "skills/obsidian-vault"
   "hooks"
   "hooks/lib"
 )
@@ -33,6 +34,7 @@ CORE_FILES=(
   "skills/careful-ops/SKILL.md"
   "skills/plan-review/SKILL.md"
   "skills/monitoring-security/SKILL.md"
+  "skills/obsidian-vault/SKILL.md"
   "hooks/careful-ops-check.sh"
   "hooks/orient-session.sh"
   "hooks/status-reminder.sh"
