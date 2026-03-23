@@ -103,7 +103,7 @@
 
 * **开发流程**: 所有非 trivial 任务遵循 `DEV.md` 定义的 9 步流程，不可静默跳过。
 * **破坏性操作**: 由 `hooks/careful-ops-check.sh` 强制拦截（CRITICAL 级别硬拒绝，HIGH 级别警告）。不主动建议重写历史的 Git 命令，除非用户明确提出。
-* **文档维护**: 由 harness hooks 强制提醒和校验。任务的 SSoT 是 `docs/tasks.json`，上下文记录在 `docs/STATUS.md`。
+* **文档维护**: 由 harness hooks 强制提醒和校验（`status-reminder.sh`、`status-format-check.sh`、`tasks-validate.sh`）。任务的 SSoT 是 `docs/tasks.json`，上下文记录在 `docs/STATUS.md`（格式参照 `docs/STATUS.template.md`）。
 * **GitHub 交互**: 优先使用 `gh` CLI。
 
 ---

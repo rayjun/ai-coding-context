@@ -50,4 +50,5 @@ fi
 # Last resort: grep (fragile, but better than nothing)
 # Only handles simple single-line cases
 LAST_KEY=$(echo "$FIELD_PATH" | rev | cut -d. -f1 | rev)
-echo "$INPUT" | grep -o "\"${LAST_KEY}\"\s*:\s*\"[^\"]*\"" | head -1 | sed "s/\"${LAST_KEY}\"\s*:\s*\"//;s/\"$//" || echo ""
+ESCAPED_KEY=$(printf '%s' "$LAST_KEY" | sed 's/[.[\*^$()+?{|\\]/\\&/g')
+echo "$INPUT" | grep -o "\"${ESCAPED_KEY}\"\s*:\s*\"[^\"]*\"" | head -1 | sed "s/\"${ESCAPED_KEY}\"\s*:\s*\"//;s/\"$//" || echo ""

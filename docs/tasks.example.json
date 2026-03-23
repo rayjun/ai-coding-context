@@ -5,9 +5,25 @@
   "tasks": [
     {
       "id": "T-001",
-      "title": "Example task title",
-      "status": "pending",
+      "title": "Example: completed task",
+      "status": "done",
       "blocked_by": [],
+      "notes": "Finished in session 1",
+      "done": true
+    },
+    {
+      "id": "T-002",
+      "title": "Example: in-progress task",
+      "status": "in_progress",
+      "blocked_by": [],
+      "notes": "Working on the API layer",
+      "done": false
+    },
+    {
+      "id": "T-003",
+      "title": "Example: pending task",
+      "status": "pending",
+      "blocked_by": ["T-002"],
       "notes": "",
       "done": false
     }
