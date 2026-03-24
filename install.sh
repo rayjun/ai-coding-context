@@ -56,6 +56,7 @@ CORE_FILES=(
   ".claude/hooks/session-end.sh"
   ".claude/hooks/prompt-context.sh"
   ".claude/hooks/pre-compact.sh"
+  ".claude/hooks/usage-tracker.sh"
   ".gemini/settings.json"
   ".codex/config.toml"
 )
