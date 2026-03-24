@@ -24,10 +24,6 @@
       "Write(**/*token*)"
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": ".claude/hooks/usage-tracker.sh"
-  },
   "hooks": {
     "PreToolUse": [
       {
