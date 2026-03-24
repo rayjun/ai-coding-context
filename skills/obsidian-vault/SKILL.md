@@ -157,3 +157,39 @@ grep -r '\[\[' <目标目录>/ | grep -o '\[\[[^]]*\]\]' | sort -u
 | 标签层数超过目录层数 | `Projects/foo/` 最多 `projects/foo`，不可 `projects/foo/bar` |
 | 笔记之间没有 `[[]]` 链接 | 每个笔记至少链接到索引页 + 1 个相关笔记 |
 | 没有先扫描 vault 就开始写 | 必须先执行第一步，了解命名和标签惯例 |
+
+## 质量评估标准
+
+以下为二元（pass/fail）评估项，用于验证本 skill 输出质量。可配合 autoresearch 工具自动化运行。
+
+```
+EVAL 1: 标签-目录匹配
+问题: 笔记中每个标签是否都能在 vault 目录树中找到对应路径？
+Pass: 所有标签均可映射到 vault 中已存在的目录（小写化后完全匹配）
+Fail: 出现任何一个标签在 vault 目录树中无对应路径
+
+EVAL 2: 标签层数
+问题: 笔记中每个标签的层数（/分隔段数）是否 ≤ 文件所在目录的深度？
+Pass: 所有标签的段数不超过文件相对于 vault 根的目录层数
+Fail: 出现任何一个标签的段数超过目录层数
+
+EVAL 3: 文件名格式
+问题: 文件名是否遵循 YYYY.MM.DD-xxxx.md 格式，且 xxxx 为英文 kebab-case？
+Pass: 日期格式正确，描述部分为全小写字母和连字符，无中文/空格/特殊字符
+Fail: 日期格式错误，或描述部分包含非法字符
+
+EVAL 4: 链接完整性
+问题: 笔记中所有 [[]] 链接的目标文件是否存在于 vault 中？
+Pass: 每个 [[target]] 在 vault 中都能找到对应的 target.md
+Fail: 出现任何悬空链接
+
+EVAL 5: vault 扫描前置
+问题: 在写入任何笔记之前，是否执行了 vault 目录结构和标签惯例的扫描？
+Pass: 工具调用记录中显示先执行了 find/ls 扫描 vault，然后才创建文件
+Fail: 直接创建文件，未先扫描
+
+EVAL 6: Frontmatter 完整
+问题: 每个笔记是否包含有效的 YAML frontmatter（tags + created 字段）？
+Pass: frontmatter 格式正确，tags 为数组，created 为 YYYY-MM-DD 格式
+Fail: 缺少 frontmatter、tags 或 created 字段，或格式不符
+```
