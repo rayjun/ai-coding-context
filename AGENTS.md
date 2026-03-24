@@ -93,8 +93,8 @@
 
 ## 7 · 安全与 Harness
 
-* **破坏性操作**: `hooks/careful-ops-check.sh` 硬拦截 CRITICAL（rm -rf, DROP TABLE 等），警告 HIGH。
-* **commit 门禁**: `hooks/pre-commit-check.sh` 要求本会话跑过测试才能 commit。
+* **破坏性操作**: `.claude/hooks/careful-ops-check.sh` 硬拦截 CRITICAL（rm -rf, DROP TABLE 等），警告 HIGH。
+* **commit 门禁**: `.claude/hooks/pre-commit-check.sh` 要求本会话跑过测试才能 commit。
 * **敏感文件**: `permissions.deny` 拦截 .env / credentials / secrets / *.pem / *.key 的读写。
 * **GitHub 交互**: 优先使用 `gh` CLI。
 

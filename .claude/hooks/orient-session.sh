@@ -45,7 +45,7 @@ fi
 # 4. Structured task progress (docs/tasks.json)
 if [ -f "docs/tasks.json" ]; then
   echo "--- Task Progress ---"
-  TASK_SUMMARY=$(python3 hooks/lib/task-summary.py full 2>/dev/null || echo "(python3 not available for task parsing)")
+  TASK_SUMMARY=$(python3 .claude/hooks/lib/task-summary.py full 2>/dev/null || echo "(python3 not available for task parsing)")
   echo "$TASK_SUMMARY"
   echo ""
 fi

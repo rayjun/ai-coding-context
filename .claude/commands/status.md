@@ -8,7 +8,7 @@ description: Check project health — STATUS.md freshness, tasks.json consistenc
 
 ## Task Progress
 
-!`python3 hooks/lib/task-summary.py full 2>/dev/null || echo "No tasks.json or python3 unavailable"`
+!`python3 .claude/hooks/lib/task-summary.py full 2>/dev/null || echo "No tasks.json or python3 unavailable"`
 
 ## Git State
 

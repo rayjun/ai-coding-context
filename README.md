@@ -26,7 +26,7 @@ your-project/
 ├── .claude/
 │   ├── settings.json          # 权限 + hooks 配置
 │   ├── rules/                 # 按路径作用域的模块化规则
-│   │   ├── hooks-dev.md       # hooks/ 目录下的开发规则
+│   │   ├── hooks-dev.md       # .claude/hooks/ 目录下的开发规则
 │   │   ├── skills-dev.md      # .claude/skills/ 目录下的开发规则
 │   │   └── docs-maintenance.md # docs/ 目录下的文档规则
 │   ├── commands/              # 自定义斜杠命令
@@ -39,8 +39,8 @@ your-project/
 │       ├── plan-review/           # 架构审查
 │       ├── monitoring-security/   # 监控安全加固
 │       └── obsidian-vault/        # Obsidian 笔记整理
-│
-├── hooks/                     # Harness 层（13 个脚本，覆盖 7 个生命周期事件）
+│   └── hooks/                 # Harness 层（13 个脚本，覆盖 7 个生命周期事件）
+│       └── lib/               # 共享库（json-extract, session-dir, task-summary）
 │
 ├── docs/
 │   ├── STATUS.md              # 项目状态（上下文记录）
@@ -62,7 +62,7 @@ Claude Code 启动时第一个加载的文件。指向 AGENTS.md。
 定义 AI 的推理框架、9 步强制开发流程、编码风格、安全规则和文档维护原则。一个文件包含所有行为规范。
 
 ### `.claude/rules/` — 路径作用域规则
-按工作目录自动加载的模块化规则。编辑 `hooks/` 时加载 hook 开发规则，编辑 `.claude/skills/` 时加载 skill 开发规则。
+按工作目录自动加载的模块化规则。编辑 `.claude/hooks/` 时加载 hook 开发规则，编辑 `.claude/skills/` 时加载 skill 开发规则。
 
 ### `.claude/commands/` — 自定义命令
 - `/project:review` — 审查当前分支 diff

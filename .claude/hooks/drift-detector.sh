@@ -1,7 +1,7 @@
 #!/bin/bash
 # Hook: PostToolUse (all tools)
 # Purpose: Every N tool invocations, remind AI to check the plan.
-# Counter is project-scoped via hooks/lib/session-dir.sh.
+# Counter is project-scoped via .claude/hooks/lib/session-dir.sh.
 
 set -euo pipefail
 

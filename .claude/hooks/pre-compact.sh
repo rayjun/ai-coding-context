@@ -9,7 +9,7 @@ echo "=== CRITICAL CONTEXT (preserve through compaction) ==="
 
 # 1. Current task
 if [ -f "docs/tasks.json" ]; then
-  python3 hooks/lib/task-summary.py full 2>/dev/null || true
+  python3 .claude/hooks/lib/task-summary.py full 2>/dev/null || true
 fi
 
 # 2. Resume point from STATUS.md

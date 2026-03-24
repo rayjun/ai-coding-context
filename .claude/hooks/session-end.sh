@@ -28,7 +28,7 @@ fi
 
 # 2. Check tasks.json consistency if it exists
 if [ -f "docs/tasks.json" ]; then
-  TASK_CHECK=$(python3 hooks/lib/task-summary.py check 2>/dev/null || true)
+  TASK_CHECK=$(python3 .claude/hooks/lib/task-summary.py check 2>/dev/null || true)
   if [ -n "$TASK_CHECK" ]; then
     WARNINGS="${WARNINGS}\n  - ${TASK_CHECK}"
   fi

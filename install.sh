@@ -23,8 +23,8 @@ DIRECTORIES=(
   ".claude/skills/obsidian-vault"
   ".claude/rules"
   ".claude/commands"
-  "hooks"
-  "hooks/lib"
+  ".claude/hooks"
+  ".claude/hooks/lib"
 )
 
 CORE_FILES=(
@@ -42,20 +42,20 @@ CORE_FILES=(
   ".claude/rules/docs-maintenance.md"
   ".claude/commands/review.md"
   ".claude/commands/status.md"
-  "hooks/careful-ops-check.sh"
-  "hooks/orient-session.sh"
-  "hooks/status-reminder.sh"
-  "hooks/pre-commit-check.sh"
-  "hooks/status-format-check.sh"
-  "hooks/tasks-validate.sh"
-  "hooks/drift-detector.sh"
-  "hooks/notify.sh"
-  "hooks/lib/json-extract.sh"
-  "hooks/lib/session-dir.sh"
-  "hooks/lib/task-summary.py"
-  "hooks/session-end.sh"
-  "hooks/prompt-context.sh"
-  "hooks/pre-compact.sh"
+  ".claude/hooks/careful-ops-check.sh"
+  ".claude/hooks/orient-session.sh"
+  ".claude/hooks/status-reminder.sh"
+  ".claude/hooks/pre-commit-check.sh"
+  ".claude/hooks/status-format-check.sh"
+  ".claude/hooks/tasks-validate.sh"
+  ".claude/hooks/drift-detector.sh"
+  ".claude/hooks/notify.sh"
+  ".claude/hooks/lib/json-extract.sh"
+  ".claude/hooks/lib/session-dir.sh"
+  ".claude/hooks/lib/task-summary.py"
+  ".claude/hooks/session-end.sh"
+  ".claude/hooks/prompt-context.sh"
+  ".claude/hooks/pre-compact.sh"
   ".gemini/settings.json"
   ".codex/config.toml"
 )
@@ -123,7 +123,7 @@ download_file "README.md" "false"
 
 # 5. Make Hook Scripts Executable
 info "Setting hook scripts as executable..."
-chmod +x hooks/*.sh hooks/lib/*.sh 2>/dev/null || true
+chmod +x .claude/hooks/*.sh .claude/hooks/lib/*.sh 2>/dev/null || true
 
 # 6. Clean up deprecated files
 if [ -f "DEV.md" ]; then
@@ -132,8 +132,8 @@ fi
 if [ -f "DOCS.md" ]; then
   warn "DOCS.md is deprecated (merged into AGENTS.md). Consider removing it."
 fi
-if [ -d "skills" ] && [ ! -d ".claude/skills" ]; then
-  warn "skills/ at project root is deprecated. Skills now live in .claude/skills/."
+if [ -d "hooks" ] && [ ! -d ".claude/hooks" ]; then
+  warn "hooks/ at project root is deprecated. Hooks now live in .claude/hooks/."
 fi
 
 # 7. Success Message

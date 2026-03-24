@@ -31,12 +31,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "hooks/careful-ops-check.sh",
+            "command": ".claude/hooks/careful-ops-check.sh",
             "timeout": 5000
           },
           {
             "type": "command",
-            "command": "hooks/pre-commit-check.sh",
+            "command": ".claude/hooks/pre-commit-check.sh",
             "timeout": 5000
           }
         ]
@@ -47,7 +47,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "hooks/prompt-context.sh",
+            "command": ".claude/hooks/prompt-context.sh",
             "timeout": 3000
           }
         ]
@@ -58,7 +58,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "hooks/pre-compact.sh",
+            "command": ".claude/hooks/pre-compact.sh",
             "timeout": 5000
           }
         ]
@@ -69,7 +69,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "hooks/orient-session.sh",
+            "command": ".claude/hooks/orient-session.sh",
             "timeout": 10000
           }
         ]
@@ -81,17 +81,17 @@
         "hooks": [
           {
             "type": "command",
-            "command": "hooks/status-reminder.sh",
+            "command": ".claude/hooks/status-reminder.sh",
             "timeout": 5000
           },
           {
             "type": "command",
-            "command": "hooks/status-format-check.sh",
+            "command": ".claude/hooks/status-format-check.sh",
             "timeout": 5000
           },
           {
             "type": "command",
-            "command": "hooks/tasks-validate.sh",
+            "command": ".claude/hooks/tasks-validate.sh",
             "timeout": 5000
           }
         ]
@@ -100,7 +100,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "hooks/drift-detector.sh",
+            "command": ".claude/hooks/drift-detector.sh",
             "timeout": 3000
           }
         ]
@@ -111,7 +111,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "hooks/notify.sh",
+            "command": ".claude/hooks/notify.sh",
             "timeout": 5000
           }
         ]
@@ -122,7 +122,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "hooks/session-end.sh",
+            "command": ".claude/hooks/session-end.sh",
             "timeout": 10000
           }
         ]

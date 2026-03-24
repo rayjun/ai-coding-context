@@ -6,7 +6,7 @@
           {
             "name": "prompt-context",
             "type": "command",
-            "command": "hooks/prompt-context.sh",
+            "command": ".claude/hooks/prompt-context.sh",
             "description": "Inject current task context before each model call"
           }
         ]
@@ -19,13 +19,13 @@
           {
             "name": "careful-ops-check",
             "type": "command",
-            "command": "hooks/careful-ops-check.sh",
+            "command": ".claude/hooks/careful-ops-check.sh",
             "description": "Intercept destructive Bash commands (rm -rf, DROP TABLE, etc.)"
           },
           {
             "name": "pre-commit-check",
             "type": "command",
-            "command": "hooks/pre-commit-check.sh",
+            "command": ".claude/hooks/pre-commit-check.sh",
             "description": "Block git commit if no test/build/lint was run in this session"
           }
         ]
@@ -37,7 +37,7 @@
           {
             "name": "orient-session",
             "type": "command",
-            "command": "hooks/orient-session.sh",
+            "command": ".claude/hooks/orient-session.sh",
             "description": "Auto-inject project context (git log, STATUS.md, recent plans)"
           }
         ]
@@ -50,19 +50,19 @@
           {
             "name": "status-reminder",
             "type": "command",
-            "command": "hooks/status-reminder.sh",
+            "command": ".claude/hooks/status-reminder.sh",
             "description": "Remind to update docs/STATUS.md after editing source files"
           },
           {
             "name": "status-format-check",
             "type": "command",
-            "command": "hooks/status-format-check.sh",
+            "command": ".claude/hooks/status-format-check.sh",
             "description": "Validate STATUS.md has all required sections after editing"
           },
           {
             "name": "tasks-validate",
             "type": "command",
-            "command": "hooks/tasks-validate.sh",
+            "command": ".claude/hooks/tasks-validate.sh",
             "description": "Validate docs/tasks.json structure after editing"
           }
         ]
@@ -72,7 +72,7 @@
           {
             "name": "drift-detector",
             "type": "command",
-            "command": "hooks/drift-detector.sh",
+            "command": ".claude/hooks/drift-detector.sh",
             "description": "Periodic reminder to check plan alignment after every 30 tool calls"
           }
         ]
@@ -84,7 +84,7 @@
           {
             "name": "notify",
             "type": "command",
-            "command": "hooks/notify.sh",
+            "command": ".claude/hooks/notify.sh",
             "description": "System notification when Claude needs user attention"
           }
         ]
@@ -96,7 +96,7 @@
           {
             "name": "session-end",
             "type": "command",
-            "command": "hooks/session-end.sh",
+            "command": ".claude/hooks/session-end.sh",
             "description": "Validate state persistence before session ends"
           }
         ]

@@ -3,7 +3,7 @@
 # Purpose: Block git commit if no test/build/lint command was run in this session.
 #
 # Mechanism: Checks for a session marker file written by test commands.
-# Files are scoped to project via hooks/lib/session-dir.sh.
+# Files are scoped to project via .claude/hooks/lib/session-dir.sh.
 #
 # Exit codes:
 #   0 = allow

@@ -26,7 +26,7 @@ if [ -f "$CACHE_FILE" ]; then
 fi
 
 # Cache miss — parse and store
-CONTEXT=$(python3 hooks/lib/task-summary.py brief 2>/dev/null || true)
+CONTEXT=$(python3 .claude/hooks/lib/task-summary.py brief 2>/dev/null || true)
 if [ -n "$CONTEXT" ] && [ -n "$SESSION_DIR" ]; then
   printf '%s\n%s' "$TASKS_MTIME" "$CONTEXT" > "$CACHE_FILE"
   echo "$CONTEXT"
