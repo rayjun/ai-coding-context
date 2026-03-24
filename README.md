@@ -27,29 +27,20 @@ your-project/
 │   ├── settings.json          # 权限 + hooks 配置
 │   ├── rules/                 # 按路径作用域的模块化规则
 │   │   ├── hooks-dev.md       # hooks/ 目录下的开发规则
-│   │   ├── skills-dev.md      # skills/ 目录下的开发规则
+│   │   ├── skills-dev.md      # .claude/skills/ 目录下的开发规则
 │   │   └── docs-maintenance.md # docs/ 目录下的文档规则
-│   └── commands/              # 自定义斜杠命令
-│       ├── review.md          # /project:review — 代码审查
-│       └── status.md          # /project:status — 项目状态检查
+│   ├── commands/              # 自定义斜杠命令
+│   │   ├── review.md          # /project:review — 代码审查
+│   │   └── status.md          # /project:status — 项目状态检查
+│   └── skills/                # 可复用 Skills（Claude Code 原生发现）
+│       ├── workflow-management/   # 9 步流程管理
+│       ├── investigate/           # 系统性调试
+│       ├── careful-ops/           # 破坏性操作防护
+│       ├── plan-review/           # 架构审查
+│       ├── monitoring-security/   # 监控安全加固
+│       └── obsidian-vault/        # Obsidian 笔记整理
 │
 ├── hooks/                     # Harness 层（13 个脚本，覆盖 7 个生命周期事件）
-│   ├── careful-ops-check.sh   # 破坏性操作拦截
-│   ├── pre-commit-check.sh    # commit 前测试门禁
-│   ├── orient-session.sh      # 会话启动上下文注入
-│   ├── prompt-context.sh      # 每条消息注入任务进度
-│   ├── drift-detector.sh      # 每 30 次调用轨道修正
-│   ├── pre-compact.sh         # compaction 前保存关键状态
-│   ├── session-end.sh         # 会话结束检查
-│   └── lib/                   # 共享库
-│
-├── skills/                    # 可复用 Skills
-│   ├── workflow-management/   # 9 步流程管理
-│   ├── investigate/           # 系统性调试
-│   ├── careful-ops/           # 破坏性操作防护
-│   ├── plan-review/           # 架构审查
-│   ├── monitoring-security/   # 监控安全加固
-│   └── obsidian-vault/        # Obsidian 笔记整理
 │
 ├── docs/
 │   ├── STATUS.md              # 项目状态（上下文记录）
@@ -71,7 +62,7 @@ Claude Code 启动时第一个加载的文件。指向 AGENTS.md。
 定义 AI 的推理框架、9 步强制开发流程、编码风格、安全规则和文档维护原则。一个文件包含所有行为规范。
 
 ### `.claude/rules/` — 路径作用域规则
-按工作目录自动加载的模块化规则。编辑 `hooks/` 时加载 hook 开发规则，编辑 `skills/` 时加载 skill 开发规则。
+按工作目录自动加载的模块化规则。编辑 `hooks/` 时加载 hook 开发规则，编辑 `.claude/skills/` 时加载 skill 开发规则。
 
 ### `.claude/commands/` — 自定义命令
 - `/project:review` — 审查当前分支 diff

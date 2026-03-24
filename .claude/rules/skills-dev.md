@@ -1,6 +1,6 @@
 ---
 paths:
-  - "skills/**/*.md"
+  - ".claude/skills/**/*.md"
 ---
 
 # Skill 开发规则

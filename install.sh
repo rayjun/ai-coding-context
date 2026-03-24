@@ -15,27 +15,33 @@ BASE_URL="${1:-${AI_CONTEXT_BASE_URL:-$DEFAULT_URL}}"
 DIRECTORIES=(
   "docs/plans"
   "docs/reports"
-  "skills/workflow-management"
-  "skills/investigate"
-  "skills/careful-ops"
-  "skills/plan-review"
-  "skills/monitoring-security"
-  "skills/obsidian-vault"
-  "hooks"
-  "hooks/lib"
+  ".claude/skills/workflow-management"
+  ".claude/skills/investigate"
+  ".claude/skills/careful-ops"
+  ".claude/skills/plan-review"
+  ".claude/skills/monitoring-security"
+  ".claude/skills/obsidian-vault"
   ".claude/rules"
   ".claude/commands"
+  "hooks"
+  "hooks/lib"
 )
 
 CORE_FILES=(
   "CLAUDE.md"
   "AGENTS.md"
-  "skills/workflow-management/SKILL.md"
-  "skills/investigate/SKILL.md"
-  "skills/careful-ops/SKILL.md"
-  "skills/plan-review/SKILL.md"
-  "skills/monitoring-security/SKILL.md"
-  "skills/obsidian-vault/SKILL.md"
+  ".claude/skills/workflow-management/SKILL.md"
+  ".claude/skills/investigate/SKILL.md"
+  ".claude/skills/careful-ops/SKILL.md"
+  ".claude/skills/plan-review/SKILL.md"
+  ".claude/skills/monitoring-security/SKILL.md"
+  ".claude/skills/obsidian-vault/SKILL.md"
+  ".claude/settings.json"
+  ".claude/rules/hooks-dev.md"
+  ".claude/rules/skills-dev.md"
+  ".claude/rules/docs-maintenance.md"
+  ".claude/commands/review.md"
+  ".claude/commands/status.md"
   "hooks/careful-ops-check.sh"
   "hooks/orient-session.sh"
   "hooks/status-reminder.sh"
@@ -50,12 +56,6 @@ CORE_FILES=(
   "hooks/session-end.sh"
   "hooks/prompt-context.sh"
   "hooks/pre-compact.sh"
-  ".claude/settings.json"
-  ".claude/rules/hooks-dev.md"
-  ".claude/rules/skills-dev.md"
-  ".claude/rules/docs-maintenance.md"
-  ".claude/commands/review.md"
-  ".claude/commands/status.md"
   ".gemini/settings.json"
   ".codex/config.toml"
 )
@@ -125,25 +125,18 @@ download_file "README.md" "false"
 info "Setting hook scripts as executable..."
 chmod +x hooks/*.sh hooks/lib/*.sh 2>/dev/null || true
 
-# 6. Create .claude/skills/ symlinks for Claude Code native discovery
-info "Linking skills for Claude Code discovery..."
-mkdir -p .claude/skills
-for d in skills/*/; do
-  name=$(basename "$d")
-  if [ ! -L ".claude/skills/$name" ]; then
-    ln -sf "../../skills/$name" ".claude/skills/$name"
-  fi
-done
-
-# 7. Clean up deprecated files
+# 6. Clean up deprecated files
 if [ -f "DEV.md" ]; then
   warn "DEV.md is deprecated (merged into AGENTS.md). Consider removing it."
 fi
 if [ -f "DOCS.md" ]; then
   warn "DOCS.md is deprecated (merged into AGENTS.md). Consider removing it."
 fi
+if [ -d "skills" ] && [ ! -d ".claude/skills" ]; then
+  warn "skills/ at project root is deprecated. Skills now live in .claude/skills/."
+fi
 
-# 8. Success Message
+# 7. Success Message
 echo -e "\n\033[0;32m✅ AI Coding Context has been successfully initialized!\033[0m"
 echo -e "--------------------------------------------------------"
 echo -e "Next steps:"

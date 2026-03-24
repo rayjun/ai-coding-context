@@ -1,7 +1,7 @@
 #!/bin/bash
 # Hook: PreToolUse → Bash
 # Purpose: Intercept destructive commands before execution.
-# Based on skills/careful-ops/SKILL.md danger checklist.
+# Based on .claude/skills/careful-ops/SKILL.md danger checklist.
 #
 # Exit codes:
 #   0 = allow (with optional warning via stdout)
