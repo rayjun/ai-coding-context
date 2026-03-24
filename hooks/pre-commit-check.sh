@@ -56,7 +56,7 @@ if echo "$COMMAND" | grep -qE '\bgit\s+commit\b'; then
 
   # No evidence found — deny
   cat <<'EOF'
-{"decision":"deny","reason":"No test/build/lint evidence found in this session. DEV.md Step 7 requires verification before commit.","alternative":"Run your project's test suite first (e.g., `cargo test`, `go test ./...`, `npm test`, `pytest`), then retry the commit."}
+{"decision":"deny","reason":"No test/build/lint evidence found in this session. AGENTS.md §6 Step 7 requires verification before commit.","alternative":"Run your project's test suite first (e.g., `cargo test`, `go test ./...`, `npm test`, `pytest`), then retry the commit."}
 EOF
   exit 2
 fi

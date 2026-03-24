@@ -23,12 +23,13 @@ DIRECTORIES=(
   "skills/obsidian-vault"
   "hooks"
   "hooks/lib"
+  ".claude/rules"
+  ".claude/commands"
 )
 
 CORE_FILES=(
+  "CLAUDE.md"
   "AGENTS.md"
-  "DEV.md"
-  "DOCS.md"
   "skills/workflow-management/SKILL.md"
   "skills/investigate/SKILL.md"
   "skills/careful-ops/SKILL.md"
@@ -50,6 +51,11 @@ CORE_FILES=(
   "hooks/prompt-context.sh"
   "hooks/pre-compact.sh"
   ".claude/settings.json"
+  ".claude/rules/hooks-dev.md"
+  ".claude/rules/skills-dev.md"
+  ".claude/rules/docs-maintenance.md"
+  ".claude/commands/review.md"
+  ".claude/commands/status.md"
   ".gemini/settings.json"
   ".codex/config.toml"
 )
@@ -119,10 +125,18 @@ download_file "README.md" "false"
 info "Setting hook scripts as executable..."
 chmod +x hooks/*.sh hooks/lib/*.sh 2>/dev/null || true
 
-# 6. Success Message
+# 6. Clean up deprecated files
+if [ -f "DEV.md" ]; then
+  warn "DEV.md is deprecated (merged into AGENTS.md). Consider removing it."
+fi
+if [ -f "DOCS.md" ]; then
+  warn "DOCS.md is deprecated (merged into AGENTS.md). Consider removing it."
+fi
+
+# 7. Success Message
 echo -e "\n\033[0;32m✅ AI Coding Context has been successfully initialized!\033[0m"
 echo -e "--------------------------------------------------------"
 echo -e "Next steps:"
-echo -e "1. Read \033[1mAGENTS.md\033[0m to understand AI behavior."
-echo -e "2. Start your first task and let AI update \033[1mdocs/STATUS.md\033[0m."
+echo -e "1. Read \033[1mCLAUDE.md\033[0m and \033[1mAGENTS.md\033[0m to understand AI behavior."
+echo -e "2. Use \033[1m/project:status\033[0m to check project health."
 echo -e "3. Happy coding!\n"
