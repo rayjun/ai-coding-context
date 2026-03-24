@@ -125,7 +125,17 @@ download_file "README.md" "false"
 info "Setting hook scripts as executable..."
 chmod +x hooks/*.sh hooks/lib/*.sh 2>/dev/null || true
 
-# 6. Clean up deprecated files
+# 6. Create .claude/skills/ symlinks for Claude Code native discovery
+info "Linking skills for Claude Code discovery..."
+mkdir -p .claude/skills
+for d in skills/*/; do
+  name=$(basename "$d")
+  if [ ! -L ".claude/skills/$name" ]; then
+    ln -sf "../../skills/$name" ".claude/skills/$name"
+  fi
+done
+
+# 7. Clean up deprecated files
 if [ -f "DEV.md" ]; then
   warn "DEV.md is deprecated (merged into AGENTS.md). Consider removing it."
 fi
@@ -133,7 +143,7 @@ if [ -f "DOCS.md" ]; then
   warn "DOCS.md is deprecated (merged into AGENTS.md). Consider removing it."
 fi
 
-# 7. Success Message
+# 8. Success Message
 echo -e "\n\033[0;32m✅ AI Coding Context has been successfully initialized!\033[0m"
 echo -e "--------------------------------------------------------"
 echo -e "Next steps:"

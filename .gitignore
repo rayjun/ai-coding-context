@@ -3,6 +3,7 @@
 !.claude/settings.json
 !.claude/rules/
 !.claude/commands/
+!.claude/skills/
 .gemini/*
 !.gemini/settings.json
 .codex/*
