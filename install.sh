@@ -42,6 +42,7 @@ CORE_FILES=(
   ".claude/rules/docs-maintenance.md"
   ".claude/commands/review.md"
   ".claude/commands/status.md"
+  ".claude/commands/fix-issue.md"
   ".claude/hooks/careful-ops-check.sh"
   ".claude/hooks/orient-session.sh"
   ".claude/hooks/status-reminder.sh"
