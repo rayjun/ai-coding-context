@@ -28,3 +28,17 @@
 ## 下次从这里开始
 ### 继续工作
 "替换 Skill 文件为中文版本"
+
+---
+
+## 2026-04-21 追加：融入 4 条编码原则
+
+**变更**: 将 Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution 融入 `AGENTS.md` 现有章节。
+
+- §1 新增"显式化与澄清"
+- §2 末尾追加 Tradeoff 提示
+- §3 新增"最简实现" + "外科手术式修改"
+- §6 流程规则新增"目标可验证"
+
+**计划**: `docs/plans/integrate-coding-principles.md`
+**diff**: +25/-4 行，仅动 AGENTS.md。
