@@ -43,6 +43,8 @@ DIRECTORIES=(
   ".claude/skills/plan-review"
   ".claude/skills/monitoring-security"
   ".claude/skills/obsidian-vault"
+  ".claude/skills/obsidian-writer"
+  ".claude/skills/obsidian-writer/scripts"
   ".claude/skills/lib"
   ".claude/rules"
   ".claude/commands"
@@ -59,6 +61,9 @@ CORE_FILES=(
   ".claude/skills/plan-review/SKILL.md"
   ".claude/skills/monitoring-security/SKILL.md"
   ".claude/skills/obsidian-vault/SKILL.md"
+  ".claude/skills/obsidian-writer/SKILL.md"
+  ".claude/skills/obsidian-writer/scripts/resolve-vault.sh"
+  ".claude/skills/obsidian-writer/scripts/set-vault.sh"
   ".claude/settings.json"
   ".claude/rules/hooks-dev.md"
   ".claude/rules/skills-dev.md"
@@ -182,7 +187,7 @@ download_file "README.md" "false"
 # 5. Make Hook Scripts Executable
 if [ "$DRY_RUN" -eq 0 ]; then
   info "Setting hook scripts as executable..."
-  chmod +x .claude/hooks/*.sh .claude/hooks/lib/*.sh .claude/skills/lib/*.py 2>/dev/null || true
+  chmod +x .claude/hooks/*.sh .claude/hooks/lib/*.sh .claude/skills/lib/*.py .claude/skills/obsidian-writer/scripts/*.sh 2>/dev/null || true
 fi
 
 # 6. Clean up deprecated files

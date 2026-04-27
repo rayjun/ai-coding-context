@@ -51,7 +51,8 @@ your-project/
 │   │   ├── careful-ops/          #   破坏性操作防护
 │   │   ├── plan-review/          #   架构审查（5 维 pass/warn/fail）
 │   │   ├── monitoring-security/  #   监控安全加固
-│   │   ├── obsidian-vault/       #   Obsidian 笔记整理
+│   │   ├── obsidian-vault/       #   Obsidian 笔记整理（内置规则）
+│   │   ├── obsidian-writer/      #   Obsidian 写入（读 vault 根 AGENTS.md）
 │   │   └── lib/eval-runner.py    #   从 SKILL.md EVAL 块打分
 │   └── hooks/                    # Harness 层
 │       ├── careful-ops-check.sh  # PreToolUse 危险命令拦截
