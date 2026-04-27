@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "project": "ai-coding-context",
+  "updated_at": "2026-04-27",
+  "tasks": [
+    {
+      "id": "T-001",
+      "title": "P0-A1: 统一 AGENTS.md §1/§3 优先级表述",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "已改为正确性与安全性 > 可读性 > 性能 > 代码长度；两处对齐",
+      "done": true
+    },
+    {
+      "id": "T-002",
+      "title": "P0-A2: 同步 docs/STATUS.md 到真实状态并初始化 tasks.json",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "STATUS.md 重写；tasks.json 首次初始化（取代 example）",
+      "done": true
+    },
+    {
+      "id": "T-003",
+      "title": "P0-A3: 补齐 workflow-management / monitoring-security / careful-ops 的 EVAL 章节",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "3 个 SKILL 各补 5 条 EVAL；6/6 合规",
+      "done": true
+    },
+    {
+      "id": "T-004",
+      "title": "P1-B4: pre-commit-check.sh 改为 source vs evidence mtime 判据",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "拆分为 pre-commit-check.sh（门禁）+ record-test-evidence.sh（PostToolUse 仅 exit 0 时记录）",
+      "done": true
+    },
+    {
+      "id": "T-005",
+      "title": "P1-B5: 抽取 danger-patterns 共享清单并补 rm -rf $VAR 检测",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "lib/danger-patterns.sh 成为 SSoT；careful-ops-check.sh 只做 I/O；18 条测试通过",
+      "done": true
+    },
+    {
+      "id": "T-006",
+      "title": "P1-B6: /project:review 用 origin/HEAD 动态检测 base 分支",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "origin/HEAD symref → init.defaultBranch → main 三级 fallback",
+      "done": true
+    },
+    {
+      "id": "T-007",
+      "title": "P1-B7: 合并 PostToolUse Edit|Write 的 3 个 hook 为单调度脚本",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "post-edit-dispatch.sh 按 file_path 分发；drift-detector 限定为 Bash|Edit|Write",
+      "done": true
+    },
+    {
+      "id": "T-008",
+      "title": "P1-B8: 重命名根 STATUS.md 为 docs/status-writing-guide.md",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "git mv 保留历史；install.sh 同步",
+      "done": true
+    },
+    {
+      "id": "T-009",
+      "title": "P1-B9: 验证 .claude/rules/ paths frontmatter 是否实际加载",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "确认不被原生解析；改造为子目录 CLAUDE.md 级联（.claude/hooks/CLAUDE.md、.claude/skills/CLAUDE.md、docs/CLAUDE.md），rules/*.md 保留为 SSoT 人类可读版本",
+      "done": true
+    },
+    {
+      "id": "T-010",
+      "title": "P1-B10: AGENTS.md 增加 moderate/complex 流程分级矩阵",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "§2 重写为分级矩阵；§6 步骤 4 TDD 限定为生产业务逻辑",
+      "done": true
+    },
+    {
+      "id": "T-011",
+      "title": "P2-C11: TDD 限定为生产业务逻辑",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "与 T-010 合并完成；§4 给出判据",
+      "done": true
+    },
+    {
+      "id": "T-012",
+      "title": "P2-C12: 新增 credential-sniff / large-file-warn / migration-safety hooks",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "secrets-scan 因 permissions.deny 命名冲突改名 credential-sniff；3 个 hook 全部功能测试通过",
+      "done": true
+    },
+    {
+      "id": "T-013",
+      "title": "P2-C13: skills/lib/eval-runner.py — 从 SKILL.md EVAL 块打分 transcript",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "支持 parse / prompt / score 三种模式；investigate SKILL 解析出 5 条 EVAL 验证通过",
+      "done": true
+    },
+    {
+      "id": "T-014",
+      "title": "P2-C14: README 新增 Claude/Gemini/Codex 工具兼容矩阵",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "8 行兼容矩阵覆盖 hooks / rules / skills / commands / permissions",
+      "done": true
+    },
+    {
+      "id": "T-015",
+      "title": "P2-C15: install.sh 覆盖前写 .bak，支持 --dry-run",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "新增 --dry-run / --help；覆盖前自动备份 .bak；下载失败自动恢复",
+      "done": true
+    },
+    {
+      "id": "T-016",
+      "title": "P2-C16: Stop hook 做断言-证据一致性审计",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "assertion-audit.sh 扫 transcript 中的 '测试通过' / 'tests passed' 断言，对比 evidence 文件；两种场景测试通过",
+      "done": true
+    },
+    {
+      "id": "T-017",
+      "title": "Round2-R1: 验证 PostToolUse Bash 的 JSON schema",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "探针捕获到实际结构：tool_response = {stdout, stderr, interrupted, isImage, noOutputExpected}。无 exit_code 字段",
+      "done": true
+    },
+    {
+      "id": "T-018",
+      "title": "Round2-R2: record-test-evidence 改用 stdout 启发式",
+      "status": "done",
+      "blocked_by": ["T-017"],
+      "notes": "基于 interrupted=false + 无 FAILED/ERROR/panic 标记判断成功；5/5 场景测试通过",
+      "done": true
+    },
+    {
+      "id": "T-019",
+      "title": "Round2-R3: PreToolUse deny 升级为 hookSpecificOutput 格式",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "新增 lib/pretool-response.sh；careful-ops + pre-commit 全走新 API；danger-patterns 25/25 测试通过；已在真实 PreToolUse 中验证拦截生效",
+      "done": true
+    },
+    {
+      "id": "T-020",
+      "title": "Round2-R4: 删除冗余 CLAUDE.md + 纠正命令前缀",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "rm 3 个子目录 CLAUDE.md；rules/*.md 恢复 paths frontmatter 为 SSoT；README/install/tasks 全部 /project:xxx → /xxx",
+      "done": true
+    }
+  ]
+}

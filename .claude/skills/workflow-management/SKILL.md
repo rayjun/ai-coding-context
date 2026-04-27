@@ -41,3 +41,39 @@ AI 必须在每轮会话的开始和结束时更新 `docs/STATUS.md`。所有技
 - 跳过步骤 8 (文档维护)：导致项目知识库腐烂。
 - 静默跳步：违反了 AGENTS.md §6 的强制流程规则。
 - 缺失验证证据：在没有展示命令输出的情况下声称"测试通过"。
+
+## 质量评估标准
+
+以下为二元（pass/fail）评估项，用于验证本 skill 输出质量。可配合 autoresearch 工具自动化运行。
+
+```
+EVAL 1: 步骤播报
+问题: 在每个步骤切换时，是否明确播报了"进入第 N 步：【名称】"？
+Pass: transcript 中能找到每一次步骤切换的播报语句
+Fail: 出现未播报的静默步骤切换，或直接从 Plan 跳到 Execute 无任何提示
+
+EVAL 2: 计划文件前置
+问题: 是否在第二步产出了 docs/plans/*.md 文件，且该文件存在于实现代码之前？
+Pass: docs/plans/ 下有对应计划文件，git 提交时间早于实现代码
+Fail: 直接开始实现代码，或计划文件与实现代码在同一次编辑中产生
+
+EVAL 3: 验证证据
+问题: 第 7 步（验证）是否展示了测试/构建命令的实际 stdout/stderr 输出？
+Pass: 能看到真实的命令输出（测试数量、pass/fail 行、时间戳）
+Fail: 只写"测试通过"而无输出，或输出被总结抹除掉数字
+
+EVAL 4: tasks.json 同步
+问题: 任务状态变更（pending → in_progress → done）是否及时写入 docs/tasks.json？
+Pass: 每个步骤的开始/结束都能在 tasks.json 的 diff 中看到对应 status 变更
+Fail: tasks.json 不存在、长时间未更新，或状态与实际不符
+
+EVAL 5: STATUS.md 落地
+问题: 第 8 步是否更新了 docs/STATUS.md 的当前目标 / 最新发现 / 下次从这里开始？
+Pass: STATUS.md 的时间戳为本次会话，且上述 3 个 section 有实质更新
+Fail: STATUS.md 未动，或只更新时间戳而内容未变
+
+EVAL 6: 跳步说明
+问题: 如果跳过了任何一步，是否明确说明原因并等待用户确认？
+Pass: 跳步时有明确的 "跳过第 N 步：【原因】" 声明，且有用户确认轨迹
+Fail: 静默跳步，或跳步后才补说明
+```
