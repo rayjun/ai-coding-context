@@ -142,22 +142,38 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/status-reminder.sh",
+            "command": ".claude/hooks/post-edit-dispatch.sh",
             "timeout": 5000
           },
           {
             "type": "command",
-            "command": ".claude/hooks/status-format-check.sh",
+            "command": ".claude/hooks/credential-sniff.sh",
             "timeout": 5000
           },
           {
             "type": "command",
-            "command": ".claude/hooks/tasks-validate.sh",
-            "timeout": 5000
+            "command": ".claude/hooks/large-file-warn.sh",
+            "timeout": 3000
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/migration-safety.sh",
+            "timeout": 3000
           }
         ]
       },
       {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/record-test-evidence.sh",
+            "timeout": 3000
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|Write",
         "hooks": [
           {
             "type": "command",
@@ -185,6 +201,11 @@
             "type": "command",
             "command": ".claude/hooks/session-end.sh",
             "timeout": 10000
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/assertion-audit.sh",
+            "timeout": 5000
           }
         ]
       }
