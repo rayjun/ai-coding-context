@@ -1,88 +1,70 @@
-> **最后更新**: 2026-04-27 14:30 UTC
-> **当前阶段**: [规范审计 Round 2 — Claude Code 合规性修正]
-> **整体进度**: 20/20 任务完成 (100%)
+> **最后更新**: 2026-05-10 UTC
+> **当前阶段**: [Round 3 P0 修复 — 完成]
+> **整体进度**: 3/3 P0 项落地
 
 ## 当前目标
-Round 1（16 项审计）完成后，对照 Claude Code 官方文档做合规性修正，避免假设偏离文档导致的硬伤。
-**参考**: `docs/plans/audit-fixes-2026-04.md` [DONE]、本文档 Round 2 决策记录
+修复 Round 3 review 提出的 P0 三项：Stop hook 顺序 bug、evidence session 隔离、决策外置到 `docs/decisions/`。
+**参考**: `docs/plans/round3-p0-fixes.md`
 
 ## 任务进度
 
-任务 SSoT 见 `docs/tasks.json`。Round 1 16 项 + Round 2 4 项 = 20/20。
+任务 SSoT 见 `docs/tasks.json`。本节只记录上下文。
 
-### Round 1 (A + B + C) — 见 tasks.json T-001 ~ T-016
-
-| 批次 | 重点 |
-|------|------|
-| A · P0 | 优先级统一 / STATUS 同步 / EVAL 补齐 |
-| B · P1 | pre-commit mtime 判据 / danger-patterns SSoT / review 动态分支 / post-edit 合并 / 流程分级 |
-| C · P2 | TDD 限定 / 新增 credential-sniff/large-file-warn/migration-safety/assertion-audit / eval-runner / 工具兼容矩阵 / install.sh .bak |
-
-### Round 2 (T-017 ~ T-020) — Claude Code 合规性修正
-
-- T-017 探针证明 PostToolUse Bash 的 `tool_response` **不含** `exit_code`，只有 `stdout/stderr/interrupted` ✓
-- T-018 `record-test-evidence.sh` 改用 stdout/stderr 启发式 + interrupted 判定，5/5 场景测试通过 ✓
-- T-019 `careful-ops-check.sh` / `pre-commit-check.sh` 升级为官方 `hookSpecificOutput` deny 格式，新增 `lib/pretool-response.sh`；danger-patterns 25/25 测试通过；**已通过真实 PreToolUse 拦截验证** ✓
-- T-020 删除 3 个冗余子目录 CLAUDE.md；恢复 rules/*.md 的 `paths` frontmatter 为原生机制；纠正 README/install 中 `/project:xxx` 误用为 `/xxx` ✓
+| Round | 范围 | 状态 |
+|-------|------|------|
+| Round 1 (T-001~T-016) | 优先级统一 / harness 重构 / 流程分级 / 4 新 hook | ✓ |
+| Round 2 (T-017~T-020) | Claude Code 官方 API 合规性 | ✓ |
+| Round 3 P0 | Stop 顺序 + evidence 隔离 + 决策外置 | ✓ |
 
 ## 最新发现
 
-- **Bash PostToolUse 无 exit_code**: 实测 JSON 结构为 `{session_id, tool_name, tool_input:{command, description}, tool_response:{stdout, stderr, interrupted, isImage, noOutputExpected}, tool_use_id}`。`record-test-evidence` 改用输出启发式（匹配 FAIL/ERROR/panic 标记）。
-- **hookSpecificOutput 格式在线验证**: 修好的 careful-ops 在本会话中**真的阻断了我自己的 bash 测试命令两次**，确认 Claude Code 支持新格式 `{hookSpecificOutput:{hookEventName:"PreToolUse", permissionDecision:"deny", permissionDecisionReason:"..."}}` + exit 0。旧的 `{decision:"deny"}` + exit 2 对 PreToolUse 已 deprecated。
-- **`.claude/rules/` 的 `paths` 是官方原生机制**: 之前子代理说"不被原生解析"是错的。官方文档 [memory#organize-rules-with-claude/rules/](https://code.claude.com/docs/en/memory) 明确支持。Round 1 建的 3 个子目录 CLAUDE.md 是冗余。
-- **斜杠命令无 `project:` 前缀**: `.claude/commands/review.md` 对应 `/review`（不是 `/project:review`）。同名时 `.claude/skills/<name>/SKILL.md` 优先。
+- **Stop hook 执行顺序很重要**：`session-end.sh` 之前会 `rm -rf` 整个 SESSION_DIR，在 `assertion-audit.sh` 之前跑会让审计永远看到空 evidence。Round 3 把 audit 调到 session-end 之前，并把清理逻辑收窄到只删本会话的 evidence 文件。
+- **Claude Code 启动后才加载 settings.json hooks**：本会话内修改 settings.json 不会重载，新加的 hook 直到下次启动才生效。验证 hook 的修改要么用功能测试 + 真实 stdin payload 模拟，要么重启会话。
+- **session_id 是 PostToolUse / PreToolUse 输入 JSON 的顶层字段**：`evidence-path.sh` helper 抽取它，作为 evidence 文件后缀，实现跨会话隔离。
 
 ## 决策记录
 
-### 决策 #22 (2026-04-27): record-test-evidence 改用 stdout 启发式
-**背景**: 官方 PostToolUse Bash schema 不含 exit_code；之前设计依赖的字段根本不存在。
-**决策**: 用 `interrupted=false` + 输出中无 `FAILED/ERROR/panic/build failed/lint errors` 标记作为"成功"启发式；继续由 pre-commit gate 的 mtime 比对作为第二道关卡。
-**影响**: 可能少量误判（比如故意输出 "Error:" 作为文本的正常命令），但 mtime 机制能兜底。
+详见 [`docs/decisions/`](./decisions/)。每决策一文件。STATUS.md 不再复制决策正文。
 
-### 决策 #23 (2026-04-27): PreToolUse deny 格式全面升级
-**背景**: PreToolUse 上 `{decision:"deny"}` + `exit 2` 已 deprecated；应使用 `hookSpecificOutput.permissionDecision`。
-**决策**: 新增 `.claude/hooks/lib/pretool-response.sh#emit_pretool_deny`；careful-ops-check.sh 和 pre-commit-check.sh 全部走新 API；exit 0 + stdout JSON。
-**影响**: 与未来 Claude Code 版本兼容；旧格式虽仍工作但文档已标废弃。
+| # | 标题 | 日期 |
+|---|------|------|
+| 22 | [record-test-evidence 改用 stdout 启发式](./decisions/0022-record-evidence-heuristic.md) | 2026-04-27 |
+| 23 | [PreToolUse deny 格式全面升级](./decisions/0023-pretool-deny-format.md) | 2026-04-27 |
+| 24 | [回归 rules/*.md 原生 paths 机制](./decisions/0024-rules-native-paths.md) | 2026-04-27 |
+| 25 | [纠正斜杠命令语法文档](./decisions/0025-slash-command-syntax.md) | 2026-04-27 |
 
-### 决策 #24 (2026-04-27): 回归 rules/*.md 原生 paths 机制
-**背景**: 官方文档证实 `.claude/rules/*.md` + `paths: [...]` frontmatter 是原生加载机制。Round 1 我错误地"改造"成子目录 CLAUDE.md 级联，属于重复造轮子。
-**决策**: 删除 `.claude/hooks/CLAUDE.md`、`.claude/skills/CLAUDE.md`、`docs/CLAUDE.md` 三个冗余文件；rules/*.md 保留为 SSoT，由 Claude Code 原生按 paths glob 加载。
-**影响**: 配置更精简；消除 SSoT 分叉；新人不用理解"两套路径作用域机制"。
-
-### 决策 #25 (2026-04-27): 纠正斜杠命令语法文档
-**背景**: 文档多处写 `/project:review`、`/project:status`，Claude Code 实际无此前缀。
-**决策**: 全部改为 `/review`、`/status`、`/fix-issue`。在 README 补注"命令与 skill 同名时 skill 优先"。
-**影响**: 新用户调用 `/project:review` 会失败 — 纠正后符合官方行为。
+新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
 ## 下次从这里开始
 
 ### 恢复上下文
-Round 1 + Round 2 全部落地，20/20 任务完成。
 
 ```bash
-python3 .claude/hooks/lib/task-summary.py full  # 20/20 done
-bash .claude/hooks/lib/danger-patterns.test.sh  # 25/25 PASS
+python3 .claude/hooks/lib/task-summary.py full        # 任务进度
+bash .claude/hooks/lib/danger-patterns.test.sh        # 25/25 PASS
+ls docs/decisions/                                    # 决策档案
 ```
 
 ### 继续工作
-建议分 3 批 commit（便于审阅）：
 
-1. **Round 1 P0 基线**：T-001 ~ T-003（AGENTS.md 优先级、STATUS/tasks、EVAL）
-2. **Round 1 P1/P2 机制 + 扩展**：T-004 ~ T-016
-3. **Round 2 合规性修正**：T-017 ~ T-020
+Round 3 review 还有 P1 / P2 / P3 待办（见 review 报告或 `docs/plans/round3-p0-fixes.md` 的"后续"段）：
 
-后续潜在改进：
-- eval-runner 接入 CI
-- assertion-audit 升级为 blocking
-- migration-safety 扩展 ORM 框架
-- credential-sniff 结合 trufflehog/gitleaks
+- P1：CLAUDE.md 精简 / AGENTS.md §0 去 Ray 化 / EVAL schema 文档化 / onboarding.md
+- P2：hooks 集成测试 / session metrics / install.sh 版本号
+- P3：plan-review 自动触发 / migration drill / 历史扫描 / log.sh 统一 / 逃生通道
 
 ---
 
 ## 历史记录（保留）
 
+### 2026-04-27: Round 2 — Claude Code 官方 API 合规性
+4 项修正：record-test-evidence stdout 启发式、PreToolUse hookSpecificOutput、rules paths 原生机制、slash 命令前缀纠正。决策 #22-#25 见 [`docs/decisions/`](./decisions/)。
+
+### 2026-04-27: Round 1 — 16 项规范审计
+P0 优先级统一 / STATUS bootstrap / EVAL 补齐；P1 pre-commit mtime 判据 / danger-patterns SSoT / review 动态分支 / post-edit 合并 / 流程分级；P2 TDD 限定 / 4 个新 hook / eval-runner / 工具兼容矩阵 / install.sh .bak。
+
 ### 2026-04-21: 融入 4 条编码原则
 将 Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution 融入 AGENTS.md。
 
-### 2026-03-11: Skill 国际化 (Task-32/33 — 已完成)
+### 2026-03-11: Skill 国际化
 将 skills 目录下所有 SKILL.md 翻译为中文，保留 YAML `name` 为英文标识符。

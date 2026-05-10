@@ -10,11 +10,12 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SESSION_DIR=$("$SCRIPT_DIR/lib/session-dir.sh" 2>/dev/null || echo "")
-EVIDENCE_FILE="${SESSION_DIR:-/tmp}/test-evidence"
+# shellcheck source=lib/evidence-path.sh
+source "$SCRIPT_DIR/lib/evidence-path.sh"
 
 # Stop hook receives JSON with session transcript path or chunk.
 INPUT=$(cat || true)
+EVIDENCE_FILE=$(evidence_path_for_input "$INPUT")
 
 # Try to pull transcript_path (Claude Code) first, fall back to reading stdin.
 TRANSCRIPT_PATH=$(echo "$INPUT" | "$SCRIPT_DIR/lib/json-extract.sh" transcript_path 2>/dev/null || true)

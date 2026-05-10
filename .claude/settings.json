@@ -199,13 +199,13 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/session-end.sh",
-            "timeout": 10000
+            "command": ".claude/hooks/assertion-audit.sh",
+            "timeout": 5000
           },
           {
             "type": "command",
-            "command": ".claude/hooks/assertion-audit.sh",
-            "timeout": 5000
+            "command": ".claude/hooks/session-end.sh",
+            "timeout": 10000
           }
         ]
       }

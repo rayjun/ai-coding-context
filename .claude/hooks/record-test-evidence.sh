@@ -16,10 +16,12 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SESSION_DIR=$("$SCRIPT_DIR/lib/session-dir.sh")
-EVIDENCE_FILE="$SESSION_DIR/test-evidence"
+# shellcheck source=lib/evidence-path.sh
+source "$SCRIPT_DIR/lib/evidence-path.sh"
 
 INPUT=$(cat)
+EVIDENCE_FILE=$(evidence_path_for_input "$INPUT")
+
 COMMAND=$(echo "$INPUT" | "$SCRIPT_DIR/lib/json-extract.sh" tool_input.command)
 INTERRUPTED=$(echo "$INPUT" | "$SCRIPT_DIR/lib/json-extract.sh" tool_response.interrupted)
 STDERR=$(echo "$INPUT" | "$SCRIPT_DIR/lib/json-extract.sh" tool_response.stderr)

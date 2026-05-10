@@ -5,6 +5,13 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=lib/evidence-path.sh
+source "$SCRIPT_DIR/lib/evidence-path.sh"
+
+# Capture stdin so we can read session_id later (other checks don't need it)
+INPUT=$(cat || true)
+
 WARNINGS=""
 
 # 1. Check STATUS.md was updated recently (within last 2 hours)
@@ -51,13 +58,14 @@ if [ -n "$WARNINGS" ]; then
   echo ""
 fi
 
-# Clean up session temp files
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-if [ -x "$SCRIPT_DIR/lib/session-dir.sh" ]; then
-  SESSION_DIR=$("$SCRIPT_DIR/lib/session-dir.sh" 2>/dev/null || true)
-  if [ -n "$SESSION_DIR" ] && [ -d "$SESSION_DIR" ] && [[ "$SESSION_DIR" == /tmp/claude-hooks/* ]]; then
-    rm -rf "$SESSION_DIR"
-  fi
+# Clean up only THIS session's evidence file. Other sessions' evidence files
+# remain (allows parallel sessions to coexist). Other temp files in
+# $SESSION_DIR are left alone (drift counter, prompt cache, etc).
+EVIDENCE_FILE=$(evidence_path_for_input "$INPUT" 2>/dev/null || true)
+if [ -n "$EVIDENCE_FILE" ] && [ -f "$EVIDENCE_FILE" ]; then
+  case "$EVIDENCE_FILE" in
+    /tmp/claude-hooks/*) rm -f "$EVIDENCE_FILE" ;;
+  esac
 fi
 
 exit 0

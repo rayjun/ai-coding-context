@@ -79,13 +79,15 @@
 ```markdown
 ## 决策记录
 
-### 决策 #N: [简述]
-**日期**: YYYY-MM-DD
-**背景**: [为什么]
-**决策**: [是什么]
-**理由**: [原因列表]
-**影响**: [后果]
+详见 `docs/decisions/`。每决策一文件，本节只保留索引行：
+
+| # | 标题 | 日期 |
+|---|------|------|
+| 22 | [record-test-evidence 改用 stdout 启发式](./decisions/0022-record-evidence-heuristic.md) | 2026-04-27 |
 ```
+
+> 决策正文写到 `docs/decisions/NNNN-kebab-slug.md`，含**背景 / 决策 / 影响** 三段。
+> 模板见 `docs/decisions/README.md`。
 
 ### 2.7 下次会话指南
 ```markdown
