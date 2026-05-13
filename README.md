@@ -90,23 +90,6 @@ Shared Libraries: `lib/json-extract.sh`, `lib/session-dir.sh`, `lib/task-summary
 
 ---
 
-## Cross-tool Compatibility Matrix
-
-| Capability | Claude Code | Gemini CLI | Codex CLI |
-|------|:-:|:-:|:-:|
-| Path-scoped Rules (`.claude/rules/`) | ✅ Native | ⚠️ Ref AGENTS.md | ❌ |
-| SessionStart / PreCompact | ✅ | ✅ | ❌ |
-| PreToolUse Bash Blocking | ✅ | ✅ (`matcher=shell`) | ⚠️ sandbox + approval_policy |
-| PostToolUse Edit Dispatch | ✅ | ✅ (`matcher=write_file\|edit`) | ❌ |
-| Stop / SessionEnd | ✅ Stop | ✅ SessionEnd | ❌ |
-| `permissions.allow/deny` | ✅ | ❌ | ❌ (use `sandbox_mode`) |
-| Skills (`SKILL.md` Discovery) | ✅ | ❌ Manual @ required | ❌ |
-| Slash Commands | ✅ | ❌ | ❌ |
-
-**Conclusion**: Claude Code is a first-class citizen; Gemini CLI runs hooks but lacks Skills; Codex CLI mainly relies on sandbox + approval for protection. Cross-tool usage uses `AGENTS.md` as the common specification layer.
-
----
-
 ## Workflow: 9-Step Process (Scaled by Complexity)
 
 | Step | trivial | moderate | complex |
@@ -133,16 +116,3 @@ See `AGENTS.md` §2 §6 for details.
 - **Skills Framework**: [superpowers](https://github.com/obra/superpowers)
 - **Spec Origin**: `AGENTS.md` adapted from [Xuanwo's AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)
 - **Official Docs**: [Claude Code Hooks](https://code.claude.com/docs/en/hooks) · [Skills](https://code.claude.com/docs/en/skills) · [Memory](https://code.claude.com/docs/en/memory)
-
----
-
-## Audit History
-
-| Date | Action | Outcome |
-|------|------|------|
-| 2026-04-27 | Round 2 · Align with official Claude Code documentation | hookSpecificOutput upgrade, rules returned to native paths, command prefix corrections |
-| 2026-04-27 | Round 1 · 16-item specification audit | Unified priorities, EVAL completion, pre-commit mtime criteria, 3 new hooks |
-| 2026-04-21 | Integrated 4 coding principles | Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven |
-| 2026-03-11 | Skill internationalization (Chinese) | Names kept as English identifiers, content/description in Chinese |
-
-See `docs/STATUS.md` decision records (#1 ~ #25) for details.
