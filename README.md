@@ -1,191 +1,148 @@
 # AI Coding Context
 
-> AI Coding 的本质是 **上下文管理**。本项目在 LLM 的概率性与软件工程的确定性之间，通过规范、Harness 和 Skills 建立平衡。
+> The essence of AI Coding is **Context Management**. This project establishes a balance between the probability of LLMs and the certainty of software engineering through standards, Harness, and Skills.
 
-一套完整的 AI 行为治理框架，四层协同：
+A complete AI behavior governance framework with four-layer synergy:
 
-1. **上下文工程** — `AGENTS.md` 定义推理框架、9 步流程、编码哲学、安全规则
-2. **Harness 层** — 19 个 hook 脚本将关键规则从"文字约束"升级为"代码强制"
-3. **Skills 层** — 按需加载的可复用能力包（工作流 / 调试 / 安全 / 架构审查）
-4. **SSoT 文档** — `docs/STATUS.md` 记录上下文、`docs/tasks.json` 追踪进度
+1. **Context Engineering** — `AGENTS.md` defines the reasoning framework, 9-step process, coding philosophy, and security rules.
+2. **Harness Layer** — 19 hook scripts upgrade key rules from "textual constraints" to "code enforcement".
+3. **Skills Layer** — Reusable capability packages loaded on demand (Workflow / Debugging / Security / Architecture Review).
+4. **SSoT Documentation** — `docs/STATUS.md` records context, `docs/tasks.json` tracks progress.
 
-跨工具可用：Claude Code（一等公民）、Gemini CLI（hooks 兼容）、Codex CLI（sandbox 兜底）。
+Cross-tool compatible: Claude Code (First-class citizen), Gemini CLI (Hooks compatible), Codex CLI (Sandbox fallback).
 
 ---
 
-## 快速安装
+## Quick Installation
 
 ```bash
-# 前置依赖
+# Prerequisites
 # 1. Claude Code: https://docs.claude.com/en/docs/claude-code
 # 2. superpowers: https://github.com/obra/superpowers
 
-# 在项目根目录执行
+# Execute in the project root directory
 curl -sSL https://raw.githubusercontent.com/rayjun/ai-coding-context/main/install.sh | bash
 
-# 预览将要写入的文件（不落盘）
+# Preview files to be written (dry run)
 curl -sSL .../install.sh | bash -s -- --dry-run
 ```
 
-覆盖前自动写 `.bak` 备份；下载失败自动回滚。
+Automatic `.bak` backup before overwriting; automatic rollback on download failure.
 
 ---
 
-## 项目结构
+## Core Specifications
 
-```
-your-project/
-├── CLAUDE.md                     # Claude Code 原生入口（@AGENTS.md import）
-├── AGENTS.md                     # AI 行为规范（~150 行）
-│
-├── .claude/
-│   ├── settings.json             # 7 个 hook 事件 + permissions
-│   ├── rules/                    # paths frontmatter 作用域规则（原生）
-│   │   ├── hooks-dev.md          #   → 编辑 .claude/hooks/** 时加载
-│   │   ├── skills-dev.md         #   → 编辑 .claude/skills/**/*.md 时加载
-│   │   └── docs-maintenance.md   #   → 编辑 docs/** 时加载
-│   ├── commands/                 # 斜杠命令（/review /status /fix-issue）
-│   ├── skills/                   # 按需加载的 Skills
-│   │   ├── workflow-management/  #   9 步开发流程
-│   │   ├── investigate/          #   根因调试
-│   │   ├── careful-ops/          #   破坏性操作防护
-│   │   ├── plan-review/          #   架构审查（5 维 pass/warn/fail）
-│   │   ├── monitoring-security/  #   监控安全加固
-│   │   ├── obsidian-writer/      #   Obsidian 写入（读 vault 根 AGENTS.md）
-│   │   └── lib/eval-runner.py    #   从 SKILL.md EVAL 块打分
-│   └── hooks/                    # Harness 层
-│       ├── careful-ops-check.sh  # PreToolUse 危险命令拦截
-│       ├── pre-commit-check.sh   # PreToolUse commit 门禁
-│       ├── record-test-evidence  # PostToolUse 测试证据记录
-│       ├── credential-sniff.sh   # 扫 inline 凭据
-│       ├── migration-safety.sh   # DB migration 可回滚性
-│       ├── assertion-audit.sh    # Stop 时审计虚假断言
-│       └── lib/                  # danger-patterns + 测试套件
-│
-├── docs/
-│   ├── STATUS.md                 # 项目状态 SSoT（跨会话上下文）
-│   ├── tasks.json                # 任务 SSoT（结构化）
-│   ├── status-writing-guide.md   # STATUS 书写规范
-│   └── plans/                    # 计划存档
-│
-├── .gemini/settings.json         # Gemini CLI hooks（适配 Claude 的 hook 脚本）
-└── .codex/config.toml            # Codex CLI sandbox + approval
-```
+### `CLAUDE.md` — Claude Code Entrypoint
+Automatically loaded when Claude Code starts. References the main `AGENTS.md` specification via `@AGENTS.md` import.
 
----
+### `AGENTS.md` — AI Behavior Guidelines
+Reasoning framework, task complexity levels, coding philosophy, 9-step development process, security rules, and documentation maintenance. The process is scaled via a **trivial/moderate/complex × 9-step matrix** to avoid a one-size-fits-all approach.
 
-## 核心规范
-
-### `CLAUDE.md` — Claude Code 入口
-Claude Code 启动时自动加载。通过 `@AGENTS.md` import 引用 AGENTS.md 主规范。
-
-### `AGENTS.md` — AI 行为准则
-推理框架、任务复杂度分级、编码哲学、9 步开发流程、安全规则、文档维护。**流程按 trivial/moderate/complex × 9 步矩阵裁量**，避免一刀切。
-
-### `.claude/rules/` — 路径作用域规则（官方 paths 原生机制）
+### `.claude/rules/` — Path-scoped Rules (Official native paths mechanism)
 ```yaml
 ---
 paths:
   - ".claude/hooks/**/*.sh"
 ---
-# Hook 开发规则
-- 所有 hook 脚本必须以 `set -euo pipefail` 开头
+# Hook Development Rules
+- All hook scripts must start with `set -euo pipefail`
 - ...
 ```
-Claude Code 在编辑匹配文件时自动注入内容。
+Claude Code automatically injects content when editing matching files.
 
-### `.claude/commands/` — 自定义斜杠命令
-- `/review` — 审查当前分支 diff（动态检测 base 分支）
-- `/status` — 项目健康检查（STATUS.md 新鲜度 + tasks 一致性 + git 状态）
-- `/fix-issue <n>` — 从 GitHub issue 号系统性修复
+### `.claude/commands/` — Custom Slash Commands
+- `/review` — Review current branch diff (dynamically detects base branch)
+- `/status` — Project health check (`STATUS.md` freshness + tasks consistency + git status)
+- `/fix-issue <n>` — Systematically fix from GitHub issue ID
 
-> Claude Code 的斜杠命令**无 `project:` 前缀**。同名时 skill 优先。
+> Claude Code's slash commands **do not have a `project:` prefix**. Skills take precedence in case of name collisions.
 
-### `.claude/skills/` — 按需 Skills
-6 个项目级 skill + 1 个 eval-runner 工具。每个 SKILL.md 含 `EVAL 1..N` 质量评估块，可用 `eval-runner.py` 自动打分。
+### `.claude/skills/` — On-demand Skills
+6 project-level skills + 1 eval-runner tool. Each `SKILL.md` contains `EVAL 1..N` quality assessment blocks, which can be automatically scored using `eval-runner.py`.
 
 ---
 
-## Harness 层（19 个 hook）
+## Harness Layer (19 Hooks)
 
-| 事件 | 脚本 | 作用 |
+| Event | Script | Function |
 |------|------|------|
-| SessionStart | `orient-session.sh` | 注入 git log / STATUS.md / tasks 摘要 |
-| UserPromptSubmit | `prompt-context.sh` | 每次对话前注入 tasks 简报（带 mtime 缓存） |
-| PreToolUse Bash | `careful-ops-check.sh` | 危险命令阻断（hookSpecificOutput 格式）|
-| PreToolUse Bash | `pre-commit-check.sh` | 无测试证据或源码被动后过禁止 commit |
-| PostToolUse Bash | `record-test-evidence.sh` | 仅在测试/构建输出看起来成功时记录 |
-| PostToolUse Edit\|Write | `post-edit-dispatch.sh` | 合并分发 status-reminder / format-check / tasks-validate |
-| PostToolUse Edit\|Write | `credential-sniff.sh` | 扫 AKIA / sk- / ghp_ / PEM / JWT |
-| PostToolUse Edit\|Write | `large-file-warn.sh` | >1500 行提醒拆分 |
-| PostToolUse Edit\|Write | `migration-safety.sh` | 检测 NOT NULL 无默认 / DROP / 非 CONCURRENTLY |
-| PreCompact | `pre-compact.sh` | 压缩前保留当前目标 / 计划 / resume point |
-| Notification | `notify.sh` | macOS / Linux 桌面通知 |
-| Stop | `session-end.sh` | 会话结束检查 STATUS / tasks / 未提交 |
-| Stop | `assertion-audit.sh` | 扫 "测试通过" 断言，对比 evidence 文件 |
+| SessionStart | `orient-session.sh` | Inject git log / `STATUS.md` / tasks summary |
+| UserPromptSubmit | `prompt-context.sh` | Inject tasks briefing before each conversation (with mtime caching) |
+| PreToolUse Bash | `careful-ops-check.sh` | Block dangerous commands (`hookSpecificOutput` format) |
+| PreToolUse Bash | `pre-commit-check.sh` | Prohibit commit if no test evidence or passive source code changes |
+| PostToolUse Bash | `record-test-evidence.sh` | Record only when test/build output appears successful |
+| PostToolUse Edit\|Write | `post-edit-dispatch.sh` | Merge and dispatch `status-reminder` / `format-check` / `tasks-validate` |
+| PostToolUse Edit\|Write | `credential-sniff.sh` | Scan for AKIA / sk- / ghp_ / PEM / JWT |
+| PostToolUse Edit\|Write | `large-file-warn.sh` | Remind to split files > 1500 lines |
+| PostToolUse Edit\|Write | `migration-safety.sh` | Detect NOT NULL without default / DROP / non-CONCURRENTLY |
+| PreCompact | `pre-compact.sh` | Preserve current target / plan / resume point before compaction |
+| Notification | `notify.sh` | macOS / Linux desktop notifications |
+| Stop | `session-end.sh` | Session end check for `STATUS` / tasks / uncommitted changes |
+| Stop | `assertion-audit.sh` | Scan for "test passed" assertions and compare with evidence files |
 
-共享库：`lib/json-extract.sh`、`lib/session-dir.sh`、`lib/task-summary.py`、`lib/danger-patterns.sh`（+ 25 条单元测试）、`lib/pretool-response.sh`。
+Shared Libraries: `lib/json-extract.sh`, `lib/session-dir.sh`, `lib/task-summary.py`, `lib/danger-patterns.sh` (+ 25 unit tests), `lib/pretool-response.sh`.
 
-### 官方合规
-- PreToolUse deny 使用 **`hookSpecificOutput.permissionDecision`**（非 deprecated 的 `{decision:"deny"}` + exit 2）
-- PostToolUse Bash 的 JSON schema 无 `exit_code`，使用 `tool_response.{stdout,stderr,interrupted}` 启发式判定
-- `.claude/rules/*.md` 的 `paths` frontmatter 是官方原生加载机制
+### Official Compliance
+- PreToolUse deny uses **`hookSpecificOutput.permissionDecision`** (not the deprecated `{decision:"deny"}` + exit 2)
+- PostToolUse Bash's JSON schema lacks `exit_code`; uses `tool_response.{stdout,stderr,interrupted}` heuristic determination
+- `.claude/rules/*.md`'s `paths` frontmatter is the official native loading mechanism
 
 ---
 
-## 跨工具兼容矩阵
+## Cross-tool Compatibility Matrix
 
-| 能力 | Claude Code | Gemini CLI | Codex CLI |
+| Capability | Claude Code | Gemini CLI | Codex CLI |
 |------|:-:|:-:|:-:|
-| 路径作用域 Rules (`.claude/rules/`) | ✅ 原生 | ⚠️ 参考 AGENTS.md | ❌ |
+| Path-scoped Rules (`.claude/rules/`) | ✅ Native | ⚠️ Ref AGENTS.md | ❌ |
 | SessionStart / PreCompact | ✅ | ✅ | ❌ |
-| PreToolUse Bash 拦截 | ✅ | ✅ (`matcher=shell`) | ⚠️ sandbox + approval_policy |
-| PostToolUse Edit 合并分发 | ✅ | ✅ (`matcher=write_file\|edit`) | ❌ |
+| PreToolUse Bash Blocking | ✅ | ✅ (`matcher=shell`) | ⚠️ sandbox + approval_policy |
+| PostToolUse Edit Dispatch | ✅ | ✅ (`matcher=write_file\|edit`) | ❌ |
 | Stop / SessionEnd | ✅ Stop | ✅ SessionEnd | ❌ |
-| `permissions.allow/deny` | ✅ | ❌ | ❌ (用 `sandbox_mode`) |
-| Skills (`SKILL.md` 原生发现) | ✅ | ❌ 需人工 @引用 | ❌ |
-| 斜杠命令 | ✅ | ❌ | ❌ |
+| `permissions.allow/deny` | ✅ | ❌ | ❌ (use `sandbox_mode`) |
+| Skills (`SKILL.md` Discovery) | ✅ | ❌ Manual @ required | ❌ |
+| Slash Commands | ✅ | ❌ | ❌ |
 
-**结论**：Claude Code 一等公民；Gemini CLI 跑 hook 但无 Skills；Codex CLI 主要靠 sandbox + approval 兜底。跨工具使用以 `AGENTS.md` 为共通规范面。
+**Conclusion**: Claude Code is a first-class citizen; Gemini CLI runs hooks but lacks Skills; Codex CLI mainly relies on sandbox + approval for protection. Cross-tool usage uses `AGENTS.md` as the common specification layer.
 
 ---
 
-## 工作流：9 步流程（按复杂度裁量）
+## Workflow: 9-Step Process (Scaled by Complexity)
 
-| 步骤 | trivial | moderate | complex |
+| Step | trivial | moderate | complex |
 |------|:-:|:-:|:-:|
-| 1. 头脑风暴 | ➖ | ◯ | ✅ |
-| 2. 制定计划 + 审查 | ➖ | ✅ | ✅ |
+| 1. Brainstorming | ➖ | ◯ | ✅ |
+| 2. Planning + Review | ➖ | ✅ | ✅ |
 | 3. Git worktree | ➖ | ➖ | ◯ |
-| 4. TDD（生产业务逻辑） | ➖ | ✅ | ✅ |
-| 5. 执行（可并行 agent） | 直接 | ✅ | ✅ |
-| 6. 代码审查 | ➖ | ◯ | ✅ |
-| 7. **验证（证据先于断言）** | ✅ | ✅ | ✅ |
-| 8. 文档维护 | ➖ | ✅ | ✅ |
-| 9. 完成分支 | ➖ | ◯ | ✅ |
+| 4. TDD (Production Logic) | ➖ | ✅ | ✅ |
+| 5. Execution (Parallel agents) | Direct | ✅ | ✅ |
+| 6. Code Review | ➖ | ◯ | ✅ |
+| 7. **Verification (Evidence > Assertions)** | ✅ | ✅ | ✅ |
+| 8. Documentation Maintenance | ➖ | ✅ | ✅ |
+| 9. Finishing Branch | ➖ | ◯ | ✅ |
 
-✅ 必做 · ◯ 可选 · ➖ 可跳
+✅ Required · ◯ Optional · ➖ Skippable
 
-详见 `AGENTS.md` §2 §6。
-
----
-
-## 相关依赖
-
-- **Harness 理念**: [12 Factor Agents](https://github.com/humanlayer/12-factor-agents)
-- **Skills 框架**: [superpowers](https://github.com/obra/superpowers)
-- **规范起源**: `AGENTS.md` 改编自 [Xuanwo 的 AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)
-- **官方文档**: [Claude Code Hooks](https://code.claude.com/docs/en/hooks) · [Skills](https://code.claude.com/docs/en/skills) · [Memory](https://code.claude.com/docs/en/memory)
+See `AGENTS.md` §2 §6 for details.
 
 ---
 
-## 审计历史
+## Related Dependencies
 
-| 日期 | 动作 | 产出 |
+- **Harness Philosophy**: [12 Factor Agents](https://github.com/humanlayer/12-factor-agents)
+- **Skills Framework**: [superpowers](https://github.com/obra/superpowers)
+- **Spec Origin**: `AGENTS.md` adapted from [Xuanwo's AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)
+- **Official Docs**: [Claude Code Hooks](https://code.claude.com/docs/en/hooks) · [Skills](https://code.claude.com/docs/en/skills) · [Memory](https://code.claude.com/docs/en/memory)
+
+---
+
+## Audit History
+
+| Date | Action | Outcome |
 |------|------|------|
-| 2026-04-27 | Round 2 · 对齐 Claude Code 官方文档 | hookSpecificOutput 升级、rules 回归原生 paths、命令前缀纠正 |
-| 2026-04-27 | Round 1 · 16 项规范审计 | 优先级统一、EVAL 补齐、pre-commit mtime 判据、3 个新 hook |
-| 2026-04-21 | 融入 4 条编码原则 | Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven |
-| 2026-03-11 | Skill 国际化（中文） | name 保留英文标识符，内容 / description 中文 |
+| 2026-04-27 | Round 2 · Align with official Claude Code documentation | hookSpecificOutput upgrade, rules returned to native paths, command prefix corrections |
+| 2026-04-27 | Round 1 · 16-item specification audit | Unified priorities, EVAL completion, pre-commit mtime criteria, 3 new hooks |
+| 2026-04-21 | Integrated 4 coding principles | Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven |
+| 2026-03-11 | Skill internationalization (Chinese) | Names kept as English identifiers, content/description in Chinese |
 
-详见 `docs/STATUS.md` 决策记录（#1 ~ #25）。
+See `docs/STATUS.md` decision records (#1 ~ #25) for details.
