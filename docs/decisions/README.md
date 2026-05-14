@@ -26,5 +26,7 @@
 | 23 | [PreToolUse deny 格式全面升级](./0023-pretool-deny-format.md) | 2026-04-27 |
 | 24 | [回归 rules/*.md 原生 paths 机制](./0024-rules-native-paths.md) | 2026-04-27 |
 | 25 | [纠正斜杠命令语法文档](./0025-slash-command-syntax.md) | 2026-04-27 |
+| 26 | [引入 .claude/agents/ subagents](./0026-introduce-subagents.md) | 2026-05-14 |
+| 27 | [docs/specs/ 作为可选 Spec-Driven 增强](./0027-optional-spec-driven.md) | 2026-05-14 |
 
 > #1-#21 散落在历史 STATUS.md 与 commit log；2026-05-10 起新决策外置到本目录。

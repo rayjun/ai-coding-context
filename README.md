@@ -61,6 +61,17 @@ Claude Code automatically injects content when editing matching files.
 ### `.claude/skills/` — On-demand Skills
 6 project-level skills + 1 eval-runner tool. Each `SKILL.md` contains `EVAL 1..N` quality assessment blocks, which can be automatically scored using `eval-runner.py`.
 
+### `.claude/agents/` — Subagents (Claude Code only)
+Independent context windows for tasks that would otherwise pollute the main thread:
+
+- `plan-reviewer.md` — runs the 5-dimension architectural review (data flow / concurrency / interface / testing / operability) in isolation. References `plan-review` skill as the rule SSoT, does not duplicate.
+- `retro-writer.md` — extracts self-correction patterns ("expected X, actually Y") from session transcripts and appends to `docs/lessons.md`.
+
+> Skills define rules; agents execute them. complex tasks recommend `Agent(subagent_type="plan-reviewer")`; trivial / moderate use the skill directly.
+
+### `docs/specs/` — Spec-Driven Development (Optional)
+Inspired by Kiro / spec-kit. The `requirements.md` (EARS) → `design.md` → `tasks.md` triplet is an **optional alternative** to `docs/plans/` for cross-PR / multi-week features. AGENTS.md §6 is unchanged. See `docs/specs/README.md` for when to use spec vs plan.
+
 ---
 
 ## Harness Layer (19 Hooks)

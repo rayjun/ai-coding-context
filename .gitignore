@@ -5,6 +5,7 @@
 !.claude/commands/
 !.claude/skills/
 !.claude/hooks/
+!.claude/agents/
 .gemini/*
 !.gemini/settings.json
 .codex/*

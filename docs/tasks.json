@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-04-27",
+  "updated_at": "2026-05-14",
   "tasks": [
     {
       "id": "T-001",
@@ -161,6 +161,62 @@
       "status": "done",
       "blocked_by": [],
       "notes": "rm 3 个子目录 CLAUDE.md；rules/*.md 恢复 paths frontmatter 为 SSoT；README/install/tasks 全部 /project:xxx → /xxx",
+      "done": true
+    },
+    {
+      "id": "T-021",
+      "title": "Round4-P0: 新建 .claude/agents/plan-reviewer.md",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "独立上下文跑 5 维度审查；引用 plan-review skill 不复制；frontmatter name+description+tools",
+      "done": true
+    },
+    {
+      "id": "T-022",
+      "title": "Round4-P0: 新建 .claude/agents/retro-writer.md",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "提取 transcript 中自我修正模式，追加到 docs/lessons.md",
+      "done": true
+    },
+    {
+      "id": "T-023",
+      "title": "Round4-P0: 新建 docs/lessons.md 初始骨架",
+      "status": "done",
+      "blocked_by": ["T-022"],
+      "notes": "按主题分类（流程/工具/认知偏差），含写作模板和示例",
+      "done": true
+    },
+    {
+      "id": "T-024",
+      "title": "Round4-P0: AGENTS.md §6 第 2 续步加注 subagent 推荐",
+      "status": "done",
+      "blocked_by": ["T-021"],
+      "notes": "complex 级建议通过 plan-reviewer subagent 跑；说明与 plan-review skill 的边界",
+      "done": true
+    },
+    {
+      "id": "T-025",
+      "title": "Round4-P0: 新建 docs/specs/_template 三件套",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "requirements.md (EARS) + design.md + tasks.md 骨架",
+      "done": true
+    },
+    {
+      "id": "T-026",
+      "title": "Round4-P0: 新建 docs/specs/README.md 写作指南",
+      "status": "done",
+      "blocked_by": ["T-025"],
+      "notes": "何时用 spec vs plan；与 tasks.json 关系；与 plan-review skill 关系",
+      "done": true
+    },
+    {
+      "id": "T-027",
+      "title": "Round4-P0: install.sh / README.md / decisions #26 #27 同步",
+      "status": "done",
+      "blocked_by": ["T-021", "T-022", "T-023", "T-024", "T-025", "T-026"],
+      "notes": "install.sh DIRECTORIES + CORE_FILES；README 加 Subagents/Specs 段；2 个决策文件",
       "done": true
     }
   ]

@@ -129,6 +129,9 @@
 | 8 | 文档维护 | — | 更新 tasks.json + STATUS.md + 项目文档 |
 | 9 | 完成分支 | finishing-a-development-branch | 合并 / PR / 清理，用户决定 |
 
+> **第 2 续步执行方式**：complex 级别推荐通过 `plan-reviewer` subagent 跑（`Agent(subagent_type="plan-reviewer")`），独立上下文窗口避免污染主线程。trivial / moderate 级直接在主上下文用 `plan-review` skill 即可。Skill 是规则 SSoT，agent 是执行 surface，两者不重复。
+> **会话复盘**：会话结束或用户主动要求时，可调用 `retro-writer` subagent 追加 `docs/lessons.md`。
+
 ### 流程规则
 1. **禁止静默跳步** — 需说明原因并等待确认。
 2. **目标可验证** — 把任务转成可检验的成功标准（例："加校验"→"为非法输入写失败测试再让它通过"）。标准越强，越能独立循环到达绿灯；标准模糊（"让它跑起来"）必然要反复澄清。
