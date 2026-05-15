@@ -21,12 +21,23 @@ if git rev-parse --is-inside-work-tree &>/dev/null; then
 fi
 
 # 3. STATUS.md content + format validation
+#    Token-budget: inject only "当前目标" and "下次从这里开始" sections (the
+#    actionable parts). History / 决策记录 / 任务进度 大表 are skipped here —
+#    they are still on disk and can be Read on demand. This typically saves
+#    ~900 tokens per SessionStart on a mature project.
 if [ -f "docs/STATUS.md" ]; then
-  echo "--- docs/STATUS.md ---"
-  cat "docs/STATUS.md"
+  echo "--- docs/STATUS.md (key sections) ---"
+  awk '
+    /^## (当前目标|下次从这里开始)/ { in_block=1; print; next }
+    /^## / && in_block { in_block=0 }
+    /^---[[:space:]]*$/ && in_block { in_block=0 }
+    in_block { print }
+  ' "docs/STATUS.md"
+  echo ""
+  echo "(full STATUS.md including 历史/决策记录/最新发现 is on disk — Read on demand.)"
   echo ""
 
-  # Validate required sections exist
+  # Validate required sections exist (full file, not just the snippet)
   MISSING_SECTIONS=""
   grep -q '## 当前目标' "docs/STATUS.md" || MISSING_SECTIONS="${MISSING_SECTIONS} [当前目标]"
   grep -q '## 任务进度' "docs/STATUS.md" || MISSING_SECTIONS="${MISSING_SECTIONS} [任务进度]"

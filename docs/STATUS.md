@@ -1,10 +1,10 @@
-> **最后更新**: 2026-05-14 UTC
-> **当前阶段**: [Round 4 P0 — 完成]
-> **整体进度**: 27/27 任务，2/2 P0 落地
+> **最后更新**: 2026-05-15 UTC
+> **当前阶段**: [Round 4 P1 — token 瘦身进行中]
+> **整体进度**: 27/27 任务，Round 4 P0 已落地，本轮跟进 token 优化
 
 ## 当前目标
-Round 4 P0 两项：引入 `.claude/agents/` subagents（plan-reviewer + retro-writer），交付 `docs/specs/` 三件套模板（可选增强，不改 §6）。
-**参考**: `docs/plans/round4-p0.md`
+Token 瘦身：先改 orient-session.sh 用 awk 截取 STATUS.md 关键段，节省 ~1180 tokens / session。后续按 P1 列表推进 AGENTS.md §0 去 Ray 化、tasks 归档等。
+**参考**: `docs/decisions/0028-orient-session-trim.md`
 
 ## 任务进度
 
@@ -36,6 +36,7 @@ Round 4 P0 两项：引入 `.claude/agents/` subagents（plan-reviewer + retro-w
 | 25 | [纠正斜杠命令语法文档](./decisions/0025-slash-command-syntax.md) | 2026-04-27 |
 | 26 | [引入 .claude/agents/ subagents](./decisions/0026-introduce-subagents.md) | 2026-05-14 |
 | 27 | [docs/specs/ 作为可选 Spec-Driven 增强](./decisions/0027-optional-spec-driven.md) | 2026-05-14 |
+| 28 | [orient-session 改用 awk 截取 STATUS.md 关键段](./decisions/0028-orient-session-trim.md) | 2026-05-15 |
 
 新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
@@ -64,6 +65,9 @@ Round 4 P0 已完成。剩余待办（按优先级）：
 ---
 
 ## 历史记录（保留）
+
+### 2026-05-15: Round 4 P1 — orient-session token 瘦身
+`orient-session.sh` 第 3 步从 `cat docs/STATUS.md` 改为 awk 截取「当前目标」+「下次从这里开始」两段。SessionStart 注入从 ~1587 tokens 降到 ~818 tokens（节省 ~1180）。决策 #28。
 
 ### 2026-05-14: Round 4 P0 — Subagents + Spec-Driven 模板
 新增 `.claude/agents/{plan-reviewer, retro-writer}.md`、`docs/specs/_template/{requirements,design,tasks}.md`、`docs/specs/README.md`、`docs/lessons.md`。AGENTS.md §6 第 2 续步加注 subagent 推荐。决策 #26 #27 见 `docs/decisions/`。
