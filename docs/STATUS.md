@@ -1,10 +1,10 @@
 > **最后更新**: 2026-05-15 UTC
-> **当前阶段**: [Round 4 P1 — token 瘦身进行中]
-> **整体进度**: 27/27 任务，Round 4 P0 已落地，本轮跟进 token 优化
+> **当前阶段**: [Round 4 P1 — token 瘦身 + 模板化进行中]
+> **整体进度**: 27/27 任务，Round 4 P0 已落地，本轮跟进 token 优化与模板通用化
 
 ## 当前目标
-Token 瘦身：先改 orient-session.sh 用 awk 截取 STATUS.md 关键段，节省 ~1180 tokens / session。后续按 P1 列表推进 AGENTS.md §0 去 Ray 化、tasks 归档等。
-**参考**: `docs/decisions/0028-orient-session-trim.md`
+Round 4 P1：(1) orient-session 瘦身已落地；(2) AGENTS.md §0 去 Ray 化已落地。后续按 P1 列表推进 tasks 归档、CLAUDE.md 精简等。
+**参考**: `docs/decisions/0028-orient-session-trim.md`、`docs/decisions/0029-agents-deray.md`
 
 ## 任务进度
 
@@ -37,6 +37,7 @@ Token 瘦身：先改 orient-session.sh 用 awk 截取 STATUS.md 关键段，节
 | 26 | [引入 .claude/agents/ subagents](./decisions/0026-introduce-subagents.md) | 2026-05-14 |
 | 27 | [docs/specs/ 作为可选 Spec-Driven 增强](./decisions/0027-optional-spec-driven.md) | 2026-05-14 |
 | 28 | [orient-session 改用 awk 截取 STATUS.md 关键段](./decisions/0028-orient-session-trim.md) | 2026-05-15 |
+| 29 | [AGENTS.md §0 去 Ray 化](./decisions/0029-agents-deray.md) | 2026-05-15 |
 
 新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
@@ -65,6 +66,9 @@ Round 4 P0 已完成。剩余待办（按优先级）：
 ---
 
 ## 历史记录（保留）
+
+### 2026-05-15: Round 4 P1 — AGENTS.md §0 去 Ray 化
+§0「关于用户与你的角色」主语 `Ray` → `资深工程师 / 用户`，加 fork 提示行。§1 第一人称统一为第三人称。决策 #29。
 
 ### 2026-05-15: Round 4 P1 — orient-session token 瘦身
 `orient-session.sh` 第 3 步从 `cat docs/STATUS.md` 改为 awk 截取「当前目标」+「下次从这里开始」两段。SessionStart 注入从 ~1587 tokens 降到 ~818 tokens（节省 ~1180）。决策 #28。

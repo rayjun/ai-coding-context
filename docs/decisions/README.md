@@ -29,5 +29,6 @@
 | 26 | [引入 .claude/agents/ subagents](./0026-introduce-subagents.md) | 2026-05-14 |
 | 27 | [docs/specs/ 作为可选 Spec-Driven 增强](./0027-optional-spec-driven.md) | 2026-05-14 |
 | 28 | [orient-session 改用 awk 截取 STATUS.md 关键段](./0028-orient-session-trim.md) | 2026-05-15 |
+| 29 | [AGENTS.md §0 去 Ray 化](./0029-agents-deray.md) | 2026-05-15 |
 
 > #1-#21 散落在历史 STATUS.md 与 commit log；2026-05-10 起新决策外置到本目录。
