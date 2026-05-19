@@ -1,4 +1,6 @@
-# Plan: 远程安装脚本 (install.sh)
+# Plan: 远程安装脚本 (install.sh) [DONE]
+
+**完成日期**: 2026-04-27（决策 #15）
 
 ## 1. 目标
 通过 `curl -sSL [URL] | bash` 在目标项目中快速初始化 AI Context 规范。

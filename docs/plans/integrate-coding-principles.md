@@ -1,5 +1,6 @@
-# Plan: 将 4 条编码原则融入 AGENTS.md
+# Plan: 将 4 条编码原则融入 AGENTS.md [DONE]
 
+**完成日期**: 2026-04-21
 **日期**: 2026-04-21
 **作者**: Claude (与 Ray 讨论)
 **目标**: 将 Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution 四条行为原则融入现有 AGENTS.md 章节，不新增顶层章节。

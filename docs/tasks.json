@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-05-14",
+  "updated_at": "2026-05-19",
   "tasks": [
     {
       "id": "T-001",
@@ -217,6 +217,14 @@
       "status": "done",
       "blocked_by": ["T-021", "T-022", "T-023", "T-024", "T-025", "T-026"],
       "notes": "install.sh DIRECTORIES + CORE_FILES；README 加 Subagents/Specs 段；2 个决策文件",
+      "done": true
+    },
+    {
+      "id": "T-028",
+      "title": "Round5-P1: 流程清理 — workflow skill thin shell + rules 去重 + 删 monitoring-security + 旧 plans 标 DONE",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "5 项一并落地；详见 docs/plans/round5-p1-cleanup.md；验证矩阵 8/8 PASS",
       "done": true
     }
   ]
