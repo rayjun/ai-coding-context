@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-05-19",
+  "updated_at": "2026-05-23",
   "tasks": [
     {
       "id": "T-001",
@@ -225,6 +225,14 @@
       "status": "done",
       "blocked_by": [],
       "notes": "5 项一并落地；详见 docs/plans/round5-p1-cleanup.md；验证矩阵 8/8 PASS",
+      "done": true
+    },
+    {
+      "id": "T-029",
+      "title": "Round6-P0: Context 二轮优化 — §1/§3 去重 + §6 加 superpowers 说明 + CLAUDE.md 精简 + orient-session 删 ACTION REQUIRED",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "实测节省 ~120 tokens/session；详见决策 #31",
       "done": true
     }
   ]

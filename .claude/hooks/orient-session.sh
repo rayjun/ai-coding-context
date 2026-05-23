@@ -71,9 +71,7 @@ if [ -d "docs/plans" ]; then
   fi
 fi
 
-# 6. Explicit resume instruction
-echo "=== ACTION REQUIRED ==="
-echo "1. docs/tasks.json is the task SSoT. Work on the next pending task shown above."
-echo "2. docs/STATUS.md has context and decisions. Read '下次从这里开始' for resume instructions."
-echo "3. Do NOT restart from scratch. Continue from where the last session left off."
+# 6. End marker
+#    The actionable resume instructions live in docs/STATUS.md "下次从这里开始"
+#    (already injected above) and AGENTS.md — no need to repeat them here.
 echo "=== End Session Context ==="

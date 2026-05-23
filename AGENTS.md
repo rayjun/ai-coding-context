@@ -42,8 +42,6 @@
 4. **性能** — 非瓶颈不优化；有数据再动。
 5. **代码长度** — 最后考量。
 
-> §3 的排序（可读性 > 正确性 > 性能）曾与此冲突，已在 2026-04 审计中修正。正确性永远优先于可读性。
-
 ---
 
 ## 2 · 任务复杂度
@@ -77,7 +75,7 @@
 ## 3 · 编程哲学
 
 * 代码是写给人读的，机器执行只是副产品。
-* 优先级：**正确性与安全性 > 可读性 > 性能 > 代码长度**（与 §1 冲突处理表对齐）。
+* 优先级遵循 §1「冲突处理优先级」表，不再重述。
 * 遵循各语言社区惯用写法（Rust snake_case、Go 大写导出、Python PEP 8、Java Google Style、Solidity OpenZeppelin）。
 * 主动指出坏味道（重复逻辑、过紧耦合、脆弱设计、命名含糊、过度设计）+ 给出重构方向。
 
@@ -117,6 +115,8 @@
 ## 6 · 强制开发流程（9 步）
 
 所有非 trivial 任务必须按顺序执行。跳步前必须明确询问用户确认，**禁止静默跳过**。
+
+> **Skill 列**：`brainstorming` / `writing-plans` / `using-git-worktrees` / `test-driven-development` / `executing-plans` / `requesting-code-review` / `verification-before-completion` / `finishing-a-development-branch` 来自 [superpowers](https://github.com/obra/superpowers) 包；`plan-review` 由本项目提供。未安装 superpowers 时，行为约束仍然有效，只是缺少对应的可执行 skill 触发器。
 
 | 步骤 | 名称 | Skill | 要点 |
 |------|------|-------|------|

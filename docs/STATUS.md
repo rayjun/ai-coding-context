@@ -1,10 +1,10 @@
-> **最后更新**: 2026-05-19 UTC
-> **当前阶段**: [Round 5 P1 — 流程清理完成]
-> **整体进度**: 28/28 任务
+> **最后更新**: 2026-05-23 UTC
+> **当前阶段**: [Round 6 P0 — Context 二轮优化完成]
+> **整体进度**: 29/29 任务
 
 ## 当前目标
-Round 5 P1：清除 5 项架构臃尾（workflow skill thin shell / rules 去重 / 删 monitoring-security / 旧 plans 标 DONE / install.sh 重复行）。
-**参考**: `docs/plans/round5-p1-cleanup.md`、`docs/decisions/0030-round5-cleanup.md`
+Round 6 P0：第二轮 context 优化（§1/§3 去重 + §6 加 superpowers 来源 + CLAUDE.md 精简 + orient-session 删 ACTION REQUIRED）。实测节省 ~120 tokens/session。
+**参考**: `docs/plans/round6-p0-context.md`、`docs/decisions/0031-round6-context-trim.md`
 
 ## 任务进度
 
@@ -39,6 +39,7 @@ Round 5 P1：清除 5 项架构臃尾（workflow skill thin shell / rules 去重
 | 28 | [orient-session 改用 awk 截取 STATUS.md 关键段](./decisions/0028-orient-session-trim.md) | 2026-05-15 |
 | 29 | [AGENTS.md §0 去 Ray 化](./decisions/0029-agents-deray.md) | 2026-05-15 |
 | 30 | [Round 5 P1 流程清理](./decisions/0030-round5-cleanup.md) | 2026-05-19 |
+| 31 | [Round 6 P0 Context 二轮优化](./decisions/0031-round6-context-trim.md) | 2026-05-23 |
 
 新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
@@ -67,6 +68,9 @@ Round 4 P0 已完成。剩余待办（按优先级）：
 ---
 
 ## 历史记录（保留）
+
+### 2026-05-23: Round 6 P0 — Context 二轮优化
+4 项：§1 删历史脚注 / §3 优先级表述去重指向 §1；§6 加 superpowers skill 来源说明；CLAUDE.md 缩到 6 行；orient-session 删 ACTION REQUIRED 段。实测节省 ~120 tokens/session。决策 #31。
 
 ### 2026-05-19: Round 5 P1 — 流程清理
 5 项细节债清除：workflow-management skill 改 thin shell（指向 §6）；rules/*.md 三个文件删尾部重复段；删除 monitoring-security skill；docs/plans/ 三份历史计划标 [DONE]；install.sh DIRECTORIES 重复行删除。决策 #30。
