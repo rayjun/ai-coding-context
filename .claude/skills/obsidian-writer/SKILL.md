@@ -3,6 +3,8 @@ name: obsidian-writer
 description: 将内容写入 Obsidian vault 时使用。规则源为 vault 根目录的 AGENTS.md（每个 vault 自定义命名/标签/frontmatter 惯例）。触发条件：用户要求把笔记写入 vault、整理到 Obsidian，或提到"整理到 vault / 归档到 Obsidian / 创建 Obsidian 笔记"。
 ---
 
+> **示例 skill**：本 skill 演示「per-vault AGENTS.md 驱动规则」的设计模式，本仓库自身不使用。fork 后如不需要可直接删除（同时从 install.sh 的 DIRECTORIES + CORE_FILES 移除对应行）。
+
 # Obsidian Writer
 
 ## 概览

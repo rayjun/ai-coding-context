@@ -59,7 +59,9 @@ Claude Code automatically injects content when editing matching files.
 > Claude Code's slash commands **do not have a `project:` prefix**. Skills take precedence in case of name collisions.
 
 ### `.claude/skills/` — On-demand Skills
-6 project-level skills + 1 eval-runner tool. Each `SKILL.md` contains `EVAL 1..N` quality assessment blocks, which can be automatically scored using `eval-runner.py`.
+5 project-level skills (workflow-management / plan-review / investigate / careful-ops / obsidian-writer) + 1 eval-runner tool. Each `SKILL.md` contains `EVAL 1..N` quality assessment blocks, which can be automatically scored using `eval-runner.py`.
+
+> `obsidian-writer` is a **demo skill** showcasing the per-vault `AGENTS.md` rule pattern; this repo itself does not use it. Forks can drop it from `install.sh` if not needed.
 
 ### `.claude/agents/` — Subagents (Claude Code only)
 Independent context windows for tasks that would otherwise pollute the main thread:

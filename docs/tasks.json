@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-05-23",
+  "updated_at": "2026-05-24",
   "tasks": [
     {
       "id": "T-001",
@@ -233,6 +233,14 @@
       "status": "done",
       "blocked_by": [],
       "notes": "实测节省 ~120 tokens/session；详见决策 #31",
+      "done": true
+    },
+    {
+      "id": "T-030",
+      "title": "Round6-P1: Context 三轮微调 — §6 规则 6→5 + §9 合并到 §4 + obsidian-writer 标示例 + README skills 同步",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "实测再省 ~85 tokens/session（AGENTS.md -50 + orient-session -35）；详见决策 #32",
       "done": true
     }
   ]

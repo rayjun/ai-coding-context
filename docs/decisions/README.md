@@ -32,5 +32,6 @@
 | 29 | [AGENTS.md §0 去 Ray 化](./0029-agents-deray.md) | 2026-05-15 |
 | 30 | [Round 5 P1 流程清理](./0030-round5-cleanup.md) | 2026-05-19 |
 | 31 | [Round 6 P0 Context 二轮优化](./0031-round6-context-trim.md) | 2026-05-23 |
+| 32 | [Round 6 P1 Context 三轮微调](./0032-round6-p1-microtrim.md) | 2026-05-24 |
 
 > #1-#21 散落在历史 STATUS.md 与 commit log；2026-05-10 起新决策外置到本目录。
