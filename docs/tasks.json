@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-05-24",
+  "updated_at": "2026-05-25",
   "tasks": [
     {
       "id": "T-001",
@@ -241,6 +241,14 @@
       "status": "done",
       "blocked_by": [],
       "notes": "实测再省 ~85 tokens/session（AGENTS.md -50 + orient-session -35）；详见决策 #32",
+      "done": true
+    },
+    {
+      "id": "T-031",
+      "title": "Round7-P0: 跨 surface 去重 — §6 superpowers 短化+加 ★ / §6 表头去重 / §2 脚注下沉 / §8 删 Harness 提醒",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "AGENTS.md 5092 → 4708 chars（-128 t）；详见决策 #33",
       "done": true
     }
   ]

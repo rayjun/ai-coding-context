@@ -65,7 +65,7 @@
 | 8. 文档维护 | 可跳 | **必做**（tasks + STATUS） | **必做**（+ 项目文档） |
 | 9. 完成分支 | 可跳 | 可选 | **必做** |
 
-> **规则**：可跳 = 默认跳过；可选 = 按判断裁量；必做 = 禁止静默跳过，跳须询问用户。
+> **规则**：可跳 = 默认跳过；可选 = 按判断裁量；必做 = 必须执行（跳步规则见 §6）。
 > **证据先于断言** 在任何复杂度下都不可豁免。
 
 > **取舍提示**：本规范偏向"谨慎 > 速度"。trivial 任务可用判断力裁量，不必机械走流程。
@@ -119,22 +119,22 @@
 
 ## 6 · 强制开发流程（9 步）
 
-所有非 trivial 任务必须按顺序执行。跳步前必须明确询问用户确认，**禁止静默跳过**。
+所有非 trivial 任务必须按顺序执行。
 
-> **Skill 列**：`brainstorming` / `writing-plans` / `using-git-worktrees` / `test-driven-development` / `executing-plans` / `requesting-code-review` / `verification-before-completion` / `finishing-a-development-branch` 来自 [superpowers](https://github.com/obra/superpowers) 包；`plan-review` 由本项目提供。未安装 superpowers 时，行为约束仍然有效，只是缺少对应的可执行 skill 触发器。
+> **Skill 列**：★ 标的来自 [superpowers](https://github.com/obra/superpowers) 包；未标的本仓库提供。未装 superpowers 时行为约束仍生效，只是缺少对应的可执行 skill 触发器。
 
 | 步骤 | 名称 | Skill | 要点 |
 |------|------|-------|------|
-| 1 | 头脑风暴 | brainstorming | 写代码前先探索意图和方案 |
-| 2 | 制定计划 | writing-plans | 产出计划文件（`docs/plans/`）+ 创建/更新 `docs/tasks.json` |
+| 1 | 头脑风暴 | brainstorming ★ | 写代码前先探索意图和方案 |
+| 2 | 制定计划 | writing-plans ★ | 产出计划文件（`docs/plans/`）+ 创建/更新 `docs/tasks.json` |
 | 2续 | 架构审查 | plan-review | 5 维度 pass/warn/fail，complex 级别必做 |
-| 3 | Git 工作树 | using-git-worktrees | 隔离开发，用户可跳过 |
-| 4 | TDD | test-driven-development | 红→绿→重构；**仅对生产业务逻辑必做**，探索脚本可跳 |
-| 5 | 执行计划 | executing-plans | 可并行子 agent；异常用 investigate 调试 |
-| 6 | 代码审查 | requesting-code-review | 验证成果是否满足需求 |
-| 7 | 验证 | verification-before-completion | **证据先于断言**，必须展示实际输出 |
+| 3 | Git 工作树 | using-git-worktrees ★ | 隔离开发，用户可跳过 |
+| 4 | TDD | test-driven-development ★ | 红→绿→重构；**仅对生产业务逻辑必做**，探索脚本可跳 |
+| 5 | 执行计划 | executing-plans ★ | 可并行子 agent；异常用 investigate 调试 |
+| 6 | 代码审查 | requesting-code-review ★ | 验证成果是否满足需求 |
+| 7 | 验证 | verification-before-completion ★ | **证据先于断言**，必须展示实际输出 |
 | 8 | 文档维护 | — | 更新 tasks.json + STATUS.md + 项目文档 |
-| 9 | 完成分支 | finishing-a-development-branch | 合并 / PR / 清理，用户决定 |
+| 9 | 完成分支 | finishing-a-development-branch ★ | 合并 / PR / 清理，用户决定 |
 
 > **第 2 续步执行方式**：complex 级别推荐通过 `plan-reviewer` subagent 跑（`Agent(subagent_type="plan-reviewer")`），独立上下文窗口避免污染主线程。trivial / moderate 级直接在主上下文用 `plan-review` skill 即可。Skill 是规则 SSoT，agent 是执行 surface，两者不重复。
 > **会话复盘**：会话结束或用户主动要求时，可调用 `retro-writer` subagent 追加 `docs/lessons.md`。
@@ -168,8 +168,3 @@
 * **tasks.json** — 任务 SSoT，由 harness hooks 校验（`tasks-validate.sh`）。
 * **STATUS.md** — 上下文记录，格式参照 `docs/STATUS.template.md`，由 `status-format-check.sh` 校验。
 * **项目文档** — 按分类（架构 / 知识库 / API / 操作指南）追加更新。
-
-### Harness 提醒
-* `status-reminder.sh` — 编辑源码后提醒更新 STATUS.md。
-* `drift-detector.sh` — 每 30 次工具调用提醒检查计划。
-* `session-end.sh` — 会话结束前检查 STATUS.md 更新、tasks 状态、未提交文件。

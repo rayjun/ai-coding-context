@@ -1,10 +1,10 @@
-> **最后更新**: 2026-05-24 UTC
-> **当前阶段**: [Round 6 P0 + P1 — Context 优化完成]
-> **整体进度**: 30/30 任务
+> **最后更新**: 2026-05-25 UTC
+> **当前阶段**: [Round 7 P0 — 跨 surface 去重完成]
+> **整体进度**: 31/31 任务
 
 ## 当前目标
-Round 6 P1：§6 流程规则合并 6→5、§9 合并到 §4、obsidian-writer 标记示例、README skills count 同步。Round 6 累计省 ~205 tokens/session。
-**参考**: `docs/plans/round6-p1-microtrim.md`、`docs/decisions/0032-round6-p1-microtrim.md`
+Round 7 P0：跨文件重复声明清理（§6 表头 superpowers 注解短化+加 ★ / §6 表头去重「禁止静默跳过」/ §2 矩阵脚注下沉到 §6 / §8 删 Harness 提醒）。AGENTS.md 节省 ~128 tokens。
+**参考**: `docs/decisions/0033-round7-p0-cross-surface-dedup.md`
 
 ## 任务进度
 
@@ -41,6 +41,7 @@ Round 6 P1：§6 流程规则合并 6→5、§9 合并到 §4、obsidian-writer 
 | 30 | [Round 5 P1 流程清理](./decisions/0030-round5-cleanup.md) | 2026-05-19 |
 | 31 | [Round 6 P0 Context 二轮优化](./decisions/0031-round6-context-trim.md) | 2026-05-23 |
 | 32 | [Round 6 P1 Context 三轮微调](./decisions/0032-round6-p1-microtrim.md) | 2026-05-24 |
+| 33 | [Round 7 P0 跨 surface 去重](./decisions/0033-round7-p0-cross-surface-dedup.md) | 2026-05-25 |
 
 新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
@@ -69,6 +70,9 @@ Round 4 P0 已完成。剩余待办（按优先级）：
 ---
 
 ## 历史记录（保留）
+
+### 2026-05-25: Round 7 P0 — 跨 surface 去重
+4 项：§6 表头 superpowers 注解短化 + 表格加 ★；§6 表头删除重复的「禁止静默跳过」；§2 矩阵脚注的跳步规则下沉到 §6；§8 删除 Harness 提醒 3 行 bullet（与 hook 首注释重复）。AGENTS.md 节省 384 字符 / ~128 tokens。决策 #33。
 
 ### 2026-05-24: Round 6 P1 — Context 三轮微调
 4 项：§6 流程规则 6→5（合并语义重复条目）；§9 合并到 §4 新增「输出风格」子段（章节 0-8）；obsidian-writer 标记为示例 skill；README skills count 同步为 5（修复 Round 5 删 monitoring-security 后的数字 drift）。决策 #32。
