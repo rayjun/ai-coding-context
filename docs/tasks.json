@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-05-25",
+  "updated_at": "2026-05-26",
   "tasks": [
     {
       "id": "T-001",
@@ -249,6 +249,14 @@
       "status": "done",
       "blocked_by": [],
       "notes": "AGENTS.md 5092 → 4708 chars（-128 t）；详见决策 #33",
+      "done": true
+    },
+    {
+      "id": "T-032",
+      "title": "Round7-P1: §1 优先级表改名（决策过滤顺序 / 取舍顺序）+ §6 流程规则 #2 缩短",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "AGENTS.md 4708 → 4679 chars（-10 t）；主要为正确性收益；详见决策 #34",
       "done": true
     }
   ]

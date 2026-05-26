@@ -34,5 +34,6 @@
 | 31 | [Round 6 P0 Context 二轮优化](./0031-round6-context-trim.md) | 2026-05-23 |
 | 32 | [Round 6 P1 Context 三轮微调](./0032-round6-p1-microtrim.md) | 2026-05-24 |
 | 33 | [Round 7 P0 跨 surface 去重](./0033-round7-p0-cross-surface-dedup.md) | 2026-05-25 |
+| 34 | [Round 7 P1 §1 优先级表改名 + §6 规则 #2 缩短](./0034-round7-p1-priority-rename.md) | 2026-05-26 |
 
 > #1-#21 散落在历史 STATUS.md 与 commit log；2026-05-10 起新决策外置到本目录。
