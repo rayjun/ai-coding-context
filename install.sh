@@ -92,6 +92,7 @@ CORE_FILES=(
   ".claude/hooks/lib/danger-patterns.test.sh"
   ".claude/hooks/lib/pretool-response.sh"
   ".claude/hooks/lib/evidence-path.sh"
+  ".claude/hooks/lib/counter-path.sh"
   ".claude/skills/lib/eval-runner.py"
   ".claude/hooks/session-end.sh"
   ".claude/hooks/assertion-audit.sh"

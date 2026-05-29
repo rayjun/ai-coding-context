@@ -35,5 +35,6 @@
 | 32 | [Round 6 P1 Context 三轮微调](./0032-round6-p1-microtrim.md) | 2026-05-24 |
 | 33 | [Round 7 P0 跨 surface 去重](./0033-round7-p0-cross-surface-dedup.md) | 2026-05-25 |
 | 34 | [Round 7 P1 §1 优先级表改名 + §6 规则 #2 缩短](./0034-round7-p1-priority-rename.md) | 2026-05-26 |
+| 35 | [Round 8 P0 工作流健康度修复](./0035-round8-workflow-health.md) | 2026-05-29 |
 
 > #1-#21 散落在历史 STATUS.md 与 commit log；2026-05-10 起新决策外置到本目录。

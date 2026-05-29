@@ -138,6 +138,7 @@
 
 > **第 2 续步执行方式**：complex 级别推荐通过 `plan-reviewer` subagent 跑（`Agent(subagent_type="plan-reviewer")`），独立上下文窗口避免污染主线程。trivial / moderate 级直接在主上下文用 `plan-review` skill 即可。Skill 是规则 SSoT，agent 是执行 surface，两者不重复。
 > **会话复盘**：会话结束或用户主动要求时，可调用 `retro-writer` subagent 追加 `docs/lessons.md`。
+> **第 9 步适配**：单人 main-only / 文档迭代项目可跳过第 9 步——直接 commit + push 到 main 即合规；feature branch + PR 工作流的项目应当执行。第 6 步「代码审查」同理：单人项目可跳，多人协作项目必做。
 
 ### 流程规则
 1. **禁止静默跳步** — 跳步前需说明原因、列出将跳过哪些步骤，并等待用户确认。

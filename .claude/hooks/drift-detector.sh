@@ -1,15 +1,19 @@
 #!/bin/bash
 # Hook: PostToolUse (all tools)
 # Purpose: Every N tool invocations, remind AI to check the plan.
-# Counter is project-scoped via .claude/hooks/lib/session-dir.sh.
+# Counter is session-scoped via lib/counter-path.sh — fresh sessions
+# start at 0 instead of inheriting a cross-session running total.
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SESSION_DIR=$("$SCRIPT_DIR/lib/session-dir.sh")
-COUNTER_FILE="$SESSION_DIR/drift-counter"
+# shellcheck source=lib/counter-path.sh
+source "$SCRIPT_DIR/lib/counter-path.sh"
 
-# Increment counter
+INPUT=$(cat)
+COUNTER_FILE=$(counter_path_for_input "$INPUT" "drift-counter")
+
+# Read current counter
 if [ -f "$COUNTER_FILE" ]; then
   COUNT=$(cat "$COUNTER_FILE" 2>/dev/null || echo "0")
   if ! echo "$COUNT" | grep -qE '^[0-9]+$'; then

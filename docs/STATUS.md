@@ -1,10 +1,10 @@
-> **最后更新**: 2026-05-26 UTC
-> **当前阶段**: [Round 7 P1 — 优先级表改名 + 规则缩短]
-> **整体进度**: 32/32 任务
+> **最后更新**: 2026-05-29 UTC
+> **当前阶段**: [Round 8 P0 — 工作流健康度修复完成]
+> **整体进度**: 33 任务（16 active + 16 archived + 1 在进）
 
 ## 当前目标
-Round 7 P1：§1 「约束优先级」→「决策过滤顺序」；「冲突处理优先级」→「取舍顺序（写代码时的冲突解决）」（强调维度差异）。§6 流程规则 #2「目标可验证」缩短。
-**参考**: `docs/decisions/0034-round7-p1-priority-rename.md`
+Round 8 P0：3 项工作流健康度修复 — drift-counter 加 session_id 后缀（修计数失真）、tasks.json 归档机制（T-001..T-016 迁出）、§6 第 9 步加注「单人 main-only 可跳」。
+**参考**: `docs/plans/round8-p0-workflow-health.md`、`docs/decisions/0035-round8-workflow-health.md`
 
 ## 任务进度
 
@@ -43,6 +43,7 @@ Round 7 P1：§1 「约束优先级」→「决策过滤顺序」；「冲突处
 | 32 | [Round 6 P1 Context 三轮微调](./decisions/0032-round6-p1-microtrim.md) | 2026-05-24 |
 | 33 | [Round 7 P0 跨 surface 去重](./decisions/0033-round7-p0-cross-surface-dedup.md) | 2026-05-25 |
 | 34 | [Round 7 P1 §1 优先级表改名 + §6 规则 #2 缩短](./decisions/0034-round7-p1-priority-rename.md) | 2026-05-26 |
+| 35 | [Round 8 P0 工作流健康度修复](./decisions/0035-round8-workflow-health.md) | 2026-05-29 |
 
 新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
@@ -71,6 +72,9 @@ Round 4 P0 已完成。剩余待办（按优先级）：
 ---
 
 ## 历史记录（保留）
+
+### 2026-05-29: Round 8 P0 — 工作流健康度修复
+3 项：drift-counter 抽 lib/counter-path.sh 加 session_id 后缀（修计数失真，counter A/B 隔离）；tasks.json 归档机制（T-001..T-016 迁出到 tasks-archive.json，主文件 263→144 行省 45%）；AGENTS.md §6 加注「单人 main-only 可跳第 6/9 步」（与本仓库实际工作流诚实匹配）。决策 #35。
 
 ### 2026-05-26: Round 7 P1 — §1 优先级表改名 + §6 规则缩短
 §1「约束优先级」→「决策过滤顺序」、「冲突处理优先级」→「取舍顺序（写代码时的冲突解决）」，避免 LLM 把两个不同维度当同一个「优先级」混用；§3 引用同步。§6 流程规则 #2「目标可验证」缩短，去掉冗余例子。AGENTS.md 4708 → 4679 chars。决策 #34。
