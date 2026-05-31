@@ -4,6 +4,8 @@ description: Session retrospective writer. Use at the end of a non-trivial sessi
 tools: Read, Edit, Write, Glob, Grep, Bash
 ---
 
+> **示例 agent**：本仓库自身从未实际调用此 subagent（lessons.md 自创建以来未被追加）。保留作为「会话复盘自动化」的设计模式演示。
+
 # retro-writer subagent
 
 ## 角色

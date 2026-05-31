@@ -1,5 +1,7 @@
 # Lessons Learned
 
+> **示例文件**：自 2026-04-27 创建以来本仓库未追加任何 lesson（retro-writer subagent 0 触发）。保留作为「会话经验沉淀」的设计模式示范，fork 用户可启用 retro-writer 或手工追加。
+>
 > 本文件由 `retro-writer` subagent 维护（也可手工追加）。**追加式**记录会话中发现的认知修正、工具陷阱、流程教训。
 >
 > 目的：让经验沉淀可被未来 `SessionStart` hook 注入，避免重复踩坑。

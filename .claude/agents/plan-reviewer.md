@@ -4,6 +4,8 @@ description: Architectural reviewer for implementation plans. Use after Step 2 (
 tools: Read, Glob, Grep, Bash
 ---
 
+> **示例 agent**：本仓库自身从未实际调用此 subagent（complex 任务直接在主上下文用 plan-review skill）。保留作为「subagent 跑长报告任务」的设计模式演示，fork 用户的多人协作或大型项目里更可能用到。
+
 # plan-reviewer subagent
 
 ## 角色

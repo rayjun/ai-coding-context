@@ -144,21 +144,6 @@
             "type": "command",
             "command": ".claude/hooks/post-edit-dispatch.sh",
             "timeout": 5000
-          },
-          {
-            "type": "command",
-            "command": ".claude/hooks/credential-sniff.sh",
-            "timeout": 5000
-          },
-          {
-            "type": "command",
-            "command": ".claude/hooks/large-file-warn.sh",
-            "timeout": 3000
-          },
-          {
-            "type": "command",
-            "command": ".claude/hooks/migration-safety.sh",
-            "timeout": 3000
           }
         ]
       },

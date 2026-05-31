@@ -3,6 +3,8 @@
 > 受 Amazon Kiro / GitHub spec-kit 范式启发的「Spec → Design → Tasks」三件套。
 >
 > **当前为可选增强**，不影响 AGENTS.md §6 的 9 步流程。complex 级任务可选用 spec 替代单文件 plan，moderate / trivial 继续用 `docs/plans/`。
+>
+> **示例性质**：本仓库自身未使用 spec 模式（所有 Round 都用 `docs/plans/` 单文件计划）。`_template/` 三件套保留作为 fork 用户启用 spec-driven 流程时的参考。
 
 ---
 

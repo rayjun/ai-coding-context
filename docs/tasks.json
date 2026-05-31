@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-05-29",
+  "updated_at": "2026-05-31",
   "archive": "T-001 ~ T-016 (Round 1, 2026-04-27 完成) 已迁出到 docs/tasks-archive.json，本文件只保留 Round 2+ 任务。",
   "tasks": [
     {
@@ -138,6 +138,14 @@
       "status": "done",
       "blocked_by": [],
       "notes": "新增 lib/counter-path.sh；T-001..T-016 迁出到 tasks-archive.json（263→144 行）；详见决策 #35",
+      "done": true
+    },
+    {
+      "id": "T-034",
+      "title": "Round9-P0: 运行时 surface 整理 — settings.json 移除 3 个静默 hook + 4 个 demo surface 加示例标注",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "PostToolUse Edit|Write hook 链 4→1；4 个 demo surface 加「示例」标注；详见决策 #36",
       "done": true
     }
   ]
