@@ -57,6 +57,15 @@ else:
         if not task.get('done') and task.get('status') == 'done':
             warnings.append(f'{prefix}: status=\"done\" but done=false')
 
+        if 'spec_id' in task:
+            sid = task['spec_id']
+            if not isinstance(sid, str):
+                warnings.append(f'{prefix}: spec_id must be string, got {type(sid).__name__}')
+            elif not sid.startswith('docs/plans/'):
+                warnings.append(f'{prefix}: spec_id should start with \"docs/plans/\" (got \"{sid}\")')
+            elif not __import__('os').path.exists(sid):
+                warnings.append(f'{prefix}: spec_id target not found: {sid}')
+
     total = len(data['tasks'])
     completed = sum(1 for t in data['tasks'] if t.get('done'))
     pending = [t for t in data['tasks'] if not t.get('done')]
