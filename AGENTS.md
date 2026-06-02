@@ -126,8 +126,8 @@
 | 步骤 | 名称 | Skill | 要点 |
 |------|------|-------|------|
 | 1 | 头脑风暴 | brainstorming ★ | 写代码前先探索意图和方案 |
-| 2 | 制定计划 | writing-plans ★ | 产出计划文件（`docs/plans/`）+ 创建/更新 `docs/tasks.json` |
-| 2续 | 架构审查 | plan-review | 5 维度 pass/warn/fail，complex 级别必做 |
+| 2 | 制定计划 | writing-plans ★ | 产出计划文件（`docs/plans/`）+ 创建/更新 `docs/tasks.json`（可选 `spec_id` 指向计划文件） |
+| 2续 | 架构审查 | plan-review | 5 维度 pass/warn/fail，complex 级别必做（计划保存后 hook 会提醒） |
 | 3 | Git 工作树 | using-git-worktrees ★ | 隔离开发，用户可跳过 |
 | 4 | TDD | test-driven-development ★ | 红→绿→重构；**仅对生产业务逻辑必做**，探索脚本可跳 |
 | 5 | 执行计划 | executing-plans ★ | 可并行子 agent；异常用 investigate 调试 |
