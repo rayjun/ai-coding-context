@@ -34,4 +34,9 @@ fi
 # 3. STATUS.md update reminder — fires when source files (non-docs) are edited
 run_with_input "$SCRIPT_DIR/status-reminder.sh"
 
+# 4. plan-review reminder — only fires when docs/plans/*.md edited
+if [ -n "$FILE_PATH" ] && echo "$FILE_PATH" | grep -qE '(^|/)docs/plans/[^/]+\.md$'; then
+  run_with_input "$SCRIPT_DIR/plan-review-reminder.sh"
+fi
+
 exit 0
