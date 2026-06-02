@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-05-31",
+  "updated_at": "2026-06-02",
   "archive": "T-001 ~ T-016 (Round 1, 2026-04-27 完成) 已迁出到 docs/tasks-archive.json，本文件只保留 Round 2+ 任务。",
   "tasks": [
     {
@@ -147,6 +147,15 @@
       "blocked_by": [],
       "notes": "PostToolUse Edit|Write hook 链 4→1；4 个 demo surface 加「示例」标注；详见决策 #36",
       "done": true
+    },
+    {
+      "id": "T-035",
+      "title": "Round10-P0: 流程强制度提升 — plan-reviewer 软提醒 hook + tasks.json spec_id 字段",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "plan-review-reminder.sh 接到 post-edit-dispatch.sh 第 4 分支；tasks-validate.sh 校验 spec_id 类型/前缀/存在；install.sh + .gemini/settings.json 同步；详见决策 #37",
+      "done": true,
+      "spec_id": "docs/plans/round10-p0-flow-rigor.md"
     }
   ]
 }

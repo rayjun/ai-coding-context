@@ -1,10 +1,10 @@
-> **最后更新**: 2026-05-31 UTC
-> **当前阶段**: [Round 9 P0 — 运行时 surface 整理完成]
-> **整体进度**: 18 active 任务（含 16 archived）
+> **最后更新**: 2026-06-02 UTC
+> **当前阶段**: [Round 10 P0 — 流程强制度提升完成]
+> **整体进度**: 19 active 任务（含 16 archived）
 
 ## 当前目标
-Round 9 P0：(1) settings.json 移除 3 个对本仓库永远静默的 PostToolUse hook（credential-sniff/large-file-warn/migration-safety，脚本保留供 fork 用户启用）；(2) 4 个 demo surface（plan-reviewer/retro-writer/lessons.md/specs）加「示例」标注。每次编辑省 3 fork-exec。
-**参考**: `docs/plans/round9-p0-runtime-cleanup.md`、`docs/decisions/0036-round9-runtime-surface.md`
+Round 10 P0：(1) plan-reviewer 软提醒 hook（`plan-review-reminder.sh` 接到 `post-edit-dispatch.sh` 第 4 分支，匹配 `docs/plans/*.md`）；(2) tasks.json 加可选 `spec_id` 字段，`tasks-validate.sh` 校验类型 / 路径前缀 / 目标存在；同步更新 `install.sh` CORE_FILES + `.gemini/settings.json`。零新顶层 hook 注册、零阻断。
+**参考**: `docs/plans/round10-p0-flow-rigor.md`、`docs/decisions/0037-round10-flow-rigor.md`
 
 ## 任务进度
 
@@ -45,6 +45,8 @@ Round 9 P0：(1) settings.json 移除 3 个对本仓库永远静默的 PostToolU
 | 34 | [Round 7 P1 §1 优先级表改名 + §6 规则 #2 缩短](./decisions/0034-round7-p1-priority-rename.md) | 2026-05-26 |
 | 35 | [Round 8 P0 工作流健康度修复](./decisions/0035-round8-workflow-health.md) | 2026-05-29 |
 | 36 | [Round 9 P0 运行时 surface 整理](./decisions/0036-round9-runtime-surface.md) | 2026-05-31 |
+| 37 | [Round 10 P0 流程强制度提升](./decisions/0037-round10-flow-rigor.md) | 2026-06-02 |
+| 37 | [Round 10 P0 流程强制度提升](./decisions/0037-round10-flow-rigor.md) | 2026-06-02 |
 
 新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
@@ -53,26 +55,28 @@ Round 9 P0：(1) settings.json 移除 3 个对本仓库永远静默的 PostToolU
 ### 恢复上下文
 
 ```bash
-python3 .claude/hooks/lib/task-summary.py full        # 任务进度 27/27
+python3 .claude/hooks/lib/task-summary.py full        # 任务进度 19/19
 bash .claude/hooks/lib/danger-patterns.test.sh        # 25/25 PASS
-ls docs/decisions/                                    # 决策档案 #22-#27
+bash .claude/hooks/plan-review-reminder.test.sh       # 6/6 PASS
+ls docs/decisions/                                    # 决策档案 #22-#37
 ls .claude/agents/                                    # plan-reviewer / retro-writer
-ls docs/specs/_template/                              # requirements / design / tasks
 ```
 
 ### 继续工作
 
-Round 4 P0 已完成。剩余待办（按优先级）：
+Round 10 P0 已完成。剩余待办（按优先级）：
 
 - **P1（来自 Round 3 review 遗留）**：CLAUDE.md 精简 / AGENTS.md §0 去 Ray 化 / EVAL schema 文档化 / onboarding.md
 - **P1（Round 4 中 ROI 项）**：statusline 脚本 / token 预算 hook / output-styles 分场景输出
 - **P2（来自 Round 3 review 遗留）**：hooks 集成测试 / session metrics / install.sh 版本号
-- **P2（Round 4 后续）**：plan-reviewer 接入 §6 第 2 续步强制触发 / tasks.json 加 `spec_id` 字段
 - **P3（Round 4 后续）**：MCP servers 显式管理 / lessons-extractor Stop hook 自动跑 retro-writer / eval 进 CI
 
 ---
 
 ## 历史记录（保留）
+
+### 2026-06-02: Round 10 P0 — 流程强制度提升
+2 项：(1) 新增 `plan-review-reminder.sh` 接到 `post-edit-dispatch.sh` 第 4 分支，匹配 `docs/plans/*.md` 编辑时输出软提醒（不阻断），让 §6 第 2 续步从「文档约定」进入 runtime；(2) `tasks-validate.sh` 校验可选 `spec_id` 字段（类型/前缀/目标存在），新 task T-035 携带 `spec_id` 指向本轮 plan。同步更新 `install.sh` CORE_FILES + `.gemini/settings.json`（按 `.claude/rules/hooks-dev.md`）。决策 #37。
 
 ### 2026-05-31: Round 9 P0 — 运行时 surface 整理
 2 项：(1) settings.json 中 PostToolUse Edit|Write hook 链 4→1，移除 credential-sniff/large-file-warn/migration-safety（脚本保留，下游可启用）；(2) plan-reviewer/retro-writer/lessons.md/specs/README.md 顶部加「示例」blockquote（自 R4 P0 引入 33 天 0 触发，明确归类为 demo）。每次编辑省 3 fork-exec。决策 #36。
