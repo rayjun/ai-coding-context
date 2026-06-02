@@ -80,6 +80,8 @@ CORE_FILES=(
   ".claude/hooks/post-edit-dispatch.sh"
   ".claude/hooks/status-format-check.sh"
   ".claude/hooks/tasks-validate.sh"
+  ".claude/hooks/plan-review-reminder.sh"
+  ".claude/hooks/plan-review-reminder.test.sh"
   ".claude/hooks/drift-detector.sh"
   ".claude/hooks/notify.sh"
   ".claude/hooks/credential-sniff.sh"

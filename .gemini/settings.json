@@ -64,6 +64,12 @@
             "type": "command",
             "command": ".claude/hooks/tasks-validate.sh",
             "description": "Validate docs/tasks.json structure after editing"
+          },
+          {
+            "name": "plan-review-reminder",
+            "type": "command",
+            "command": ".claude/hooks/plan-review-reminder.sh",
+            "description": "Remind to run plan-reviewer subagent after editing docs/plans/*.md"
           }
         ]
       },
