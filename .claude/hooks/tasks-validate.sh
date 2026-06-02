@@ -22,7 +22,7 @@ if [ ! -f "docs/tasks.json" ]; then
 fi
 
 python3 -c "
-import json, sys
+import json, sys, os, os
 
 try:
     with open('docs/tasks.json') as f:
@@ -63,7 +63,7 @@ else:
                 warnings.append(f'{prefix}: spec_id must be string, got {type(sid).__name__}')
             elif not sid.startswith('docs/plans/'):
                 warnings.append(f'{prefix}: spec_id should start with \"docs/plans/\" (got \"{sid}\")')
-            elif not __import__('os').path.exists(sid):
+            elif not os.path.exists(sid):
                 warnings.append(f'{prefix}: spec_id target not found: {sid}')
 
     total = len(data['tasks'])
