@@ -61,12 +61,12 @@
 | 4. TDD | 可跳 | 对"生产业务逻辑"**必做**；探索脚本/原型可跳 | **必做** |
 | 5. 执行计划 | 直接写 | **必做** | **必做**，可并行 |
 | 6. 代码审查 | 可跳 | 可选 | **必做** |
-| 7. 验证 | **必做**（证据） | **必做** | **必做** |
+| 7. 验证 | **必做**（证据 / evidence） | **必做** | **必做** |
 | 8. 文档维护 | 可跳 | **必做**（tasks + STATUS） | **必做**（+ 项目文档） |
 | 9. 完成分支 | 可跳 | 可选 | **必做** |
 
 > **规则**：可跳 = 默认跳过；可选 = 按判断裁量；必做 = 必须执行（跳步规则见 §6）。
-> **证据先于断言** 在任何复杂度下都不可豁免。
+> **证据先于断言** (evidence over assertions) 在任何复杂度下都不可豁免。
 
 > **取舍提示**：本规范偏向"谨慎 > 速度"。trivial 任务可用判断力裁量，不必机械走流程。
 
@@ -117,7 +117,7 @@
 
 ---
 
-## 6 · 强制开发流程（9 步）
+## 6 · 强制开发流程（9 步 / 9-step）
 
 所有非 trivial 任务必须按顺序执行。
 
@@ -132,7 +132,7 @@
 | 4 | TDD | test-driven-development ★ | 红→绿→重构；**仅对生产业务逻辑必做**，探索脚本可跳 |
 | 5 | 执行计划 | executing-plans ★ | 可并行子 agent；异常用 investigate 调试 |
 | 6 | 代码审查 | requesting-code-review ★ | 验证成果是否满足需求 |
-| 7 | 验证 | verification-before-completion ★ | **证据先于断言**，必须展示实际输出 |
+| 7 | 验证 | verification-before-completion ★ | **证据先于断言** (evidence over assertions)，必须展示实际输出 |
 | 8 | 文档维护 | — | 更新 tasks.json + STATUS.md + 项目文档 |
 | 9 | 完成分支 | finishing-a-development-branch ★ | 合并 / PR / 清理，用户决定 |
 
@@ -149,7 +149,7 @@
 
 ---
 
-## 7 · 安全与 Harness
+## 7 · 安全与 Harness (security & harness)
 
 * **破坏性操作**: `.claude/hooks/careful-ops-check.sh` 硬拦截 CRITICAL（rm -rf, DROP TABLE 等），警告 HIGH。
 * **commit 门禁**: `.claude/hooks/pre-commit-check.sh` 要求本会话跑过测试才能 commit。

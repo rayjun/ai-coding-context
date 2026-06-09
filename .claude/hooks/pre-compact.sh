@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PreCompact (fires before context window compaction)
 # Purpose: Inject critical state that MUST survive compaction.
 # Without this, AI loses track of what it was doing after compaction.

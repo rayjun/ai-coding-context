@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Shared source: destructive command detection patterns.
 # Used by .claude/hooks/careful-ops-check.sh and referenced by
 # .claude/skills/careful-ops/SKILL.md. Single source of truth.

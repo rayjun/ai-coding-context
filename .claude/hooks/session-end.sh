@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: Stop (fires when the AI agent stops / session ends)
 # Purpose: Validate that persistent state has been updated before session ends.
 # Non-blocking (exit 0) — outputs warnings for anything that looks stale.

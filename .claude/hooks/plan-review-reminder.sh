@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PostToolUse → Edit|Write
 # Purpose: Remind to run plan-reviewer subagent after editing docs/plans/*.md.
 # Non-blocking: stdout only, exit 0 always.

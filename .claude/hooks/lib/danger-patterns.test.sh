@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Unit tests for .claude/hooks/lib/danger-patterns.sh
 # Run: bash .claude/hooks/lib/danger-patterns.test.sh
 set +e

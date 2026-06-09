@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PostToolUse (all tools)
 # Purpose: Every N tool invocations, remind AI to check the plan.
 # Counter is session-scoped via lib/counter-path.sh — fresh sessions

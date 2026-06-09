@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: UserPromptSubmit
 # Purpose: Before AI processes each user message, inject current task context.
 # Lightweight — uses mtime cache to avoid spawning python3 on every prompt.

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PostToolUse → Edit|Write
 # Purpose: Warn when a single file exceeds a size threshold. AI tends to
 #          generate one large file when splitting is healthier. Non-blocking.

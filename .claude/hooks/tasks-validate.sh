@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PostToolUse → Edit|Write
 # Purpose: After docs/tasks.json is edited, validate its structure.
 

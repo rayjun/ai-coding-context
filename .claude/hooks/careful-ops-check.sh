@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PreToolUse → Bash
 # Purpose: Intercept destructive commands before execution.
 # Pattern SSoT: .claude/hooks/lib/danger-patterns.sh (shared with the SKILL).

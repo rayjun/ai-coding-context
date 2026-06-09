@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: Stop (session-end companion to session-end.sh)
 # Purpose: Warn when the AI claimed tests passed / code verified without
 #          a corresponding successful Bash test command recorded via

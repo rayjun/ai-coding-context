@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PreToolUse → Bash
 # Purpose: Block git commit when there is no test evidence newer than the
 #          most recent source-code change.
@@ -42,7 +43,7 @@ fi
 
 # --- Gate: evidence must be newer than latest source edit ---
 file_mtime() {
-  stat -f %m "$1" 2>/dev/null || stat -c %Y "$1" 2>/dev/null || echo 0
+  stat -c %Y "$1" 2>/dev/null || stat -f %m "$1" 2>/dev/null || echo 0
 }
 
 EVIDENCE_MTIME=$(file_mtime "$EVIDENCE_FILE")
@@ -52,8 +53,10 @@ if git rev-parse --is-inside-work-tree &>/dev/null; then
     | grep -vE '(^|/)(docs/|\.git/|node_modules/|target/|dist/|build/)' \
     | grep -vE '\.(md|txt|lock|bak)$' \
     | grep -vE '(^|/)docs/STATUS\.md$' \
-    | xargs -I{} stat -f '%m %N' {} 2>/dev/null \
-    | sort -nr | head -1 | awk '{print $1}')
+    | while IFS= read -r f; do
+        stat -c %Y "$f" 2>/dev/null || stat -f %m "$f" 2>/dev/null || echo 0
+      done \
+    | sort -nr | head -1)
 
   NEWEST_SRC=${NEWEST_SRC:-0}
 

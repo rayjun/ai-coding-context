@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Shared utility: return a session-scoped directory for temporary files.
 # Isolates by project path so parallel sessions on different projects don't collide.
 # Usage: SESSION_DIR=$(hooks/lib/session-dir.sh)

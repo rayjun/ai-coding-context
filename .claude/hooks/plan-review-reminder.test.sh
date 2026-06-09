@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Unit tests for .claude/hooks/plan-review-reminder.sh
 # Run: bash .claude/hooks/plan-review-reminder.test.sh
 set +e

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PostToolUse → Edit|Write
 # Purpose: Single dispatcher for post-edit checks.
 # Replaces separate entries for status-reminder + status-format-check + tasks-validate,

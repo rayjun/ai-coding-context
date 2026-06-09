@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 # Shared helper: derive a session-scoped counter file path.
 #
 # Reads the hook JSON from stdin (passed as a positional arg via INPUT),

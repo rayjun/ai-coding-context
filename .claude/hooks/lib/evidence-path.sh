@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 # Shared helper: derive the session-scoped evidence file path.
 #
 # Reads the hook JSON from stdin (passed as a positional arg via INPUT),
@@ -20,7 +21,11 @@ evidence_path_for_input() {
   local script_dir
   script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   local session_dir
-  session_dir=$("$script_dir/session-dir.sh")
+  if [ -n "${HERMES_HOOK_EVIDENCE_DIR:-}" ]; then
+    session_dir="$HERMES_HOOK_EVIDENCE_DIR"
+  else
+    session_dir=$("$script_dir/session-dir.sh")
+  fi
 
   local session_id=""
   if [ -n "$input" ]; then

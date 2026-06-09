@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # AI Coding Context Installer
 # Purpose: Quickly set up or update AI Context standards in a project.

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: Notification
 # Purpose: Alert user via system notification when a long-running task completes
 # or when Claude needs user attention.

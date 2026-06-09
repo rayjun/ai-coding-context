@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PostToolUse → Edit|Write
 # Purpose: When a DB migration / schema file is edited, remind the AI to
 #          consider reversibility, backfill behavior, and online DDL concerns.

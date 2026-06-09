@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Shared helper: emit the Claude Code PreToolUse deny response.
 # Uses the current (non-deprecated) hookSpecificOutput format.
 # See: https://code.claude.com/docs/en/hooks

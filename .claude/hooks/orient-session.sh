@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: SessionStart
 # Purpose: Auto-inject project context at the start of every session.
 # Replaces the "AI should remember to read STATUS.md" text constraint

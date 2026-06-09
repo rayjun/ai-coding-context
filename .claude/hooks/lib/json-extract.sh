@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Shared utility: extract a field from JSON piped via stdin.
 # Usage: echo '{"tool_input":{"command":"ls"}}' | hooks/lib/json-extract.sh tool_input.command
 # Uses python3 for robust parsing (handles escapes, multiline, nested fields).

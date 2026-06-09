@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PostToolUse → Edit|Write
 # Purpose: Scan edited file content for inline credentials (API keys, private
 #          keys, tokens). The permissions.deny rule only blocks .env* files —

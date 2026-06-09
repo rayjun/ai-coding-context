@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PostToolUse → Bash
 # Purpose: Record evidence of a successful test/build/lint command so the
 #          pre-commit gate can verify the working tree was tested.

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Hook: PostToolUse → Edit|Write
 # Purpose: Remind to update docs/STATUS.md after editing source files.
 # Only triggers for non-docs files to avoid nagging while editing documentation.
