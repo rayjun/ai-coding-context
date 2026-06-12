@@ -56,11 +56,11 @@
 |------|:-:|:-:|:-:|
 | 1. 头脑风暴 | 可跳 | 可选 | **必做** |
 | 2. 制定计划 | 可跳 | **必做** | **必做** |
-| 2续. 架构审查 | 可跳 | 可选 | **必做** |
+| 2续. 架构审查 | 可跳 | **必做** | **必做** |
 | 3. Git 工作树 | 可跳 | 可跳 | 可选 |
 | 4. TDD | 可跳 | 对"生产业务逻辑"**必做**；探索脚本/原型可跳 | **必做** |
 | 5. 执行计划 | 直接写 | **必做** | **必做**，可并行 |
-| 6. 代码审查 | 可跳 | 可选 | **必做** |
+| 6. 代码审查 | 可跳 | **必做** | **必做** |
 | 7. 验证 | **必做**（证据 / evidence） | **必做** | **必做** |
 | 8. 文档维护 | 可跳 | **必做**（tasks + STATUS） | **必做**（+ 项目文档） |
 | 9. 完成分支 | 可跳 | 可选 | **必做** |
@@ -123,22 +123,23 @@
 
 > **Skill 列**：★ 标的来自 [superpowers](https://github.com/obra/superpowers) 包；未标的本仓库提供。未装 superpowers 时行为约束仍生效，只是缺少对应的可执行 skill 触发器。
 
-| 步骤 | 名称 | Skill | 要点 |
-|------|------|-------|------|
-| 1 | 头脑风暴 | brainstorming ★ | 写代码前先探索意图和方案 |
-| 2 | 制定计划 | writing-plans ★ | 产出计划文件（`docs/plans/`）+ 创建/更新 `docs/tasks.json`（可选 `spec_id` 指向计划文件） |
-| 2续 | 架构审查 | plan-review | 5 维度 pass/warn/fail，complex 级别必做（计划保存后 hook 会提醒） |
-| 3 | Git 工作树 | using-git-worktrees ★ | 隔离开发，用户可跳过 |
-| 4 | TDD | test-driven-development ★ | 红→绿→重构；**仅对生产业务逻辑必做**，探索脚本可跳 |
-| 5 | 执行计划 | executing-plans ★ | 可并行子 agent；异常用 investigate 调试 |
-| 6 | 代码审查 | requesting-code-review ★ | 验证成果是否满足需求 |
-| 7 | 验证 | verification-before-completion ★ | **证据先于断言** (evidence over assertions)，必须展示实际输出 |
-| 8 | 文档维护 | — | 更新 tasks.json + STATUS.md + 项目文档 |
-| 9 | 完成分支 | finishing-a-development-branch ★ | 合并 / PR / 清理，用户决定 |
+| 步骤 | 名称 | Skill | 审查方式 | 要点 |
+|------|------|-------|----------|------|
+| 1 | 头脑风暴 | brainstorming ★ | — | 写代码前先探索意图和方案 |
+| 2 | 制定计划 | writing-plans ★ | — | 产出计划文件（`docs/plans/`）+ 创建/更新 `docs/tasks.json`（可选 `spec_id` 指向计划文件） |
+| 2续 | 架构审查 | — | **subagent（强制）** | moderate+ 级别：计划产出后**必须**调用 `delegate_task` 启动方案评审 subagent，5 维度 pass/warn/fail。通过后方可进入第 3 步 |
+| 3 | Git 工作树 | using-git-worktrees ★ | — | 隔离开发，用户可跳过 |
+| 4 | TDD | test-driven-development ★ | — | 红→绿→重构；**仅对生产业务逻辑必做**，探索脚本可跳 |
+| 5 | 执行计划 | executing-plans ★ | — | 可并行子 agent；异常用 investigate 调试 |
+| 6 | 代码审查 | — | **subagent（强制）** | moderate+ 级别：代码全部完成后**必须**调用 `delegate_task` 启动代码审查 subagent。审查维度：安全性、正确性、可维护性、测试覆盖、需求符合度。通过后方可进入第 7 步 |
+| 7 | 验证 | verification-before-completion ★ | — | **证据先于断言** (evidence over assertions)，必须展示实际输出 |
+| 8 | 文档维护 | — | — | 更新 tasks.json + STATUS.md + 项目文档 |
+| 9 | 完成分支 | finishing-a-development-branch ★ | — | 合并 / PR / 清理，用户决定 |
 
-> **第 2 续步执行方式**：complex 级别推荐通过 `plan-reviewer` subagent 跑（`Agent(subagent_type="plan-reviewer")`），独立上下文窗口避免污染主线程。trivial / moderate 级直接在主上下文用 `plan-review` skill 即可。Skill 是规则 SSoT，agent 是执行 surface，两者不重复。
+> **第 2 续步执行方式**：moderate+ 级别必须通过 `delegate_task` 启动方案评审 subagent。评审 subagent 用独立上下文窗口，按 5 维度（正确性、完整性、安全性、可维护性、复杂度）做 pass/warn/fail 评判，给出具体修正建议。**评审通过前不得进入第 3 步。** 评审 subagent 的 goal 格式见 `.claude/skills/plan-review/SKILL.md`。
+> **第 6 步执行方式**：moderate+ 级别必须通过 `delegate_task` 启动代码审查 subagent。审查 subagent 用独立上下文窗口（避免实现者的认知偏差），按安全性、正确性、可维护性、测试覆盖、需求符合度 5 维度审查。**审查通过前不得进入第 7 步。** 审查 subagent 的 goal 格式见 `requesting-code-review` skill。
 > **会话复盘**：会话结束或用户主动要求时，可调用 `retro-writer` subagent 追加 `docs/lessons.md`。
-> **第 9 步适配**：单人 main-only / 文档迭代项目可跳过第 9 步——直接 commit + push 到 main 即合规；feature branch + PR 工作流的项目应当执行。第 6 步「代码审查」同理：单人项目可跳，多人协作项目必做。
+> **第 9 步适配**：单人 main-only / 文档迭代项目可跳过第 9 步——直接 commit + push 到 main 即合规；feature branch + PR 工作流的项目应当执行。
 
 ### 流程规则
 1. **禁止静默跳步** — 跳步前需说明原因、列出将跳过哪些步骤，并等待用户确认。
@@ -146,6 +147,9 @@
 3. **计划前不写代码** — 第二步审批前不写实现代码（测试除外）。
 4. **完成前必须出示证据** — 第七步强制。
 5. **播报步骤切换** — "进入第 N 步：【名称】"。
+6. **方案必须经过 subagent 评审** — moderate+ 级别任务在步骤 2 完成后，**必须**调用 `delegate_task` 启动方案评审 subagent。评审结果为 fail 时，修正方案后重新评审，通过后方可继续。
+7. **代码必须经过 subagent 审查** — moderate+ 级别任务在步骤 5 完成后，**必须**调用 `delegate_task` 启动代码审查 subagent。审查发现 critical issues 时，修正后重新审查，通过后方可进入验证步骤。
+8. **subagent 不可审查自己的产出** — 方案评审和代码审查的 subagent 必须拥有独立上下文，不接受实现者自己审查自己。
 
 ---
 
