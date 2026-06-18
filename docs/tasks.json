@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-06-02",
+  "updated_at": "2026-06-17",
   "archive": "T-001 ~ T-016 (Round 1, 2026-04-27 完成) 已迁出到 docs/tasks-archive.json，本文件只保留 Round 2+ 任务。",
   "tasks": [
     {
@@ -156,6 +156,15 @@
       "notes": "plan-review-reminder.sh 接到 post-edit-dispatch.sh 第 4 分支；tasks-validate.sh 校验 spec_id 类型/前缀/存在；install.sh + .gemini/settings.json 同步；详见决策 #37",
       "done": true,
       "spec_id": "docs/plans/round10-p0-flow-rigor.md"
+    },
+    {
+      "id": "T-036",
+      "title": "Round11-P0: Loop Engineering — §6 loop discipline + workflow EVAL + 文档/决策同步",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "新增 docs/plans/round11-loop-engineering.md；AGENTS.md §6 定义目标/观察信号/假设/退出升级条件；workflow-management 增 EVAL；README/decisions/STATUS 同步；验证矩阵通过。",
+      "done": true,
+      "spec_id": "docs/plans/round11-loop-engineering.md"
     }
   ]
 }

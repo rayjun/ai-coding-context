@@ -4,7 +4,7 @@
 
 A complete AI behavior governance framework with four-layer synergy:
 
-1. **Context Engineering** — `AGENTS.md` defines the reasoning framework, 9-step process, coding philosophy, and security rules.
+1. **Context Engineering** — `AGENTS.md` defines the reasoning framework, loop engineering discipline, 9-step process, coding philosophy, and security rules.
 2. **Harness Layer** — 19 hook scripts upgrade key rules from "textual constraints" to "code enforcement".
 3. **Skills Layer** — Reusable capability packages loaded on demand (Workflow / Debugging / Security / Architecture Review).
 4. **SSoT Documentation** — `docs/STATUS.md` records context, `docs/tasks.json` tracks progress.
@@ -37,7 +37,7 @@ Automatic `.bak` backup before overwriting; automatic rollback on download failu
 Automatically loaded when Claude Code starts. References the main `AGENTS.md` specification via `@AGENTS.md` import.
 
 ### `AGENTS.md` — AI Behavior Guidelines
-Reasoning framework, task complexity levels, coding philosophy, 9-step development process, security rules, and documentation maintenance. The process is scaled via a **trivial/moderate/complex × 9-step matrix** to avoid a one-size-fits-all approach.
+Reasoning framework, task complexity levels, coding philosophy, loop engineering discipline, 9-step development process, security rules, and documentation maintenance. The process is scaled via a **trivial/moderate/complex × 9-step matrix** to avoid a one-size-fits-all approach.
 
 ### `.claude/rules/` — Path-scoped Rules (Official native paths mechanism)
 ```yaml
@@ -112,7 +112,7 @@ Shared Libraries: `lib/json-extract.sh`, `lib/session-dir.sh`, `lib/task-summary
 | 3. Git worktree | ➖ | ➖ | ◯ |
 | 4. TDD (Production Logic) | ➖ | ✅ | ✅ |
 | 5. Execution (Parallel agents) | Direct | ✅ | ✅ |
-| 6. Code Review | ➖ | ◯ | ✅ |
+| 6. Code Review | ➖ | ✅ | ✅ |
 | 7. **Verification (Evidence > Assertions)** | ✅ | ✅ | ✅ |
 | 8. Documentation Maintenance | ➖ | ✅ | ✅ |
 | 9. Finishing Branch | ➖ | ◯ | ✅ |

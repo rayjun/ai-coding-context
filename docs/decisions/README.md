@@ -37,5 +37,7 @@
 | 34 | [Round 7 P1 §1 优先级表改名 + §6 规则 #2 缩短](./0034-round7-p1-priority-rename.md) | 2026-05-26 |
 | 35 | [Round 8 P0 工作流健康度修复](./0035-round8-workflow-health.md) | 2026-05-29 |
 | 36 | [Round 9 P0 运行时 surface 整理](./0036-round9-runtime-surface.md) | 2026-05-31 |
+| 37 | [Round 10 P0 流程强制度提升](./0037-round10-flow-rigor.md) | 2026-06-02 |
+| 38 | [Round 11 P0 — Loop Engineering](./0038-loop-engineering.md) | 2026-06-17 |
 
 > #1-#21 散落在历史 STATUS.md 与 commit log；2026-05-10 起新决策外置到本目录。
