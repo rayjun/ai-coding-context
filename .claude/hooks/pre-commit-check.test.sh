@@ -1,11 +1,12 @@
 #!/bin/bash
 # Tests for pre-commit-check.sh
-# Run: cd .claude/hooks && bash pre-commit-check.test.sh
+# Run: bash .claude/hooks/pre-commit-check.test.sh
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PASS=0; FAIL=0
-HOOK="$(pwd)/pre-commit-check.sh"
+HOOK="$SCRIPT_DIR/pre-commit-check.sh"
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 

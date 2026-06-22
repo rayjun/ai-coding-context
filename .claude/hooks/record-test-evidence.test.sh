@@ -1,11 +1,12 @@
 #!/bin/bash
 # Tests for record-test-evidence.sh
-# Run: cd .claude/hooks && bash record-test-evidence.test.sh
+# Run: bash .claude/hooks/record-test-evidence.test.sh
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PASS=0; FAIL=0
-HOOK="$(pwd)/record-test-evidence.sh"
+HOOK="$SCRIPT_DIR/record-test-evidence.sh"
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 
