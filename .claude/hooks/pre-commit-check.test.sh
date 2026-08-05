@@ -20,6 +20,8 @@ run() {
     absent) rm -f "$EVIDENCE" ;;
     present) echo "2024-01-01T00:00:00Z cargo test" > "$EVIDENCE"; touch -t 209901010000 "$EVIDENCE" ;;
     stale)  echo "2024-01-01T00:00:00Z cargo test" > "$EVIDENCE"; touch -t 200001010000 "$EVIDENCE" ;;
+    lowcov) printf '2024-01-01T00:00:00Z\tgo test -cover\ncoverage\t40\tgo test -cover\n' > "$EVIDENCE"; touch -t 209901010000 "$EVIDENCE" ;;
+    highcov) printf '2024-01-01T00:00:00Z\tgo test -cover\ncoverage\t85\tgo test -cover\n' > "$EVIDENCE"; touch -t 209901010000 "$EVIDENCE" ;;
   esac
   echo "fn main() {}" > src/main.rs; git add src/main.rs 2>/dev/null
   local input=$(jq -n --arg cmd "$cmd" --arg sid "abcdef1234567890" '{tool_input:{command:$cmd},session_id:$sid}')
@@ -37,6 +39,12 @@ echo "$OUT" | grep -q 'permissionDecision.*deny' && { echo "FAIL: commit w/ fres
 
 OUT=$(run "git commit -m x" stale)
 echo "$OUT" | grep -q 'permissionDecision.*deny' && { echo "PASS: commit w/ stale evidence denied"; PASS=$((PASS+1)); } || { echo "FAIL: commit w/ stale evidence not denied"; FAIL=$((FAIL+1)); }
+
+OUT=$(run "git commit -m x" lowcov)
+echo "$OUT" | grep -q 'MIN_COVERAGE' && { echo "PASS: low coverage denied"; PASS=$((PASS+1)); } || { echo "FAIL: low coverage should be denied"; FAIL=$((FAIL+1)); }
+
+OUT=$(run "git commit -m x" highcov)
+echo "$OUT" | grep -q 'permissionDecision.*deny' && { echo "FAIL: high coverage denied"; FAIL=$((FAIL+1)); } || { echo "PASS: high coverage allowed"; PASS=$((PASS+1)); }
 
 echo "Results: $PASS passed, $FAIL failed"
 exit $FAIL

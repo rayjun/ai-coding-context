@@ -1,10 +1,10 @@
 > **最后更新**: 2026-06-18 UTC
-> **当前阶段**: [Round 12 P0 — §2/§6 矩阵合并 + 移除 superpowers 依赖]
-> **整体进度**: 21 active 任务（含 16 archived）
+> **当前阶段**: [Round 12 P1 — 质量门禁：code-review EVAL + coverage 阈值]
+> **整体进度**: 22 active 任务（含 16 archived）
 
 ## 当前目标
-Round 12 P0：消除 AGENTS.md 增量编辑累积的结构性重复——删 §2 流程分级矩阵，合并为 §6 单一「步骤 × trivial/moderate/complex × 审查方式与要点」矩阵；subagent 评审规则 3 处合一指向 `plan-review/SKILL.md`；流程规则 9 → 4 条。同时移除 superpowers 外部依赖（Skill 列、`requesting-code-review` 悬空引用、README 依赖清单、investigate 关系节）。同步更新 README、tasks、决策索引和 STATUS。
-**参考**: `docs/decisions/0039-dedup-and-drop-superpowers.md`
+Round 12 P1：给「代码质量」装上客观判据。新建 `code-review` skill（5 维度 + EVAL 1-6，硬性要求工具证据：编译/lint/测试真实输出）+ `code-reviewer` agent，接入 §6 第 6 步。`record-test-evidence.sh` 解析测试输出的 coverage 行写入 evidence；`pre-commit-check.sh` 在 evidence 含 coverage 时校验 `MIN_COVERAGE`（默认 60）阈值，低覆盖提交硬拦截；无 coverage 的项目向后兼容。
+**参考**: `docs/plans/round12-p1-quality-gates.md`、`docs/decisions/0040-quality-gates.md`
 
 ## 任务进度
 
@@ -17,6 +17,7 @@ Round 12 P0：消除 AGENTS.md 增量编辑累积的结构性重复——删 §2
 | Round 3 P0 | Stop 顺序 + evidence 隔离 + 决策外置 | ✓ |
 | Round 4 P0 (T-021~T-027) | Subagents + Spec-Driven 模板 | ✓ |
 | Round 12 P0 (T-037) | AGENTS.md 矩阵合并去重 + 移除 superpowers 依赖 | ✓ |
+| Round 12 P1 (T-038) | 质量门禁：code-review EVAL + coverage 阈值 | ✓ |
 
 ## 最新发现
 
@@ -27,6 +28,8 @@ Round 12 P0：消除 AGENTS.md 增量编辑累积的结构性重复——删 §2
 - **install.sh 区分覆盖策略**：模板（specs/_template/、specs/README.md）每次覆盖；用户内容（lessons.md、STATUS.md、tasks.example.json）首次创建后不覆盖。Round 4 同时新增了这两类资源。
 - **单表胜双表**：§2 矩阵与 §6 表合并后，消除了双表漂移风险（本轮就发现 §6 引用块 5 维度与 `plan-review/SKILL.md` 维度不一致）；改流程只动一处。
 - **外部 skill 依赖是隐性维护债**：superpowers 的 7 个 skill 名仅存在于表头引用、无对应文件，`requesting-code-review` 甚至是悬空引用；移除后 fork 用户零外部依赖。
+- **工具证据是 LLM 审查的对冲**：code-review 的 EVAL 4 强制引用编译/lint/测试真实输出，直接针对「同一模型读代码共享盲区 + 审查者倾向认可」的弱点；审查报告可复核、可判假。
+- **coverage 行进入 evidence 的取舍**：只解析三种常见格式（TOTAL/`coverage: x%`/`x% coverage`），裸百分比不解析防误报；`MIN_COVERAGE` 默认 60 只拦「明显没测」，高目标由项目调高。
 
 ## 决策记录
 
@@ -52,6 +55,7 @@ Round 12 P0：消除 AGENTS.md 增量编辑累积的结构性重复——删 §2
 | 37 | [Round 10 P0 流程强制度提升](./decisions/0037-round10-flow-rigor.md) | 2026-06-02 |
 | 38 | [Round 11 P0 — Loop Engineering](./decisions/0038-loop-engineering.md) | 2026-06-17 |
 | 39 | [Round 12 P0 — §2/§6 矩阵合并 + 移除 superpowers 依赖](./decisions/0039-dedup-and-drop-superpowers.md) | 2026-06-18 |
+| 40 | [Round 12 P1 — 质量门禁：code-review EVAL + coverage 阈值](./decisions/0040-quality-gates.md) | 2026-06-18 |
 
 新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
@@ -63,13 +67,15 @@ Round 12 P0：消除 AGENTS.md 增量编辑累积的结构性重复——删 §2
 python3 .claude/hooks/lib/task-summary.py full        # 任务进度 20/20
 bash .claude/hooks/lib/danger-patterns.test.sh        # 25/25 PASS
 bash .claude/hooks/plan-review-reminder.test.sh       # 6/6 PASS
-ls docs/decisions/                                    # 决策档案 #22-#39
+ls docs/decisions/                                    # 决策档案 #22-#40
 ls .claude/agents/                                    # plan-reviewer / retro-writer
 ```
 
 ### 继续工作
 
-Round 12 P0 已完成。剩余待办（按优先级）：
+Round 12 P1 已完成。剩余待办（按优先级）：
+
+- **P1（质量门禁延续）**：coverage 解析扩展 lcov/cobertura 格式；断言强度 diff 启发式（评估误报后再做）；`MIN_COVERAGE` 分语言默认值。
 
 - **P1（来自 Round 3 review 遗留）**：CLAUDE.md 精简 / AGENTS.md §0 去 Ray 化 / EVAL schema 文档化 / onboarding.md
 - **P1（Round 4 中 ROI 项）**：statusline 脚本 / token 预算 hook / output-styles 分场景输出
@@ -79,6 +85,9 @@ Round 12 P0 已完成。剩余待办（按优先级）：
 ---
 
 ## 历史记录（保留）
+
+### 2026-06-18: Round 12 P1 — 质量门禁：code-review EVAL + coverage 阈值
+给「代码质量」装客观判据：新建 `code-review` skill（5 维度 + EVAL 1-6，EVAL 4 硬性要求编译/lint/测试真实输出作为证据，EVAL 5 把 §3 哲学转成可验证 checklist）+ `code-reviewer` agent（独立上下文、只读、工具白名单含 Bash），接入 AGENTS.md §6 第 6 步。`record-test-evidence.sh` 解析测试输出中的覆盖率（pytest-cov TOTAL / `go test -cover` / 通用 `x% coverage`）写入 evidence；`pre-commit-check.sh` 在 evidence 含 coverage 时校验 `MIN_COVERAGE`（默认 60）阈值，低覆盖 deny；无 coverage 项目向后兼容。测试 10/10 + 6/6 + danger-patterns 全绿；端到端验证覆盖记录/低覆盖 deny/阈值覆盖。决策 #40。
 
 ### 2026-06-18: Round 12 P0 — §2/§6 矩阵合并 + 移除 superpowers 依赖
 AGENTS.md 去重：删 §2 流程分级矩阵，合并为 §6 单一「步骤 × trivial/moderate/complex × 审查方式与要点」矩阵；subagent 评审规则 3 处合一并指向 `plan-review/SKILL.md`；「证据先于断言」4 处收敛到 2 处（执行方式 + 适用范围）；TDD 判据收敛到 §4；流程规则 9 → 4 条。移除 superpowers 依赖：删 §6 Skill 列与表头说明、`requesting-code-review` 悬空引用、README 前置依赖与 Skills Framework 引用、investigate skill 的 systematic-debugging 关系节。AGENTS.md 184 → ~150 行。决策 #39。

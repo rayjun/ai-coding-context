@@ -46,5 +46,21 @@ RESULT=$(run "cargo build" "false" "Compiling..." "")
 RESULT=$(run "cargo test" "false" "test result: ok. 10 passed; 0 failed" "")
 [ "$RESULT" = "RECORDED" ] && { echo "PASS: '0 failed' not treated as failure"; PASS=$((PASS+1)); } || { echo "FAIL: '0 failed' should allow recording"; FAIL=$((FAIL+1)); }
 
+# Test 7: go test -cover → recorded + coverage row
+RESULT=$(run "go test -cover ./..." "false" "ok  pkg  0.123s  coverage: 75.3% of statements" "")
+[ "$RESULT" = "RECORDED" ] && grep -q '^coverage\t75.3\t' "$EVIDENCE" && { echo "PASS: go coverage row recorded"; PASS=$((PASS+1)); } || { echo "FAIL: go coverage row should be recorded"; FAIL=$((FAIL+1)); }
+
+# Test 8: pytest-cov TOTAL line → coverage parsed
+RESULT=$(run "pytest --cov=app" "false" "TOTAL 123 45 67%" "")
+[ "$RESULT" = "RECORDED" ] && grep -q '^coverage\t67\t' "$EVIDENCE" && { echo "PASS: TOTAL coverage parsed"; PASS=$((PASS+1)); } || { echo "FAIL: TOTAL coverage should be parsed"; FAIL=$((FAIL+1)); }
+
+# Test 9: No coverage output → no coverage row
+RESULT=$(run "cargo test" "false" "running 5 tests\n5 passed" "")
+[ "$RESULT" = "RECORDED" ] && ! grep -q '^coverage\t' "$EVIDENCE" && { echo "PASS: no coverage row when absent"; PASS=$((PASS+1)); } || { echo "FAIL: should not add coverage row when absent"; FAIL=$((FAIL+1)); }
+
+# Test 10: bare percent w/o coverage context → NOT parsed
+RESULT=$(run "cargo test" "false" "compression ratio 100% OK" "")
+[ "$RESULT" = "RECORDED" ] && ! grep -q '^coverage\t' "$EVIDENCE" && { echo "PASS: bare percent not parsed as coverage"; PASS=$((PASS+1)); } || { echo "FAIL: bare percent must not become coverage"; FAIL=$((FAIL+1)); }
+
 echo "Results: $PASS passed, $FAIL failed"
 exit $FAIL

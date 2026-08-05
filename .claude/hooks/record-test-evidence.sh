@@ -64,4 +64,14 @@ fi
 
 printf '%s\t%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$COMMAND" >> "$EVIDENCE_FILE"
 
+# Coverage extraction: if the output reports a coverage percentage, record it
+# so the pre-commit gate can enforce a MIN_COVERAGE threshold. Patterns are
+# anchored to coverage-specific contexts (TOTAL row / "coverage: x%" /
+# "x% coverage") to avoid false positives like bare percentages elsewhere.
+COVERAGE_MATCH=$(printf '%s' "$COMBINED" | grep -oE 'TOTAL[[:space:]]+[0-9]+[[:space:]]+[0-9]+[[:space:]]+[0-9]+%|coverage:[[:space:]]*[0-9]+(\.[0-9]+)?%|[0-9]+(\.[0-9]+)?%[[:space:]]+coverage' | head -1 || true)
+if [ -n "$COVERAGE_MATCH" ]; then
+  COVERAGE_PCT=$(printf '%s' "$COVERAGE_MATCH" | grep -oE '[0-9]+(\.[0-9]+)?%' | head -1 | tr -d '%')
+  printf 'coverage\t%s\t%s\n' "$COVERAGE_PCT" "$COMMAND" >> "$EVIDENCE_FILE"
+fi
+
 exit 0

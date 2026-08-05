@@ -101,7 +101,7 @@
 
 ## 6 · 强制开发流程（9 步 / 9-step）
 
-所有非 trivial 任务必须按顺序执行。步骤按 trivial / moderate / complex 分级裁量；流程不依赖外部 skill 包，本仓库自带 skills：plan-review / investigate / careful-ops / workflow-management。
+所有非 trivial 任务必须按顺序执行。步骤按 trivial / moderate / complex 分级裁量；流程不依赖外部 skill 包，本仓库自带 skills：plan-review / code-review / investigate / careful-ops / workflow-management。
 
 ### 流程分级矩阵
 
@@ -113,7 +113,7 @@
 | 3 | Git 工作树 | 可跳 | 可跳 | 可选 | 隔离开发，用户可跳过 |
 | 4 | TDD | 可跳 | 对"生产业务逻辑"**必做**；探索脚本/原型可跳 | **必做** | 红→绿→重构（判据见 §4） |
 | 5 | 执行计划 | 直接写 | **必做** | **必做**，可并行 | 可并行子 agent；异常用 investigate 调试 |
-| 6 | 代码审查 | 可跳 | **必做** | **必做** | **subagent（强制）**：`delegate_task` 启动代码审查（安全性/正确性/可维护性/测试覆盖/需求符合度），通过后方可继续 |
+| 6 | 代码审查 | 可跳 | **必做** | **必做** | **subagent（强制）**：`delegate_task` 启动代码审查，5 维度 + 强制工具证据，判据见 `.claude/skills/code-review/SKILL.md`，通过后方可继续 |
 | 7 | 验证 | **必做** | **必做** | **必做** | 证据先于断言（见下），必须展示实际输出 |
 | 8 | 文档维护 | 可跳 | **必做**（tasks + STATUS） | **必做**（+ 项目文档） | 更新 tasks.json + STATUS.md + 项目文档 |
 | 9 | 完成分支 | 可跳 | 可选 | **必做** | 合并 / PR / 清理，用户决定 |
@@ -129,7 +129,7 @@
 * 信息不足、方案审查失败、代码审查失败、验证失败时，先记录观察信号，再更新假设，只做能验证该假设的最小修改。
 * 同一 gate 失败两轮且没有新证据时停止自旋：汇报已知事实、剩余假设和需要用户/外部信息决策的点。
 
-> **subagent 执行方式**：方案评审 / 代码审查 subagent 必须通过 `delegate_task` 启动，使用独立上下文窗口，不接受实现者自己审查自己。方案评审维度与 goal 格式见 `.claude/skills/plan-review/SKILL.md`；代码审查按表格第 6 步的 5 维度执行。
+> **subagent 执行方式**：方案评审 / 代码审查 subagent 必须通过 `delegate_task` 启动，使用独立上下文窗口，不接受实现者自己审查自己。方案评审维度与 goal 格式见 `.claude/skills/plan-review/SKILL.md`；代码审查见 `.claude/skills/code-review/SKILL.md`。
 > **会话复盘**：会话结束或用户主动要求时，可调用 `.claude/agents/retro-writer.md` subagent 追加 `docs/lessons.md`。
 > **第 9 步适配**：单人 main-only / 文档迭代项目可跳过第 9 步——直接 commit + push 到 main 即合规；feature branch + PR 工作流的项目应当执行。
 

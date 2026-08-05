@@ -6,7 +6,7 @@ A complete AI behavior governance framework with four-layer synergy:
 
 1. **Context Engineering** — `AGENTS.md` defines the reasoning framework, loop engineering discipline, 9-step process, coding philosophy, and security rules.
 2. **Harness Layer** — 19 hook scripts upgrade key rules from "textual constraints" to "code enforcement".
-3. **Skills Layer** — Reusable capability packages loaded on demand (Workflow / Debugging / Security / Architecture Review).
+3. **Skills Layer** — Reusable capability packages loaded on demand (Workflow / Debugging / Security / Architecture Review / Code Review).
 4. **SSoT Documentation** — `docs/STATUS.md` records context, `docs/tasks.json` tracks progress.
 
 Cross-tool compatible: Claude Code (First-class citizen), Gemini CLI (Hooks compatible), Codex CLI (Sandbox fallback).
@@ -58,7 +58,7 @@ Claude Code automatically injects content when editing matching files.
 > Claude Code's slash commands **do not have a `project:` prefix**. Skills take precedence in case of name collisions.
 
 ### `.claude/skills/` — On-demand Skills
-5 project-level skills (workflow-management / plan-review / investigate / careful-ops / obsidian-writer) + 1 eval-runner tool. Each `SKILL.md` contains `EVAL 1..N` quality assessment blocks, which can be automatically scored using `eval-runner.py`.
+6 project-level skills (workflow-management / plan-review / code-review / investigate / careful-ops / obsidian-writer) + 1 eval-runner tool. Each `SKILL.md` contains `EVAL 1..N` quality assessment blocks, which can be automatically scored using `eval-runner.py`. `code-review` enforces tool-evidence: every review must cite actual compiler / lint / test output, not just code reading.
 
 > `obsidian-writer` is a **demo skill** showcasing the per-vault `AGENTS.md` rule pattern; this repo itself does not use it. Forks can drop it from `install.sh` if not needed.
 
@@ -66,9 +66,10 @@ Claude Code automatically injects content when editing matching files.
 Independent context windows for tasks that would otherwise pollute the main thread:
 
 - `plan-reviewer.md` — runs the 5-dimension architectural review (data flow / concurrency / interface / testing / operability) in isolation. References `plan-review` skill as the rule SSoT, does not duplicate.
+- `code-reviewer.md` — runs the 5-dimension code review (security / correctness / maintainability / test coverage / requirement fit) in isolation, with mandatory tool-evidence (compiler / lint / test output). References `code-review` skill as the rule SSoT, does not duplicate.
 - `retro-writer.md` — extracts self-correction patterns ("expected X, actually Y") from session transcripts and appends to `docs/lessons.md`.
 
-> Skills define rules; agents execute them. complex tasks recommend `Agent(subagent_type="plan-reviewer")`; trivial / moderate use the skill directly.
+> Skills define rules; agents execute them. complex tasks recommend `Agent(subagent_type="plan-reviewer")` / `Agent(subagent_type="code-reviewer")`; trivial / moderate use the skills directly.
 
 ### `docs/specs/` — Spec-Driven Development (Optional)
 Inspired by Kiro / spec-kit. The `requirements.md` (EARS) → `design.md` → `tasks.md` triplet is an **optional alternative** to `docs/plans/` for cross-PR / multi-week features. AGENTS.md §6 is unchanged. See `docs/specs/README.md` for when to use spec vs plan.
@@ -125,6 +126,6 @@ See `AGENTS.md` §2 §6 for details.
 ## Related Dependencies
 
 - **Harness Philosophy**: [12 Factor Agents](https://github.com/humanlayer/12-factor-agents)
-- **Skills Framework**: 本仓库自带 `.claude/skills/`（plan-review / investigate / careful-ops / workflow-management），无外部依赖
+- **Skills Framework**: 本仓库自带 `.claude/skills/`（plan-review / code-review / investigate / careful-ops / workflow-management），无外部依赖
 - **Spec Origin**: `AGENTS.md` adapted from [Xuanwo's AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)
 - **Official Docs**: [Claude Code Hooks](https://code.claude.com/docs/en/hooks) · [Skills](https://code.claude.com/docs/en/skills) · [Memory](https://code.claude.com/docs/en/memory)

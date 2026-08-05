@@ -173,6 +173,15 @@
       "blocked_by": [],
       "notes": "删 §2 分级矩阵，合并为 §6 单一矩阵（步骤×复杂度×审查方式）；subagent 评审规则 3 处合一指向 plan-review/SKILL.md；流程规则 9→4；证据先于断言 4→2；README/investigate 删 superpowers 引用；详见决策 #39",
       "done": true
+    },
+    {
+      "id": "T-038",
+      "title": "Round12-P1: 质量门禁 — code-review skill/agent + coverage 阈值门禁",
+      "status": "done",
+      "blocked_by": ["T-037"],
+      "notes": "新建 code-review SKILL.md（5 维度 + 工具证据 EVAL4 + §3 哲学 EVAL5）+ code-reviewer agent；record-test-evidence 解析 coverage（TOTAL/coverage:x%/x% coverage）写入 evidence；pre-commit 低于 MIN_COVERAGE（默认 60）deny；测试 10/10 + 6/6 全绿；详见决策 #40",
+      "done": true,
+      "spec_id": "docs/plans/round12-p1-quality-gates.md"
     }
   ]
 }
