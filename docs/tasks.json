@@ -182,6 +182,15 @@
       "notes": "新建 code-review SKILL.md（5 维度 + 工具证据 EVAL4 + §3 哲学 EVAL5）+ code-reviewer agent；record-test-evidence 解析 coverage（TOTAL/coverage:x%/x% coverage）写入 evidence；pre-commit 低于 MIN_COVERAGE（默认 60）deny；测试 10/10 + 6/6 全绿；详见决策 #40",
       "done": true,
       "spec_id": "docs/plans/round12-p1-quality-gates.md"
+    },
+    {
+      "id": "T-039",
+      "title": "Round12-P2: 工具中立化 — harness/ 迁移 + 移除 .claude/.gemini/.codex/CLAUDE.md",
+      "status": "done",
+      "blocked_by": ["T-038"],
+      "notes": "hooks/skills/agents/rules/commands 迁到 harness/；git rm 工具注册文件与 CLAUDE.md；AGENTS.md §7 改为 agent 自觉执行触发时机表；install.sh/Makefile/.gitignore/README 全同步；obsidian 用户路径中性化；测试全绿；详见决策 #41",
+      "done": true,
+      "spec_id": "docs/plans/round12-p2-tool-agnostic.md"
     }
   ]
 }

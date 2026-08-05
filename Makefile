@@ -1,3 +1,3 @@
 .PHONY: test
 test:
-	@bash .claude/hooks/lib/danger-patterns.test.sh
+	@bash harness/hooks/lib/danger-patterns.test.sh

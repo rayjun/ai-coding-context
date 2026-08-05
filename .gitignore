@@ -1,15 +1,5 @@
-# AI tools - ignore local/personal settings, track shared configs
-.claude/*
-!.claude/settings.json
-!.claude/rules/
-!.claude/commands/
-!.claude/skills/
-!.claude/hooks/
-!.claude/agents/
-.gemini/*
-!.gemini/settings.json
-.codex/*
-!.codex/config.toml
+# Tool-agnostic: no per-tool config dirs (removed in Round 12 P2);
+# harness/ is fully tracked. Ignore only local/personal state.
 
 # Environment & secrets
 .env*

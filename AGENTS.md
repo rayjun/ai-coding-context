@@ -113,7 +113,7 @@
 | 3 | Git 工作树 | 可跳 | 可跳 | 可选 | 隔离开发，用户可跳过 |
 | 4 | TDD | 可跳 | 对"生产业务逻辑"**必做**；探索脚本/原型可跳 | **必做** | 红→绿→重构（判据见 §4） |
 | 5 | 执行计划 | 直接写 | **必做** | **必做**，可并行 | 可并行子 agent；异常用 investigate 调试 |
-| 6 | 代码审查 | 可跳 | **必做** | **必做** | **subagent（强制）**：`delegate_task` 启动代码审查，5 维度 + 强制工具证据，判据见 `.claude/skills/code-review/SKILL.md`，通过后方可继续 |
+| 6 | 代码审查 | 可跳 | **必做** | **必做** | **subagent（强制）**：`delegate_task` 启动代码审查，5 维度 + 强制工具证据，判据见 `harness/skills/code-review/SKILL.md`，通过后方可继续 |
 | 7 | 验证 | **必做** | **必做** | **必做** | 证据先于断言（见下），必须展示实际输出 |
 | 8 | 文档维护 | 可跳 | **必做**（tasks + STATUS） | **必做**（+ 项目文档） | 更新 tasks.json + STATUS.md + 项目文档 |
 | 9 | 完成分支 | 可跳 | 可选 | **必做** | 合并 / PR / 清理，用户决定 |
@@ -129,8 +129,8 @@
 * 信息不足、方案审查失败、代码审查失败、验证失败时，先记录观察信号，再更新假设，只做能验证该假设的最小修改。
 * 同一 gate 失败两轮且没有新证据时停止自旋：汇报已知事实、剩余假设和需要用户/外部信息决策的点。
 
-> **subagent 执行方式**：方案评审 / 代码审查 subagent 必须通过 `delegate_task` 启动，使用独立上下文窗口，不接受实现者自己审查自己。方案评审维度与 goal 格式见 `.claude/skills/plan-review/SKILL.md`；代码审查见 `.claude/skills/code-review/SKILL.md`。
-> **会话复盘**：会话结束或用户主动要求时，可调用 `.claude/agents/retro-writer.md` subagent 追加 `docs/lessons.md`。
+> **subagent 执行方式**：方案评审 / 代码审查 subagent 必须通过 `delegate_task` 启动，使用独立上下文窗口，不接受实现者自己审查自己。方案评审维度与 goal 格式见 `harness/skills/plan-review/SKILL.md`；代码审查见 `harness/skills/code-review/SKILL.md`。
+> **会话复盘**：会话结束或用户主动要求时，可调用 `harness/agents/retro-writer.md` subagent 追加 `docs/lessons.md`。
 > **第 9 步适配**：单人 main-only / 文档迭代项目可跳过第 9 步——直接 commit + push 到 main 即合规；feature branch + PR 工作流的项目应当执行。
 
 ### 流程规则
@@ -143,10 +143,21 @@
 
 ## 7 · 安全与 Harness (security & harness)
 
-* **破坏性操作**: `.claude/hooks/careful-ops-check.sh` 硬拦截 CRITICAL（rm -rf, DROP TABLE 等），警告 HIGH。
-* **commit 门禁**: `.claude/hooks/pre-commit-check.sh` 要求本会话跑过测试才能 commit。
-* **敏感文件**: `permissions.deny` 拦截 .env / credentials / secrets / *.pem / *.key 的读写。
-* **GitHub 交互**: 优先使用 `gh` CLI。
+本 harness **不依赖任何 agent 平台的 hooks 注册机制**：`harness/hooks/*.sh` 是可执行检查脚本，**由 agent 在对应时机自行运行**（「Agent 自觉执行」模式）。以下为触发时机清单，不得跳过：
+
+| 时机 | 运行 | 目的 |
+|------|------|------|
+| 会话启动 | `harness/hooks/orient-session.sh` | 注入项目上下文（git log、STATUS、近期计划） |
+| 破坏性操作前（rm -rf、DROP TABLE、git 历史重写等） | `harness/hooks/careful-ops-check.sh` | CRITICAL 硬拦截 / HIGH 警告；模式 SSoT 在 `harness/hooks/lib/danger-patterns.sh` |
+| 测试/构建/lint 命令后 | `harness/hooks/record-test-evidence.sh` | 记录成功证据（含 coverage），供 commit 门禁比对 |
+| git commit 前 | `harness/hooks/pre-commit-check.sh` | 校验本会话跑过测试 + 覆盖率不低于 `MIN_COVERAGE`（默认 60） |
+| 编辑 `docs/plans/*.md` 后 | `harness/hooks/plan-review-reminder.sh` | 提醒运行 plan-reviewer（第 2 续步） |
+| 编辑 `docs/tasks.json` 后 | `harness/hooks/tasks-validate.sh` | 校验任务 SSoT 结构 |
+| 编辑 `docs/STATUS.md` 后 | `harness/hooks/status-format-check.sh` | 校验 STATUS 格式 |
+| 会话结束 | `harness/hooks/session-end.sh` + `assertion-audit.sh` | 校验状态持久化与证据完备 |
+
+* **敏感文件**：禁止读写 .env / credentials / secrets / *.pem / *.key（原平台 `permissions.deny` 已随工具目录移除，此为硬性文本约束，配合 `credential-sniff.sh` 自觉检查）。
+* **GitHub 交互**：优先使用 `gh` CLI。
 
 ---
 

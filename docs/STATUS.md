@@ -1,10 +1,10 @@
 > **最后更新**: 2026-06-18 UTC
-> **当前阶段**: [Round 12 P1 — 质量门禁：code-review EVAL + coverage 阈值]
-> **整体进度**: 22 active 任务（含 16 archived）
+> **当前阶段**: [Round 12 P2 — 工具中立化：harness/ 迁移，移除 .claude/.gemini/.codex]
+> **整体进度**: 23 active 任务（含 16 archived）
 
 ## 当前目标
-Round 12 P1：给「代码质量」装上客观判据。新建 `code-review` skill（5 维度 + EVAL 1-6，硬性要求工具证据：编译/lint/测试真实输出）+ `code-reviewer` agent，接入 §6 第 6 步。`record-test-evidence.sh` 解析测试输出的 coverage 行写入 evidence；`pre-commit-check.sh` 在 evidence 含 coverage 时校验 `MIN_COVERAGE`（默认 60）阈值，低覆盖提交硬拦截；无 coverage 的项目向后兼容。
-**参考**: `docs/plans/round12-p1-quality-gates.md`、`docs/decisions/0040-quality-gates.md`
+Round 12 P2：工具中立化。hooks/skills/agents/rules/commands 从 `.claude/` 迁移到 `harness/`；彻底删除 `.claude/.gemini/.codex` 注册文件与 `CLAUDE.md` 专属入口；AGENTS.md 零工具引用，任何 agent 拿到即用。hooks 从平台注册改为「Agent 自觉执行」：AGENTS.md §7 定义触发时机表，由 agent 自行运行 `harness/hooks/*.sh`。
+**参考**: `docs/plans/round12-p2-tool-agnostic.md`、`docs/decisions/0041-tool-agnostic-harness.md`
 
 ## 任务进度
 
@@ -18,6 +18,7 @@ Round 12 P1：给「代码质量」装上客观判据。新建 `code-review` ski
 | Round 4 P0 (T-021~T-027) | Subagents + Spec-Driven 模板 | ✓ |
 | Round 12 P0 (T-037) | AGENTS.md 矩阵合并去重 + 移除 superpowers 依赖 | ✓ |
 | Round 12 P1 (T-038) | 质量门禁：code-review EVAL + coverage 阈值 | ✓ |
+| Round 12 P2 (T-039) | 工具中立化：harness/ 迁移 + 移除工具目录 | ✓ |
 
 ## 最新发现
 
@@ -30,6 +31,7 @@ Round 12 P1：给「代码质量」装上客观判据。新建 `code-review` ski
 - **外部 skill 依赖是隐性维护债**：superpowers 的 7 个 skill 名仅存在于表头引用、无对应文件，`requesting-code-review` 甚至是悬空引用；移除后 fork 用户零外部依赖。
 - **工具证据是 LLM 审查的对冲**：code-review 的 EVAL 4 强制引用编译/lint/测试真实输出，直接针对「同一模型读代码共享盲区 + 审查者倾向认可」的弱点；审查报告可复核、可判假。
 - **coverage 行进入 evidence 的取舍**：只解析三种常见格式（TOTAL/`coverage: x%`/`x% coverage`），裸百分比不解析防误报；`MIN_COVERAGE` 默认 60 只拦「明显没测」，高目标由项目调高。
+- **工具中立化的范式转变**：hooks 从平台注册（硬强制）变为 AGENTS.md §7 触发时机表（自觉执行）。可靠性的天平从「平台拦截」移到「AGENTS.md 约束力 + agent 自觉」。对追求零配置适配所有 agent 的场景值得，但对安全敏感项目要意识到门禁从硬变软。
 
 ## 决策记录
 
@@ -56,6 +58,7 @@ Round 12 P1：给「代码质量」装上客观判据。新建 `code-review` ski
 | 38 | [Round 11 P0 — Loop Engineering](./decisions/0038-loop-engineering.md) | 2026-06-17 |
 | 39 | [Round 12 P0 — §2/§6 矩阵合并 + 移除 superpowers 依赖](./decisions/0039-dedup-and-drop-superpowers.md) | 2026-06-18 |
 | 40 | [Round 12 P1 — 质量门禁：code-review EVAL + coverage 阈值](./decisions/0040-quality-gates.md) | 2026-06-18 |
+| 41 | [Round 12 P2 — 工具中立化：harness/ 迁移](./decisions/0041-tool-agnostic-harness.md) | 2026-06-18 |
 
 新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
@@ -64,18 +67,19 @@ Round 12 P1：给「代码质量」装上客观判据。新建 `code-review` ski
 ### 恢复上下文
 
 ```bash
-python3 .claude/hooks/lib/task-summary.py full        # 任务进度 20/20
-bash .claude/hooks/lib/danger-patterns.test.sh        # 25/25 PASS
-bash .claude/hooks/plan-review-reminder.test.sh       # 6/6 PASS
-ls docs/decisions/                                    # 决策档案 #22-#40
-ls .claude/agents/                                    # plan-reviewer / retro-writer
+python3 harness/hooks/lib/task-summary.py full        # 任务进度 20/20
+bash harness/hooks/lib/danger-patterns.test.sh        # 25/25 PASS
+bash harness/hooks/plan-review-reminder.test.sh       # 6/6 PASS
+ls docs/decisions/                                    # 决策档案 #22-#41
+ls harness/agents/                                    # plan-reviewer / code-reviewer / retro-writer
 ```
 
 ### 继续工作
 
-Round 12 P1 已完成。剩余待办（按优先级）：
+Round 12 P2 已完成。剩余待办（按优先级）：
 
 - **P1（质量门禁延续）**：coverage 解析扩展 lcov/cobertura 格式；断言强度 diff 启发式（评估误报后再做）；`MIN_COVERAGE` 分语言默认值。
+- **P2（工具中立化延续）**：真实工具接入验证（在 Gemini/Codex/pi 下各跑一轮，确认 AGENTS.md §7 自觉执行表是否够用）；必要时给 AGENTS.md 顶部加「会话启动必读」提示。
 
 - **P1（来自 Round 3 review 遗留）**：CLAUDE.md 精简 / AGENTS.md §0 去 Ray 化 / EVAL schema 文档化 / onboarding.md
 - **P1（Round 4 中 ROI 项）**：statusline 脚本 / token 预算 hook / output-styles 分场景输出
@@ -85,6 +89,9 @@ Round 12 P1 已完成。剩余待办（按优先级）：
 ---
 
 ## 历史记录（保留）
+
+### 2026-06-18: Round 12 P2 — 工具中立化：harness/ 迁移 + 移除工具目录
+hooks/skills/agents/rules/commands 从 `.claude/` 迁移到中立目录 `harness/`；`git rm` `.claude/settings.json`、`.gemini/settings.json`、`.codex/config.toml`、`CLAUDE.md`（用户确认彻底删除，不保留注册层）。AGENTS.md §7 从「平台硬拦截」改写为「Agent 自觉执行」触发时机表（会话启动/破坏性操作前/测试后/commit 前/编辑 plans-tasks-STATUS 后/会话结束 → 对应 hook）。install.sh/Makefile/.gitignore/README/STATUS 恢复上下文全同步；obsidian 用户路径与 LARGE_FILE_THRESHOLD 中性化。测试全绿，活跃文件 `.claude` 引用归零（仅历史 docs 保留）。决策 #41。
 
 ### 2026-06-18: Round 12 P1 — 质量门禁：code-review EVAL + coverage 阈值
 给「代码质量」装客观判据：新建 `code-review` skill（5 维度 + EVAL 1-6，EVAL 4 硬性要求编译/lint/测试真实输出作为证据，EVAL 5 把 §3 哲学转成可验证 checklist）+ `code-reviewer` agent（独立上下文、只读、工具白名单含 Bash），接入 AGENTS.md §6 第 6 步。`record-test-evidence.sh` 解析测试输出中的覆盖率（pytest-cov TOTAL / `go test -cover` / 通用 `x% coverage`）写入 evidence；`pre-commit-check.sh` 在 evidence 含 coverage 时校验 `MIN_COVERAGE`（默认 60）阈值，低覆盖 deny；无 coverage 项目向后兼容。测试 10/10 + 6/6 + danger-patterns 全绿；端到端验证覆盖记录/低覆盖 deny/阈值覆盖。决策 #40。
