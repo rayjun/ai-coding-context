@@ -165,6 +165,14 @@
       "notes": "新增 docs/plans/round11-loop-engineering.md；AGENTS.md §6 定义目标/观察信号/假设/退出升级条件；workflow-management 增 EVAL；README/decisions/STATUS 同步；验证矩阵通过。",
       "done": true,
       "spec_id": "docs/plans/round11-loop-engineering.md"
+    },
+    {
+      "id": "T-037",
+      "title": "Round12-P0: AGENTS.md 去重 — §2/§6 矩阵合并 + 移除 superpowers 依赖",
+      "status": "done",
+      "blocked_by": [],
+      "notes": "删 §2 分级矩阵，合并为 §6 单一矩阵（步骤×复杂度×审查方式）；subagent 评审规则 3 处合一指向 plan-review/SKILL.md；流程规则 9→4；证据先于断言 4→2；README/investigate 删 superpowers 引用；详见决策 #39",
+      "done": true
     }
   ]
 }

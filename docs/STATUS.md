@@ -1,10 +1,10 @@
-> **最后更新**: 2026-06-17 UTC
-> **当前阶段**: [Round 11 P0 — Loop Engineering 完成]
-> **整体进度**: 20 active 任务（含 16 archived）
+> **最后更新**: 2026-06-18 UTC
+> **当前阶段**: [Round 12 P0 — §2/§6 矩阵合并 + 移除 superpowers 依赖]
+> **整体进度**: 21 active 任务（含 16 archived）
 
 ## 当前目标
-Round 11 P0：把 Loop Engineering 作为 9 步流程的横切纪律写入 `AGENTS.md` §6 和 `workflow-management` skill。定义非 trivial 任务的目标、观察信号、下一步假设、退出/升级条件；审查/验证/信息不足时按有界循环重跑同一 gate。同步更新 README、tasks、决策索引和 STATUS。
-**参考**: `docs/plans/round11-loop-engineering.md`、`docs/decisions/0038-loop-engineering.md`
+Round 12 P0：消除 AGENTS.md 增量编辑累积的结构性重复——删 §2 流程分级矩阵，合并为 §6 单一「步骤 × trivial/moderate/complex × 审查方式与要点」矩阵；subagent 评审规则 3 处合一指向 `plan-review/SKILL.md`；流程规则 9 → 4 条。同时移除 superpowers 外部依赖（Skill 列、`requesting-code-review` 悬空引用、README 依赖清单、investigate 关系节）。同步更新 README、tasks、决策索引和 STATUS。
+**参考**: `docs/decisions/0039-dedup-and-drop-superpowers.md`
 
 ## 任务进度
 
@@ -16,6 +16,7 @@ Round 11 P0：把 Loop Engineering 作为 9 步流程的横切纪律写入 `AGEN
 | Round 2 (T-017~T-020) | Claude Code 官方 API 合规性 | ✓ |
 | Round 3 P0 | Stop 顺序 + evidence 隔离 + 决策外置 | ✓ |
 | Round 4 P0 (T-021~T-027) | Subagents + Spec-Driven 模板 | ✓ |
+| Round 12 P0 (T-037) | AGENTS.md 矩阵合并去重 + 移除 superpowers 依赖 | ✓ |
 
 ## 最新发现
 
@@ -24,6 +25,8 @@ Round 11 P0：把 Loop Engineering 作为 9 步流程的横切纪律写入 `AGEN
 - **EARS 格式（WHEN/IF/WHILE + SHALL）适合作为 spec 的需求语言**：每条需求强制有触发条件 + 系统行为 + 验收标准，规避「make it work」式模糊需求。
 - **Loop Engineering 边界**：非 trivial 任务应声明目标、观察信号、下一步假设、退出/升级条件。信息不足、审查失败、验证失败时重跑同一 gate；同一失败两轮且无新证据时停止自旋并升级。
 - **install.sh 区分覆盖策略**：模板（specs/_template/、specs/README.md）每次覆盖；用户内容（lessons.md、STATUS.md、tasks.example.json）首次创建后不覆盖。Round 4 同时新增了这两类资源。
+- **单表胜双表**：§2 矩阵与 §6 表合并后，消除了双表漂移风险（本轮就发现 §6 引用块 5 维度与 `plan-review/SKILL.md` 维度不一致）；改流程只动一处。
+- **外部 skill 依赖是隐性维护债**：superpowers 的 7 个 skill 名仅存在于表头引用、无对应文件，`requesting-code-review` 甚至是悬空引用；移除后 fork 用户零外部依赖。
 
 ## 决策记录
 
@@ -48,6 +51,7 @@ Round 11 P0：把 Loop Engineering 作为 9 步流程的横切纪律写入 `AGEN
 | 36 | [Round 9 P0 运行时 surface 整理](./decisions/0036-round9-runtime-surface.md) | 2026-05-31 |
 | 37 | [Round 10 P0 流程强制度提升](./decisions/0037-round10-flow-rigor.md) | 2026-06-02 |
 | 38 | [Round 11 P0 — Loop Engineering](./decisions/0038-loop-engineering.md) | 2026-06-17 |
+| 39 | [Round 12 P0 — §2/§6 矩阵合并 + 移除 superpowers 依赖](./decisions/0039-dedup-and-drop-superpowers.md) | 2026-06-18 |
 
 新决策**写到 `docs/decisions/NNNN-slug.md`**，本节只追加索引行（一行/决策）。
 
@@ -59,13 +63,13 @@ Round 11 P0：把 Loop Engineering 作为 9 步流程的横切纪律写入 `AGEN
 python3 .claude/hooks/lib/task-summary.py full        # 任务进度 20/20
 bash .claude/hooks/lib/danger-patterns.test.sh        # 25/25 PASS
 bash .claude/hooks/plan-review-reminder.test.sh       # 6/6 PASS
-ls docs/decisions/                                    # 决策档案 #22-#38
+ls docs/decisions/                                    # 决策档案 #22-#39
 ls .claude/agents/                                    # plan-reviewer / retro-writer
 ```
 
 ### 继续工作
 
-Round 11 P0 已完成。剩余待办（按优先级）：
+Round 12 P0 已完成。剩余待办（按优先级）：
 
 - **P1（来自 Round 3 review 遗留）**：CLAUDE.md 精简 / AGENTS.md §0 去 Ray 化 / EVAL schema 文档化 / onboarding.md
 - **P1（Round 4 中 ROI 项）**：statusline 脚本 / token 预算 hook / output-styles 分场景输出
@@ -75,6 +79,9 @@ Round 11 P0 已完成。剩余待办（按优先级）：
 ---
 
 ## 历史记录（保留）
+
+### 2026-06-18: Round 12 P0 — §2/§6 矩阵合并 + 移除 superpowers 依赖
+AGENTS.md 去重：删 §2 流程分级矩阵，合并为 §6 单一「步骤 × trivial/moderate/complex × 审查方式与要点」矩阵；subagent 评审规则 3 处合一并指向 `plan-review/SKILL.md`；「证据先于断言」4 处收敛到 2 处（执行方式 + 适用范围）；TDD 判据收敛到 §4；流程规则 9 → 4 条。移除 superpowers 依赖：删 §6 Skill 列与表头说明、`requesting-code-review` 悬空引用、README 前置依赖与 Skills Framework 引用、investigate skill 的 systematic-debugging 关系节。AGENTS.md 184 → ~150 行。决策 #39。
 
 ### 2026-06-17: Round 11 P0 — Loop Engineering
 把 Loop Engineering 写入 context/workflow 层：`AGENTS.md` §6 新增目标→观察信号→下一步假设→退出/升级条件；流程规则要求信息不足、审查失败、验证失败时做最小修改并重跑同一 gate，无新证据的重复失败停止自旋。`workflow-management` skill 维持 thin shell，只新增 SSoT 指向和 EVAL；README、tasks、决策索引同步。决策 #38。

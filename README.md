@@ -17,8 +17,7 @@ Cross-tool compatible: Claude Code (First-class citizen), Gemini CLI (Hooks comp
 
 ```bash
 # Prerequisites
-# 1. Claude Code: https://docs.claude.com/en/docs/claude-code
-# 2. superpowers: https://github.com/obra/superpowers
+# Claude Code: https://docs.claude.com/en/docs/claude-code
 
 # Execute in the project root directory
 curl -sSL https://raw.githubusercontent.com/rayjun/ai-coding-context/main/install.sh | bash
@@ -126,6 +125,6 @@ See `AGENTS.md` §2 §6 for details.
 ## Related Dependencies
 
 - **Harness Philosophy**: [12 Factor Agents](https://github.com/humanlayer/12-factor-agents)
-- **Skills Framework**: [superpowers](https://github.com/obra/superpowers)
+- **Skills Framework**: 本仓库自带 `.claude/skills/`（plan-review / investigate / careful-ops / workflow-management），无外部依赖
 - **Spec Origin**: `AGENTS.md` adapted from [Xuanwo's AI Context Gist](https://gist.github.com/Xuanwo/fa5162ed3548ae4f962dcc8b8e256bed)
 - **Official Docs**: [Claude Code Hooks](https://code.claude.com/docs/en/hooks) · [Skills](https://code.claude.com/docs/en/skills) · [Memory](https://code.claude.com/docs/en/memory)
