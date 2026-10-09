@@ -1,31 +1,22 @@
 {
   "version": 1,
-  "project": "",
-  "updated_at": "",
+  "project": "your-project",
+  "updated_at": "YYYY-MM-DD",
   "tasks": [
     {
       "id": "T-001",
-      "title": "Example: completed task",
-      "status": "done",
+      "title": "示例：实现 X 功能并使它可验证",
+      "status": "in_progress",
+      "done": false,
       "blocked_by": [],
-      "notes": "Finished in session 1",
-      "done": true
+      "notes": "成功标准：Y 测试通过；停止条件：Z"
     },
     {
       "id": "T-002",
-      "title": "Example: in-progress task",
-      "status": "in_progress",
-      "blocked_by": [],
-      "notes": "Working on the API layer",
-      "done": false
-    },
-    {
-      "id": "T-003",
-      "title": "Example: pending task",
+      "title": "示例：依赖 T-001 的后续任务",
       "status": "pending",
-      "blocked_by": ["T-002"],
-      "notes": "",
-      "done": false
+      "done": false,
+      "blocked_by": ["T-001"]
     }
   ]
 }

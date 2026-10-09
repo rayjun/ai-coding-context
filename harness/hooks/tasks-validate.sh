@@ -23,7 +23,7 @@ if [ ! -f "docs/tasks.json" ]; then
 fi
 
 python3 -c "
-import json, sys, os, os
+import json, sys, os
 
 try:
     with open('docs/tasks.json') as f:
@@ -57,15 +57,6 @@ else:
             warnings.append(f'{prefix}: done=true but status=\"{task.get(\"status\")}\"')
         if not task.get('done') and task.get('status') == 'done':
             warnings.append(f'{prefix}: status=\"done\" but done=false')
-
-        if 'spec_id' in task:
-            sid = task['spec_id']
-            if not isinstance(sid, str):
-                warnings.append(f'{prefix}: spec_id must be string, got {type(sid).__name__}')
-            elif not sid.startswith('docs/plans/'):
-                warnings.append(f'{prefix}: spec_id should start with \"docs/plans/\" (got \"{sid}\")')
-            elif not os.path.exists(sid):
-                warnings.append(f'{prefix}: spec_id target not found: {sid}')
 
     total = len(data['tasks'])
     completed = sum(1 for t in data['tasks'] if t.get('done'))

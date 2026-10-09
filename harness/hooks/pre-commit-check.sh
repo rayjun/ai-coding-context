@@ -66,16 +66,4 @@ if git rev-parse --is-inside-work-tree &>/dev/null; then
   fi
 fi
 
-# --- Gate: coverage threshold (only when evidence records coverage) ---
-# Projects without a coverage tool produce no coverage row and are not gated.
-# MIN_COVERAGE is overridable per project via environment.
-MIN_COVERAGE="${MIN_COVERAGE:-60}"
-LAST_COVERAGE=$(grep -E '^coverage\t' "$EVIDENCE_FILE" 2>/dev/null | tail -1 | cut -f2)
-if [ -n "$LAST_COVERAGE" ]; then
-  if awk -v c="$LAST_COVERAGE" -v m="$MIN_COVERAGE" 'BEGIN{exit !(c < m)}'; then
-    emit_pretool_deny "Test coverage ${LAST_COVERAGE}% is below the MIN_COVERAGE threshold (${MIN_COVERAGE}%). Improve coverage before committing, or set MIN_COVERAGE explicitly for this project."
-    exit 0
-  fi
-fi
-
 exit 0

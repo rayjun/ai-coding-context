@@ -21,8 +21,8 @@ evidence_path_for_input() {
   local script_dir
   script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   local session_dir
-  if [ -n "${HERMES_HOOK_EVIDENCE_DIR:-}" ]; then
-    session_dir="$HERMES_HOOK_EVIDENCE_DIR"
+  if [ -n "${AI_CONTEXT_EVIDENCE_DIR:-}" ]; then
+    session_dir="$AI_CONTEXT_EVIDENCE_DIR"
   else
     session_dir=$("$script_dir/session-dir.sh")
   fi

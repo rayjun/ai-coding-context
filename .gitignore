@@ -1,19 +1,13 @@
-# Tool-agnostic: no per-tool config dirs (removed in Round 12 P2);
-# harness/ is fully tracked. Ignore only local/personal state.
-
-# Environment & secrets
+# Secrets
 .env*
 !.env.example
 
-# OS
+# OS / editors
 .DS_Store
 Thumbs.db
-
-# IDE
-.vscode/
-.idea/
 *.swp
-*.swo
+.idea/
+.vscode/
 
-# Generated reports
-docs/reports/
+# install.sh backups
+*.bak

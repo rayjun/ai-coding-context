@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 # Hook: PostToolUse (all tools)
-# Purpose: Every N tool invocations, remind AI to check the plan.
+# Purpose: Every N tool invocations, remind AI to re-check direction (the #1 long-task failure mode).
 # Counter is session-scoped via lib/counter-path.sh — fresh sessions
 # start at 0 instead of inheriting a cross-session running total.
 
@@ -33,9 +33,9 @@ if [ $((COUNT % 30)) -eq 0 ]; then
   echo "=== DRIFT CHECK (${COUNT} tool calls in this session) ==="
   echo "You have made ${COUNT} tool invocations."
   echo "Pause and verify:"
-  echo "  1. Are you still aligned with the plan in docs/plans/?"
-  echo "  2. Check docs/tasks.json — are you working on the right task?"
-  echo "  3. Have you updated docs/STATUS.md recently?"
+  echo "  1. Check docs/tasks.json — are you still working on the right task?"
+  echo "  2. Check docs/STATUS.md — is the goal still accurate? When did you last checkpoint?"
+  echo "  3. Failed the same gate twice with no new evidence? Stop, record facts, escalate."
   echo "If you've been debugging the same issue for a while, step back and reconsider your approach."
   echo "=== END DRIFT CHECK ==="
   echo ""

@@ -62,17 +62,7 @@ if [ -f "docs/tasks.json" ]; then
   echo ""
 fi
 
-# 5. Recent plans (files only, exclude dotfiles and directories)
-if [ -d "docs/plans" ]; then
-  PLANS=$(ls -tp docs/plans/ 2>/dev/null | grep -v '/$' | grep -v '^\.' | head -5)
-  if [ -n "$PLANS" ]; then
-    echo "--- Recent Plans ---"
-    echo "$PLANS"
-    echo ""
-  fi
-fi
-
-# 6. End marker
+# 5. End marker
 #    The actionable resume instructions live in docs/STATUS.md "下次从这里开始"
 #    (already injected above) and AGENTS.md — no need to repeat them here.
 echo "=== End Session Context ==="

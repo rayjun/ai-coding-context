@@ -12,6 +12,6 @@ PROJECT_HASH=$(printf '%s' "$PWD" | md5sum 2>/dev/null | cut -c1-8) || \
 PROJECT_HASH=$(printf '%s' "$PWD" | md5 -q 2>/dev/null | cut -c1-8) || \
 PROJECT_HASH="default"
 
-SESSION_DIR="/tmp/claude-hooks/${PROJECT_HASH}"
+SESSION_DIR="/tmp/ai-context/${PROJECT_HASH}"
 mkdir -p "$SESSION_DIR"
 echo "$SESSION_DIR"

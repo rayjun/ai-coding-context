@@ -65,7 +65,7 @@ fi
 EVIDENCE_FILE=$(evidence_path_for_input "$INPUT" 2>/dev/null || true)
 if [ -n "$EVIDENCE_FILE" ] && [ -f "$EVIDENCE_FILE" ]; then
   case "$EVIDENCE_FILE" in
-    /tmp/claude-hooks/*) rm -f "$EVIDENCE_FILE" ;;
+    /tmp/ai-context/*) rm -f "$EVIDENCE_FILE" ;;
   esac
 fi
 
