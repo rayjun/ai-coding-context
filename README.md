@@ -7,6 +7,7 @@ A minimal, tool-agnostic harness for AI coding agents (Claude Code, Codex, Gemin
 - **Durable state** — `docs/tasks.json` + `docs/STATUS.md` + git commits. A brand-new agent can resume from files alone.
 - **Drift & failure control** — bounded loops (goal → signal → hypothesis → exit/stop), evidence-before-assertion, anti-spiral escalation.
 - **Safety gates** — destructive-operation interception, commit evidence gate, unattended-operation rules.
+- **Cross-agent review** — what a review request must carry and the principles the reviewer works by (self-contained, evidence-first, blocker triage).
 
 **Evaluation criterion**: every file here must answer one question — *does it help an agent execute a long-running task?* Everything that did not was removed (see `git log` for the earlier, fuller framework).
 
@@ -24,7 +25,7 @@ Dry run: append `--dry-run`. Existing files are backed up to `.bak`; a failed sy
 
 | Path | Purpose |
 | --- | --- |
-| `AGENTS.md` | The long-task protocol: state files, loop discipline, evidence, safety triggers |
+| `AGENTS.md` | The long-task protocol: state files, loop discipline, evidence, safety triggers, cross-agent review |
 | `harness/hooks/` | Self-executed check scripts + shared libs (trigger table in AGENTS.md §5) |
 | `harness/hooks/lib/danger-patterns.sh` | SSoT for destructive-command patterns, with 25-case test |
 | `docs/STATUS.template.md` | Template for the session-state file |

@@ -1,4 +1,4 @@
-> **最后更新**: 2026-10-09
+> **最后更新**: 2026-10-19
 > **当前阶段**: 精简重构完成 — 长任务 harness
 
 ## 当前目标
@@ -12,6 +12,8 @@
 - 保留核心：状态三件套、Loop 纪律、证据纪律、安全门（9 个自查脚本 + danger-patterns 库）。
 - 覆盖率门槛整体移除（跨平台不可靠且非长任务核心）；相关测试同步删除。
 - 命名中性化：`/tmp/claude-hooks` → `/tmp/ai-context`；`HERMES_HOOK_EVIDENCE_DIR` → `AI_CONTEXT_EVIDENCE_DIR`。
+- 新增 §8 跨 agent review：请求必须自包含（目标 / 范围 / 证据 / 原则 / 输出格式），8 条 review 原则（证据先于判断、发现可落地、blocker / should-fix / nit 三档、已证实与推测分离），评审结论落盘到 tasks.json / STATUS.md。
+- 已知遗留：`pre-commit-check.sh` 与 `assertion-audit.sh` 提示文本仍引用「AGENTS.md §6 Step 7」，精简后应为 §3 证据纪律，待修。
 
 ## 下次从这里开始
 - 无未完成任务。被删除内容的完整历史：`git log` / `git show <commit>^:path`。

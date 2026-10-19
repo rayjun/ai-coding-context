@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "ai-coding-context",
-  "updated_at": "2026-10-09",
+  "updated_at": "2026-10-19",
   "tasks": [
     {
       "id": "T-001",
@@ -10,6 +10,14 @@
       "done": true,
       "blocked_by": [],
       "notes": "保留 9 hooks + lib + 状态三件套；删除 skills/agents/commands/rules + 8 hooks + 历史 docs；覆盖率门槛移除；测试全绿"
+    },
+    {
+      "id": "T-002",
+      "title": "AGENTS.md 增加 §8 跨 agent review：请求自包含清单 + 8 条 review 原则 + 落盘要求",
+      "status": "done",
+      "done": true,
+      "blocked_by": [],
+      "notes": "修订 AGENTS.md / README.md / docs/STATUS.md；make test 全绿"
     }
   ]
 }
